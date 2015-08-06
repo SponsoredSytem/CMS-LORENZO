@@ -270,7 +270,7 @@ namespace IdentitySample.Controllers
            // AspNetUsersViewModel Result = new AspNetUsersViewModel();
             AspNetUsersViewModel Result = new AspNetUsersViewModel();
             Result.AspNetUserModel = new AspNetUserModel();
-            Result.Roles = RoleManager.Roles.Where(r => r.Name != "Admin").ToList(); 
+            Result.Roles = RoleManager.Roles.Where(r => r.Name == "Employee").ToList(); 
          
             if (!string.IsNullOrEmpty(userName))
             {
@@ -414,7 +414,8 @@ namespace IdentitySample.Controllers
                         var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                         var roleName = roleManager.FindById(model.AspNetUserModel.RoleId).Name;
                         UserManager.AddToRole(user.Id, roleName);
-                        // Add User Preferences for Dashboards Widgets
+
+                        await SendAccountCredentials(model.AspNetUserModel);
 
                         TempData["message"] = new MessageViewModel
                         {
@@ -442,7 +443,19 @@ namespace IdentitySample.Controllers
             //TempData["message"] = new MessageViewModel { Message = TMD.Web.Resources.HR.Account.ChkFields, IsError = true };
             return View(model);
         }
-
+        private async Task SendAccountCredentials(AspNetUserModel model)
+        {
+            var callbackUrl = Url.Action("Login", "Account", null, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(model.Email, "Login Credentials",
+                "Your Email is: " + model.Email +
+                "<br>Your Password is: " + model.Password +
+                "<br>Click <a href=\"" + callbackUrl + "\">here</a> to login.");
+            TempData["message"] = new MessageViewModel
+            {
+                Message = "Login credentials has been sent to the user.",
+                IsSaved = true
+            };
+        }
         [AllowAnonymous]
         public ActionResult Subscribe()
         {
