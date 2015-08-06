@@ -109,10 +109,14 @@
     <Compile Include="DomainModels\AspNetUserClaim.cs" />
     <Compile Include="DomainModels\AspNetUserLogin.cs" />
     <Compile Include="DomainModels\AspNetUserRole.cs" />
+    <Compile Include="DomainModels\City.cs" />
+    <Compile Include="DomainModels\Company.cs" />
+    <Compile Include="DomainModels\CompanyContact.cs" />
     <Compile Include="DomainModels\Configuration.cs" />
     <Compile Include="DomainModels\Expense.cs" />
     <Compile Include="DomainModels\ExpenseCategory.cs" />
     <Compile Include="DomainModels\InventoryItem.cs" />
+    <Compile Include="DomainModels\Municipal.cs" />
     <Compile Include="DomainModels\Note.cs" />
     <Compile Include="DomainModels\NotesCategory.cs" />
     <Compile Include="DomainModels\Order.cs" />
@@ -123,6 +127,7 @@
     <Compile Include="DomainModels\ProductConfiguration.cs" />
     <Compile Include="DomainModels\ProductMainCategory.cs" />
     <Compile Include="DomainModels\ProductsStock.cs" />
+    <Compile Include="DomainModels\Source.cs" />
     <Compile Include="DomainModels\StagingEbayBatchImport.cs" />
     <Compile Include="DomainModels\StagingEbayItem.cs" />
     <Compile Include="DomainModels\UserPrefrence.cs" />
