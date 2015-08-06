@@ -75,6 +75,66 @@
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="LogID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CityDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LegalName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="VATNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="VATOffice" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fax" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="MunicipalId" Type="bigint" />
+          <Property Name="SourceId" Type="bigint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'cmslorenzo.dbo.CompanyContact' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CompanyContact">
+          <Key>
+            <PropertyRef Name="CompanyContactId" />
+            <PropertyRef Name="CompanyId" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="RecCreatedDate" />
+            <PropertyRef Name="RecLastUpdatedDate" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+          </Key>
+          <Property Name="CompanyContactId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="bigint" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Position" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhoneCell" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhoneLandLine" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ContactType" Type="nvarchar" MaxLength="50" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <EntityType Name="Configurations">
           <Key>
             <PropertyRef Name="Id" />
@@ -197,6 +257,19 @@
           <Property Name="Message" Type="nvarchar" MaxLength="1500" />
           <Property Name="FormattedMessage" Type="ntext" />
         </EntityType>
+        <EntityType Name="Municipal">
+          <Key>
+            <PropertyRef Name="MunicipalId" />
+          </Key>
+          <Property Name="MunicipalId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MunicipalName" Type="nvarchar" MaxLength="250" />
+          <Property Name="MunicipalDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedDate" Type="datetime" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="CityId" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="Notes">
           <Key>
             <PropertyRef Name="Id" />
@@ -316,6 +389,18 @@
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="SourceId" />
+          </Key>
+          <Property Name="SourceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SourceName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SourceDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="StagingEbayBatchImports">
           <Key>
@@ -438,7 +523,7 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ProductsStock">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -464,6 +549,42 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
             </Principal>
             <Dependent Role="CategoryLog">
               <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_Municipal1">
+          <End Role="Municipal" Type="Self.Municipal" Multiplicity="0..1" />
+          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Municipal">
+              <PropertyRef Name="MunicipalId" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="MunicipalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_Source">
+          <End Role="Source" Type="Self.Source" Multiplicity="0..1" />
+          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="SourceId" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyContact_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="CompanyContact" Type="Self.CompanyContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyContact">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -616,6 +737,18 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
             </Principal>
             <Dependent Role="InventoryItems">
               <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Municipal_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Municipal" Type="Self.Municipal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Municipal">
+              <PropertyRef Name="CityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -795,6 +928,8 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataWarehouseDimComapany" EntityType="Self.DataWarehouseDimComapany" Schema="dbo" store:Type="Tables" />
@@ -806,6 +941,7 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
           <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Municipal" EntityType="Self.Municipal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotesCategory" EntityType="Self.NotesCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
@@ -814,11 +950,29 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
           <EntitySet Name="ProductConfiguration" EntityType="Self.ProductConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductMainCategory" EntityType="Self.ProductMainCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayBatchImports" EntityType="Self.StagingEbayBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayItems" EntityType="Self.StagingEbayItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingToyGraderBatchImports" EntityType="Self.StagingToyGraderBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingToyGraderItems" EntityType="Self.StagingToyGraderItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyContact" EntityType="Self.CompanyContact" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CompanyContact].[CompanyContactId] AS [CompanyContactId], 
+    [CompanyContact].[CompanyId] AS [CompanyId], 
+    [CompanyContact].[FirstName] AS [FirstName], 
+    [CompanyContact].[LastName] AS [LastName], 
+    [CompanyContact].[Position] AS [Position], 
+    [CompanyContact].[PhoneCell] AS [PhoneCell], 
+    [CompanyContact].[PhoneLandLine] AS [PhoneLandLine], 
+    [CompanyContact].[Email] AS [Email], 
+    [CompanyContact].[ContactType] AS [ContactType], 
+    [CompanyContact].[RecCreatedDate] AS [RecCreatedDate], 
+    [CompanyContact].[RecLastUpdatedDate] AS [RecLastUpdatedDate], 
+    [CompanyContact].[RecCreatedBy] AS [RecCreatedBy], 
+    [CompanyContact].[RecLastUpdatedBy] AS [RecLastUpdatedBy]
+    FROM [dbo].[CompanyContact] AS [CompanyContact]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ProductsStock" EntityType="Self.ProductsStock" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ProductsStock].[ProductId] AS [ProductId], 
@@ -833,6 +987,18 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryLog" EntitySet="CategoryLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_Municipal1" Association="Self.FK_Company_Municipal1">
+            <End Role="Municipal" EntitySet="Municipal" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_Source" Association="Self.FK_Company_Source">
+            <End Role="Source" EntitySet="Source" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyContact_Company" Association="Self.FK_CompanyContact_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CompanyContact" EntitySet="CompanyContact" />
           </AssociationSet>
           <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany" Association="Self.FK_DataWarehouseFactSale_DataWarehouseDimComapany">
             <End Role="DataWarehouseDimComapany" EntitySet="DataWarehouseDimComapany" />
@@ -881,6 +1047,10 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
           <AssociationSet Name="FK_InventoryItems_Vendors" Association="Self.FK_InventoryItems_Vendors">
             <End Role="Vendors" EntitySet="Vendors" />
             <End Role="InventoryItems" EntitySet="InventoryItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Municipal_City" Association="Self.FK_Municipal_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Municipal" EntitySet="Municipal" />
           </AssociationSet>
           <AssociationSet Name="FK_Notes_NotesCategory" Association="Self.FK_Notes_NotesCategory">
             <End Role="NotesCategory" EntitySet="NotesCategory" />
@@ -1099,6 +1269,27 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
           <AssociationSet Name="FK_OrderItems_Products" Association="TMD.Models.DomainModels.FK_OrderItems_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <EntitySet Name="Cities" EntityType="TMD.Models.DomainModels.City" />
+          <EntitySet Name="Companies" EntityType="TMD.Models.DomainModels.Company" />
+          <EntitySet Name="Municipals" EntityType="TMD.Models.DomainModels.Municipal" />
+          <EntitySet Name="Sources" EntityType="TMD.Models.DomainModels.Source" />
+          <EntitySet Name="CompanyContacts" EntityType="TMD.Models.DomainModels.CompanyContact" />
+          <AssociationSet Name="FK_Municipal_City" Association="TMD.Models.DomainModels.FK_Municipal_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Municipal" EntitySet="Municipals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_Municipal1" Association="TMD.Models.DomainModels.FK_Company_Municipal1">
+            <End Role="Municipal" EntitySet="Municipals" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_Source" Association="TMD.Models.DomainModels.FK_Company_Source">
+            <End Role="Source" EntitySet="Sources" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyContact_Company" Association="TMD.Models.DomainModels.FK_CompanyContact_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="CompanyContact" EntitySet="CompanyContacts" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1950,6 +2141,145 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CityDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Municipals" Relationship="TMD.Models.DomainModels.FK_Municipal_City" FromRole="City" ToRole="Municipal" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VATNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VATOffice" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="MunicipalId" Type="Int64" />
+          <Property Name="SourceId" Type="Int64" />
+          <NavigationProperty Name="Municipal" Relationship="TMD.Models.DomainModels.FK_Company_Municipal1" FromRole="Company" ToRole="Municipal" />
+          <NavigationProperty Name="Source" Relationship="TMD.Models.DomainModels.FK_Company_Source" FromRole="Company" ToRole="Source" />
+          <NavigationProperty Name="CompanyContacts" Relationship="TMD.Models.DomainModels.FK_CompanyContact_Company" FromRole="Company" ToRole="CompanyContact" />
+        </EntityType>
+        <EntityType Name="Municipal">
+          <Key>
+            <PropertyRef Name="MunicipalId" />
+          </Key>
+          <Property Name="MunicipalId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MunicipalName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MunicipalDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="TMD.Models.DomainModels.FK_Municipal_City" FromRole="Municipal" ToRole="City" />
+          <NavigationProperty Name="Companies" Relationship="TMD.Models.DomainModels.FK_Company_Municipal1" FromRole="Municipal" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="SourceId" />
+          </Key>
+          <Property Name="SourceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SourceName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SourceDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Companies" Relationship="TMD.Models.DomainModels.FK_Company_Source" FromRole="Source" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CompanyContact">
+          <Key>
+            <PropertyRef Name="CompanyContactId" />
+            <PropertyRef Name="CompanyId" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="RecCreatedDate" />
+            <PropertyRef Name="RecLastUpdatedDate" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+          </Key>
+          <Property Name="CompanyContactId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int64" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneCell" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneLandLine" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContactType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Company" Relationship="TMD.Models.DomainModels.FK_CompanyContact_Company" FromRole="CompanyContact" ToRole="Company" />
+        </EntityType>
+        <Association Name="FK_Municipal_City">
+          <End Type="TMD.Models.DomainModels.City" Role="City" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Municipal" Role="Municipal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Municipal">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_Municipal1">
+          <End Type="TMD.Models.DomainModels.Municipal" Role="Municipal" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Municipal">
+              <PropertyRef Name="MunicipalId" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="MunicipalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_Source">
+          <End Type="TMD.Models.DomainModels.Source" Role="Source" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="SourceId" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyContact_Company">
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.CompanyContact" Role="CompanyContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyContact">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2429,6 +2759,88 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="CityDescription" ColumnName="CityDescription" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="MunicipalId" ColumnName="MunicipalId" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="CompanyDescription" ColumnName="CompanyDescription" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="VATOffice" ColumnName="VATOffice" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+                <ScalarProperty Name="LegalName" ColumnName="LegalName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Municipals">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Municipal">
+              <MappingFragment StoreEntitySet="Municipal">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="MunicipalDescription" ColumnName="MunicipalDescription" />
+                <ScalarProperty Name="MunicipalName" ColumnName="MunicipalName" />
+                <ScalarProperty Name="MunicipalId" ColumnName="MunicipalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sources">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Source">
+              <MappingFragment StoreEntitySet="Source">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="SourceDescription" ColumnName="SourceDescription" />
+                <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyContacts">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.CompanyContact">
+              <MappingFragment StoreEntitySet="CompanyContact">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="ContactType" ColumnName="ContactType" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneLandLine" ColumnName="PhoneLandLine" />
+                <ScalarProperty Name="PhoneCell" ColumnName="PhoneCell" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CompanyContactId" ColumnName="CompanyContactId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2510,6 +2922,15 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
         <EntityTypeShape EntityType="TMD.Models.DomainModels.OrderItem" Width="1.5" PointX="17.25" PointY="4.625" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Products" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.City" Width="1.5" PointX="17.375" PointY="19.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Company" Width="1.5" PointX="21.875" PointY="18.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Municipal" Width="1.5" PointX="19.625" PointY="19" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Source" Width="1.5" PointX="19.625" PointY="15.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.CompanyContact" Width="1.5" PointX="24.125" PointY="18.625" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Municipal_City" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_Municipal1" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_Source" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_CompanyContact_Company" />
       </Diagram>
     </Diagrams>
   </Designer>
