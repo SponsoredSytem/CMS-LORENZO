@@ -33,6 +33,6 @@ namespace TMD.Implementation
             unityContainer.RegisterType<INotesCategoryService, NotesCategoryService>();
             unityContainer.RegisterType<INoteService, NoteService>();
             
-        }
+        } 
     }
 }
