@@ -120,7 +120,7 @@
             <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
             <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
             <div class="page-sidebar navbar-collapse collapse">
-                <ul class="page-sidebar-menu" data-slide-speed="200" data-auto-scroll="true">
+                <ul class="page-sidebar-menu page-sidebar-menu-closed" data-slide-speed="0" data-auto-scroll="true">
                     <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
                     <li class="sidebar-toggler-wrapper">
                         <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -137,15 +137,16 @@
                             <span class="selected"></span>
                         </a>
                     </li>
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "2") ? "active" : "")>
-                        <a href="~/Account/Profile" class="WhiteColor">
-                            <i class="icon-user"></i>
-                            <span class="title">Profile</span>
-                            <span class="selected"></span>
-                        </a>
-                    </li>
-                    @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                    
+                    @if (User.IsInRole("Employee"))
                     {
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "2") ? "active" : "")>
+                            <a href="~/Account/Profile" class="WhiteColor">
+                                <i class="icon-user"></i>
+                                <span class="title">Profile</span>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "20") ? "active " : "")>
                             <a href="~/Order/Index" class="WhiteColor">
                                 <i class="icon-basket"></i>
@@ -156,15 +157,6 @@
                     }
                     @if (User.IsInRole("Admin"))
                     {
-
-                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "22") ? "active" : "")>
-                            <a href="~/Customer/Index" class="WhiteColor">
-                                <i class="icon-users"></i>
-                                <span class="title">Customers</span>
-                                <span class="selected"></span>
-                            </a>
-                        </li>
-
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
                             <a href="~/Account/Users" class="WhiteColor">
                                 <i class="icon-wallet"></i>
@@ -172,126 +164,7 @@
                                 <span class="selected"></span>
                             </a>
                         </li>
-                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "11") ? "active" : "")>
-                            <a href="javascript:;">
-                                <i class="icon-bag"></i>
-                                <span class="title">Inventory</span>
-                                <span class="arrow "></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a class="WhiteColor" href="~/Inventory/Index">
-                                        Inventory List <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="WhiteColor" href="~/Product/Index">
-                                        Products List  <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="WhiteColor" href="~/ProductCategory/Index">
-                                        Products Category <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "28") ? "active" : "")>
-                            <a href="~/Vendor/Index" class="WhiteColor">
-                                <i class="icon-briefcase"></i>
-                                <span class="title">Vendors</span>
-                                <span class="selected"></span>
-                            </a>
-                        </li>
-                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "24") ? "active" : "")>
-                            <a href="javascript:;">
-                                <i class="icon-rocket"></i>
-                                <span class="title">Expenses</span>
-                                <span class="arrow "></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a class="WhiteColor" href="~/Expense/Index">
-                                        Expense <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="WhiteColor" href="~/ExpenseCategory/Index">
-                                        Expense Category <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "29") ? "active" : "")>
-                            <a href="javascript:;">
-                                <i class="icon-docs"></i>
-                                <span class="title">Notes</span>
-                                <span class="arrow "></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a class="WhiteColor" href="~/Notes/Index">
-                                        Notes <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="WhiteColor" href="~/NotesCategory/Index">
-                                        Notes Category <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "21") ? "active" : "")>
-                            <a href="~/Configuration/Create" class="WhiteColor">
-                                <i class="icon-settings"></i>
-                                <span class="title">Configuration</span>
-                                <span class="selected"></span>
-                            </a>
-                        </li>
                     }
-                    @if (User.IsInRole("Report") || User.IsInRole("Admin"))
-                    {
-                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "31") ? "active" : "")>
-                            <a href="javascript:;">
-                                <i class="icon-bar-chart"></i>
-                                <span class="title">Reports</span>
-                                <span class="arrow "></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a class="WhiteColor" href="~/Reports/Sales">
-                                        Sales <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="WhiteColor" href="~/Reports/Purchases">
-                                        Purchases <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="WhiteColor" href="~/Reports/Stocks">
-                                        Stocks <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="dropdown-menu pull-left"></ul>
-                        </li>
-                    }
-
-
                 </ul>
             </div>
             <!-- END HORIZONTAL RESPONSIVE MENU -->

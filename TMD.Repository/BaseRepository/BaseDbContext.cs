@@ -92,6 +92,11 @@ namespace TMD.Repository.BaseRepository
         public DbSet<NotesCategory> NotesCategories { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<ProductsStock> ProductsStocks { get; set; }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<CompanyContact> CompanyContact { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<Municipal> Municipal { get; set; }
+        public DbSet<Source> Source { get; set; }
 
         /// <summary>
         /// Staging Ebay

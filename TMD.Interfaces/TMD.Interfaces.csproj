@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository\ICompanyRepository.cs" />
     <Compile Include="IRepository\IExpenseRepository.cs" />
     <Compile Include="IRepository\IProductsStockRepository.cs" />
     <Compile Include="IRepository\INoteRepository.cs" />
