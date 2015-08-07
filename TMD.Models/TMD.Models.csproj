@@ -164,6 +164,7 @@
     <Compile Include="RequestModels\InventoryItemSearchRequest.cs" />
     <Compile Include="RequestModels\StagingEbayItemRequest.cs" />
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
+    <Compile Include="ResponseModels\CompanyResponseModel.cs" />
     <Compile Include="ResponseModels\CreateCategoryResponseModel.cs" />
     <Compile Include="ResponseModels\EbayItemSearchResponse.cs" />
     <Compile Include="ResponseModels\InventoryItemResponse.cs" />

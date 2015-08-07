@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace TMD.Models.DomainModels
+namespace TMD.Web.Models
 {
     public class Municipal
     {
@@ -13,8 +12,5 @@ namespace TMD.Models.DomainModels
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public long CityId { get; set; }
-
-        public virtual City City { get; set; }
-        public virtual ICollection<Company> Companies { get; set; }
     }
 }

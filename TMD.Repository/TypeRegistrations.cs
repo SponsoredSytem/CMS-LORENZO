@@ -30,6 +30,8 @@ namespace TMD.Repository
             unityContainer.RegisterType<INoteRepository, NoteRepository>();
             unityContainer.RegisterType<IProductsStockRepository, ProductsStockRepository>();
             unityContainer.RegisterType<ICompanyRepository, CompanyRepository>();
+            unityContainer.RegisterType<ICityRepository, CityRepository>();
+            unityContainer.RegisterType<IMunicipalRepository, MunicipalRepository>();
         }
     }
 }

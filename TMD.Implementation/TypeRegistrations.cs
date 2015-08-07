@@ -32,6 +32,9 @@ namespace TMD.Implementation
             unityContainer.RegisterType<IReportsService, ReportsService>();
             unityContainer.RegisterType<INotesCategoryService, NotesCategoryService>();
             unityContainer.RegisterType<INoteService, NoteService>();
+            unityContainer.RegisterType<ICompanyService, CompanyService>();
+            unityContainer.RegisterType<ICityService, CityService>();
+            unityContainer.RegisterType<IMunicipalService, MunicipalService>();
             
         } 
     }

@@ -1,0 +1,192 @@
+﻿@model TMD.Web.ViewModels.CompanyViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Create Company";
+    string btnText = "Save";
+    var setDiasble = "false";
+    Session["MenuKey"] = 3;
+    long cityIdSelected=0;
+    if (Model.Company != null)
+    {
+        if (Model.Company.CompanyId > 0)
+        {
+            ViewBag.Title = "Update Company";
+            btnText = "Update";
+            setDiasble = "readonly";
+        }
+        cityIdSelected = (long)Model.Company.CityId;
+    }
+}
+
+@using (Html.BeginForm("Create", "Company", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">@btnText</button>
+                <a href="~/Company/Index">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>@ViewBag.Title
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.CompanyName, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-o"></i>
+                        @Html.TextBoxFor(m => m.Company.CompanyName, new { @class = "form-control mandatory", placeholder = "Company Name" })
+                    </div>
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.LegalName, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-pdf-o"></i>
+                        @Html.TextBoxFor(m => m.Company.LegalName, new { @class = "form-control mandatory", placeholder = "Legal Name" })
+                    </div>
+                </div>
+
+
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.VATNumber, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-zip-o"></i>
+                        @Html.TextBoxFor(m => m.Company.VATNumber, new { @class = "form-control mandatory", placeholder = "V.A.T Number" })
+                    </div>
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.VATOffice, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-text"></i>
+                        @Html.TextBoxFor(m => m.Company.VATOffice, new { @class = "form-control mandatory", placeholder = "V.A.T Office" })
+                    </div>
+                </div>
+
+
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.Label("City", new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-user"></i>
+                        @Html.DropDownList("City", new SelectList(Model.Cities, "CityId", "CityName", Model.Company.CityId), "Select City", new { @class = "form-control", id = "CityId" })
+                    </div>
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.MunicipalId, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-user"></i>
+                        @Html.DropDownListFor(m => m.Company.MunicipalId, new SelectList(Model.Municipals, "MunicipalId", "MunicipalName", Model.Company.MunicipalId), "Select Municipal", new { @class = "form-control", id = "MunicipalId" })
+                    </div>
+                </div>
+
+
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.Telephone, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-user"></i>
+                        @Html.TextBoxFor(m => m.Company.Telephone, new { @class = "form-control mandatory", placeholder = "Telephone" })
+                    </div>
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.Fax, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-user"></i>
+                        @Html.TextBoxFor(m => m.Company.Fax, new { @class = "form-control mandatory", placeholder = "Fax" })
+                    </div>
+                </div>
+
+
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.Email, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-user"></i>
+                        @Html.TextBoxFor(m => m.Company.Email, new { @class = "form-control mandatory", placeholder = "Email" })
+                    </div>
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.Address, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-user"></i>
+                        @Html.TextBoxFor(m => m.Company.Address, new { @class = "form-control mandatory", placeholder = "Address" })
+                    </div>
+                </div>
+
+
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.CompanyDescription, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-user"></i>
+                        @Html.TextAreaFor(m => m.Company.CompanyDescription, new { @class = "form-control mandatory", placeholder = "Description" })
+                    </div>
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.Notes, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-user"></i>
+                        @Html.TextAreaFor(m => m.Company.Notes, new { @class = "form-control mandatory", placeholder = "Notes" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $("#CityId").on('change', function () {
+            LoadMuniciaplByCity();
+        });
+        if ('@cityIdSelected'>0) {
+            LoadMuniciaplByCity();
+        }
+    });
+    function LoadMuniciaplByCity() {
+        var code = $("#CityId").val();
+        if (code == "")
+        {
+            $("#MunicipalId").empty();
+            var newOption = "<option value='0'> Select Municipal </option>";
+            $("#MunicipalId").append(newOption);
+            return;
+        }
+        $.blockUI({ message: '<h3><img src="/Images/loading.gif" height=55px; width=55px; /> Fetching Municipals...</h2>' });
+
+        if (code != "" && code != "0") {
+            $.ajax({
+                url: "/Api/Municipal",
+                type: "GET",
+                data: { id: code },
+                dataType: "json",
+                success: function(data) {
+                    $("#MunicipalId").empty();
+                    $.each(data, function(i, item) {
+                        var newOption = "<option value='" + item.MunicipalId + "'>" + item.MunicipalName + "</option>";
+                        $("#MunicipalId").append(newOption);
+                    });
+                    $.unblockUI();
+                },
+                error: function(textStatus, errorThrown) {
+                    $.unblockUI();
+                    alert("Status: " + textStatus);
+                    alert("Error: " + errorThrown);
+                }
+            });
+        }
+    }
+</script>

@@ -125,6 +125,9 @@
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Identity\IdentityOperation.cs" />
     <Compile Include="Services\AspNetUserService.cs" />
+    <Compile Include="Services\MunicipalService.cs" />
+    <Compile Include="Services\CityService.cs" />
+    <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\EbayStagingLoadService.cs" />
     <Compile Include="Services\ExpenseService.cs" />
     <Compile Include="Services\NoteService.cs" />
