@@ -1,4 +1,7 @@
-﻿.select2me {
+﻿.formMinHeight500 {
+    min-height: 500px;
+}
+.select2me {
     width: 128% !important;
 }
 .field-validation-error {

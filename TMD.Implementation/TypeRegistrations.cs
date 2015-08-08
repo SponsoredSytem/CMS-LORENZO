@@ -35,6 +35,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<ICompanyService, CompanyService>();
             unityContainer.RegisterType<ICityService, CityService>();
             unityContainer.RegisterType<IMunicipalService, MunicipalService>();
+            unityContainer.RegisterType<ISourceService, SourceService>();
             
         } 
     }

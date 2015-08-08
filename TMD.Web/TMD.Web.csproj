@@ -317,6 +317,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
+    <Compile Include="ModelMappers\SourceMapper.cs" />
     <Compile Include="ModelMappers\CityMapper.cs" />
     <Compile Include="ModelMappers\CompanyMapper.cs" />
     <Compile Include="ModelMappers\CustomerMapper.cs" />
@@ -355,6 +356,7 @@
     <Compile Include="Models\ProductMainCategoryModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
+    <Compile Include="Models\Source.cs" />
     <Compile Include="Models\StagingEbayBatchImportModel.cs" />
     <Compile Include="Models\PaypalPaymentModel.cs" />
     <Compile Include="Models\StagingEbayItemModel.cs" />
@@ -1767,6 +1769,8 @@
     <Content Include="Views\Reports\Stocks.cshtml" />
     <Content Include="Views\Reports\Expenses.cshtml" />
     <Content Include="Views\Company\Create.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\_BlankLayout.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
@@ -2790,7 +2794,7 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />

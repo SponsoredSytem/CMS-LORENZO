@@ -12,6 +12,7 @@ namespace TMD.Web.ViewModels
         }
         public Company Company { get; set; }
         public List<City> Cities { get; set; }
-        public List<Municipal> Municipals { get; set; } 
+        public List<Municipal> Municipals { get; set; }
+        public List<Source> Sources { get; set; } 
     }
 }

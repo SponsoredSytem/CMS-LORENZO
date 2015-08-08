@@ -35,8 +35,11 @@
         </div>
 
         <div class="portlet-body form">
-            <div class="container-fluid">
+            <div class="container-fluid formMinHeight500">
                 @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Company.CompanyId)
+                @Html.HiddenFor(m => m.Company.RecCreatedBy)
+                @Html.HiddenFor(m => m.Company.RecCreatedDate)
                 <div class="row form-group margin-top-20">
                     <div class="col-md-2 textAlignRight">
                         @Html.LabelFor(m => m.Company.CompanyName, new { @class = "control-label" })
@@ -86,10 +89,19 @@
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-user"></i>
-                        @Html.DropDownListFor(m => m.Company.MunicipalId, new SelectList(Model.Municipals, "MunicipalId", "MunicipalName", Model.Company.MunicipalId), "Select Municipal", new { @class = "form-control", id = "MunicipalId" })
+                        @Html.DropDownListFor(m => m.Company.MunicipalId, new SelectList(Model.Municipals, "MunicipalId", "MunicipalName", Model.Company.MunicipalId), "Select Municipal", new { @class = "form-control mandatory", id = "MunicipalId" })
                     </div>
                 </div>
 
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.Company.SourceId, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-code-o"></i>
+                        @Html.DropDownListFor(m => m.Company.SourceId, new SelectList(Model.Sources, "SourceId", "SourceName", Model.Company.SourceId), "Select Source", new { @class = "form-control mandatory", id = "SourceId" })
+                    </div>
+                </div>
 
                 <div class="row form-group margin-top-20">
                     <div class="col-md-2 textAlignRight">
@@ -168,6 +180,7 @@
         $.blockUI({ message: '<h3><img src="/Images/loading.gif" height=55px; width=55px; /> Fetching Municipals...</h2>' });
 
         if (code != "" && code != "0") {
+            var selectedMunicipal = '@Model.Company.MunicipalId';
             $.ajax({
                 url: "/Api/Municipal",
                 type: "GET",
@@ -175,8 +188,9 @@
                 dataType: "json",
                 success: function(data) {
                     $("#MunicipalId").empty();
-                    $.each(data, function(i, item) {
-                        var newOption = "<option value='" + item.MunicipalId + "'>" + item.MunicipalName + "</option>";
+                    $.each(data, function (i, item) {
+                        var selection = (selectedMunicipal == item.MunicipalId) ? 'selected' : '';
+                        var newOption = "<option value='" + item.MunicipalId + "' " + selection + ">" + item.MunicipalName + "</option>";
                         $("#MunicipalId").append(newOption);
                     });
                     $.unblockUI();

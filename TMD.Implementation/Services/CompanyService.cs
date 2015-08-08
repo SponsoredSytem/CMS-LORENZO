@@ -11,11 +11,13 @@ namespace TMD.Implementation.Services
     {
         private readonly ICompanyRepository companyRepository;
         private readonly ICityRepository cityRepository;
+        private readonly ISourceRepository sourceRepository;
 
-        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository)
+        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository)
         {
             this.companyRepository = companyRepository;
             this.cityRepository = cityRepository;
+            this.sourceRepository = sourceRepository;
         }
 
         public Company GetCompany(long companyId)
@@ -31,6 +33,8 @@ namespace TMD.Implementation.Services
                 responseModel.Company = companyRepository.Find((long)companyId);
             //Load Cities
             responseModel.Cities = cityRepository.GetAll().ToList();
+            //Load Sources
+            responseModel.Sources = sourceRepository.GetAll();
             return responseModel;
         }
 

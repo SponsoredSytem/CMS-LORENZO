@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository\ISourceRepository.cs" />
     <Compile Include="IRepository\IMunicipalRepository.cs" />
     <Compile Include="IRepository\ICityRepository.cs" />
     <Compile Include="IRepository\ICompanyRepository.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="IRepository\IProductRepositoy.cs" />
     <Compile Include="IRepository\IProductCategoryRepository.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\ISourceService.cs" />
     <Compile Include="IServices\IMunicipalService.cs" />
     <Compile Include="IServices\ICityService.cs" />
     <Compile Include="IServices\ICompanyService.cs" />

@@ -8,5 +8,6 @@ namespace TMD.Models.ResponseModels
         public Company Company{get; set; }
         public IEnumerable<City> Cities{ get; set; }
         public IEnumerable<Municipal> Municipals { get; set; }
+        public IEnumerable<Source> Sources { get; set; }
     }
 }

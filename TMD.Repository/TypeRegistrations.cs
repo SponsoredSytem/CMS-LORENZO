@@ -32,6 +32,7 @@ namespace TMD.Repository
             unityContainer.RegisterType<ICompanyRepository, CompanyRepository>();
             unityContainer.RegisterType<ICityRepository, CityRepository>();
             unityContainer.RegisterType<IMunicipalRepository, MunicipalRepository>();
+            unityContainer.RegisterType<ISourceRepository, SourceRepository>();
         }
     }
 }

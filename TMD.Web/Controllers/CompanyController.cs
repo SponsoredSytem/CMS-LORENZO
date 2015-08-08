@@ -32,6 +32,7 @@ namespace TMD.Web.Controllers
                 companyViewModel.Company = companyData.Company!=null ? companyData.Company.CreateFromServerToClient() : new Company();
 
             companyViewModel.Cities = companyData.Cities.Select(x => x.CreateFromServerToClient()).ToList();
+            companyViewModel.Sources = companyData.Sources.Select(x => x.CreateFromServerToClient()).ToList();
             return View(companyViewModel);
         }
         [HttpPost]
