@@ -257,7 +257,7 @@ namespace IdentitySample.Controllers
         {
             AuthenticationManager.SignOut();
             Session.Abandon();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
         #endregion
 

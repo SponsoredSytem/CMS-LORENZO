@@ -29,7 +29,12 @@ namespace TMD.Web.Models
         public string IsConfirmedString { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(100, ErrorMessage = "The Password must be at least 6 characters long.", MinimumLength = 6)]
         public string Password { get; set; }
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "The Password and Confirma Password do not match.")]
         public string ConfirmPassword { get; set; }
         public string RegisterPayPalTxnID { get; set; }
         public DateTime  ? RegisterPayPalDate { get; set; }

@@ -113,7 +113,7 @@
     </div>
     <!-- END HEADER -->
     <div class="clearfix"></div>
-    <div class="page-container">
+    <div class="page-container" style="background-color: #333">
         <!-- BEGIN Mobile SIDEBAR -->
         <div class="page-sidebar-wrapper">
             <!-- BEGIN HORIZONTAL RESPONSIVE MENU -->
@@ -137,8 +137,7 @@
                             <span class="selected"></span>
                         </a>
                     </li>
-                    
-                    @if (User.IsInRole("Employee"))
+                    @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
                     {
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "2") ? "active" : "")>
                             <a href="~/Account/Profile" class="WhiteColor">
@@ -147,6 +146,9 @@
                                 <span class="selected"></span>
                             </a>
                         </li>
+                    }
+                    @if (User.IsInRole("Employee"))
+                    {
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active " : "")>
                             <a href="~/Company/Index" class="WhiteColor">
                                 <i class="icon-basket"></i>

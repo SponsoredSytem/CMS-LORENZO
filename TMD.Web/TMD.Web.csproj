@@ -940,6 +940,7 @@
     <Content Include="Content\frontend\pages\scripts\layerslider-init.js" />
     <Content Include="Content\frontend\pages\scripts\portfolio.js" />
     <Content Include="Content\frontend\pages\scripts\revo-slider-init.js" />
+    <Content Include="Content\global\componentsGlobal.css" />
     <Content Include="Content\global\css\components.css" />
     <Content Include="Content\global\css\plugins.css" />
     <Content Include="Content\global\img\accordion-plusminus.png" />
@@ -1771,6 +1772,7 @@
     <Content Include="Views\Company\Create.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_BlankLayout.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
@@ -2820,7 +2822,7 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPassword1.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\UnauthorizedRequest\Index.cshtml" />
