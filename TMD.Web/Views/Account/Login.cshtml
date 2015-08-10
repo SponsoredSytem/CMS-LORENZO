@@ -36,20 +36,14 @@
                     <label class="control-label visible-ie8 visible-ie9">Username</label>
                     <div class="input-icon">
                         <i class="fa fa-user"></i>
-                        @*<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" />*@
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control placeholder-no-fix", placeholder = "Email", autocomplete = "off" })
-
-
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">Password</label>
                     <div class="input-icon">
                         <i class="fa fa-lock"></i>
-                        @*<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" />*@
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control placeholder-no-fix", placeholder = "Password", autocomplete = "off" })
-
-
                     </div>
                 </div>
                 <div class="form-actions">

@@ -106,6 +106,7 @@ namespace IdentitySample.Controllers
                 return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+        //  bool result2 =  UserManager.CheckPassword(UserManager.FindById(User.Identity.GetUserId()), model.OldPassword);
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
