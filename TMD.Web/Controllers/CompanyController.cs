@@ -57,12 +57,11 @@ namespace TMD.Web.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 
-                throw;
+                throw e;
             }
-            return View();
         }
     }
 }

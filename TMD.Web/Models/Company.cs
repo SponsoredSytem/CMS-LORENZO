@@ -17,6 +17,9 @@ namespace TMD.Web.Models
         public string Address { get; set; }
         public string Telephone { get; set; }
         public string Fax { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get; set; }
         public string Notes { get; set; }
         [Display(Name = "Description")]
@@ -30,5 +33,7 @@ namespace TMD.Web.Models
         public long CityId { get; set; }
         [Display(Name = "Source")]
         public long? SourceId { get; set; }
+        public string CityName { get; set; }
+        public string MunicipalName { get; set; }
     }
 }

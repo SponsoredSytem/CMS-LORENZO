@@ -46,7 +46,14 @@ legend {
     border-radius: 4px;
     box-sizing: border-box;
 }
-
+.select2DDL {
+        width: 208px !important;
+}
+.select2DDLParent {
+    width: 210px !important;
+    margin-left: 15px !important;
+    padding-left: 0 !important;
+}
 .Error {
     color: #e02222;
     font-size: 12px;

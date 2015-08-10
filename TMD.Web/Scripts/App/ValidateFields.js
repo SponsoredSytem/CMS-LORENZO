@@ -5,16 +5,25 @@
         for (var i = 0; i < fields.length; i++) {
             var value = $(fields[i]).val();
             if (value.toString().length == 0) {
-                //checking session
-                //if ((!document.getElementById("RoleName").value == "SuperAdmin") &&  ($(fields[i])[0].id == "ExpiryDate")){
-                //    continue;
-                //}
-                missingCounter++;
+                
+                
                 $(fields[i]).css('border-color', 'red');
-                inCompleteFields += "<br/>"+($(fields[i]).attr('id') + (i + 1 == fields.length ? "" : ", "));
-            }
-            else
+                if (!$(fields[i]).hasClass("select2me")) {
+                    missingCounter++;
+                    inCompleteFields += "<br/>" + ($(fields[i]).attr('id') + (i + 1 == fields.length ? "" : ", "));
+                }
+                    
+            } else if (!$(fields[i]).hasClass("select2me")) {
                 $(fields[i]).css('border-color', 'gainsboro');
+            }
+
+            //check select2 DDL
+            if ($(fields[i]).hasClass("select2me") && $(fields[i]).attr("id").indexOf('s2id') == -1 && value.toString().length == 0) {
+                $(fields[i]).parent().css('border', '1px solid red');
+            }
+            else if ($(fields[i]).hasClass("select2me") && $(fields[i]).attr("id").indexOf('s2id') == -1) {
+                $(fields[i]).parent().css('border', 'none');
+            }
         }
 
         if (missingCounter > 0) {

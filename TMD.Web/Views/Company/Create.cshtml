@@ -82,16 +82,16 @@
                     <div class="col-md-2 textAlignRight">
                         @Html.Label("City", new { @class = "control-label" })
                     </div>
-                    <div class="col-md-3 input-icon ">
+                    <div class="col-md-3 input-icon">
                         @*<i class="fa fa-user"></i>*@
-                        @Html.DropDownList("City", new SelectList(Model.Cities, "CityId", "CityName", Model.Company.CityId), "Select City", new { @class = "input-medium select2me", id = "CityId" })
+                        @Html.DropDownList("City", new SelectList(Model.Cities, "CityId", "CityName", Model.Company.CityId), "Select City", new { @class = "select2DDL select2me", id = "CityId" })
                     </div>
                     <div class="col-md-2 textAlignRight">
                         @Html.LabelFor(m => m.Company.MunicipalId, new { @class = "control-label" })
                     </div>
-                    <div class="col-md-3 input-icon ">
+                    <div class="col-md-3 input-icon select2DDLParent">
                         @*<i class="fa fa-user"></i>*@
-                        @Html.DropDownListFor(m => m.Company.MunicipalId, new SelectList(Model.Municipals, "MunicipalId", "MunicipalName", Model.Company.MunicipalId), "Select Municipal", new { @class = "input-medium select2me", id = "MunicipalId" })
+                        @Html.DropDownListFor(m => m.Company.MunicipalId, new SelectList(Model.Municipals, "MunicipalId", "MunicipalName", Model.Company.MunicipalId), "Select Municipal", new { @class = "select2DDL select2me mandatory", id = "MunicipalId" })
                     </div>
                 </div>
 
@@ -99,9 +99,9 @@
                     <div class="col-md-2 textAlignRight">
                         @Html.LabelFor(m => m.Company.SourceId, new { @class = "control-label" })
                     </div>
-                    <div class="col-md-3 input-icon ">
+                    <div class="col-md-3 input-icon select2DDLParent">
                         @*<i class="fa fa-file-code-o"></i>*@
-                        @Html.DropDownListFor(m => m.Company.SourceId, new SelectList(Model.Sources, "SourceId", "SourceName", Model.Company.SourceId), "Select Source", new { @class = "input-medium select2me", id = "SourceId" })
+                        @Html.DropDownListFor(m => m.Company.SourceId, new SelectList(Model.Sources, "SourceId", "SourceName", Model.Company.SourceId), "Select Source", new { @class = "select2DDL select2me mandatory", id = "SourceId" })
                     </div>
                 </div>
 
@@ -130,6 +130,7 @@
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-user"></i>
                         @Html.TextBoxFor(m => m.Company.Email, new { @class = "form-control mandatory", placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Company.Email)
                     </div>
                     <div class="col-md-2 textAlignRight">
                         @Html.LabelFor(m => m.Company.Address, new { @class = "control-label" })
@@ -142,19 +143,19 @@
 
 
                 <div class="row form-group margin-top-20">
-                    <div class="col-md-2 textAlignRight">
+                    @*<div class="col-md-2 textAlignRight">
                         @Html.LabelFor(m => m.Company.CompanyDescription, new { @class = "control-label" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-user"></i>
                         @Html.TextAreaFor(m => m.Company.CompanyDescription, new { @class = "form-control mandatory", placeholder = "Description" })
-                    </div>
+                    </div>*@
                     <div class="col-md-2 textAlignRight">
                         @Html.LabelFor(m => m.Company.Notes, new { @class = "control-label" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-user"></i>
-                        @Html.TextAreaFor(m => m.Company.Notes, new { @class = "form-control mandatory", placeholder = "Notes" })
+                        @Html.TextAreaFor(m => m.Company.Notes, new { @class = "form-control", placeholder = "Notes" })
                     </div>
                 </div>
             </div>
