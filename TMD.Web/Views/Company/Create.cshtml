@@ -17,6 +17,8 @@
         cityIdSelected = (long)Model.Company.CityId;
     }
 }
+<link rel="stylesheet" type="text/css" href="~/Content/css/select2.css" />
+<script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
 
 @using (Html.BeginForm("Create", "Company", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -81,15 +83,15 @@
                         @Html.Label("City", new { @class = "control-label" })
                     </div>
                     <div class="col-md-3 input-icon ">
-                        <i class="fa fa-user"></i>
-                        @Html.DropDownList("City", new SelectList(Model.Cities, "CityId", "CityName", Model.Company.CityId), "Select City", new { @class = "form-control", id = "CityId" })
+                        @*<i class="fa fa-user"></i>*@
+                        @Html.DropDownList("City", new SelectList(Model.Cities, "CityId", "CityName", Model.Company.CityId), "Select City", new { @class = "input-medium select2me", id = "CityId" })
                     </div>
                     <div class="col-md-2 textAlignRight">
                         @Html.LabelFor(m => m.Company.MunicipalId, new { @class = "control-label" })
                     </div>
                     <div class="col-md-3 input-icon ">
-                        <i class="fa fa-user"></i>
-                        @Html.DropDownListFor(m => m.Company.MunicipalId, new SelectList(Model.Municipals, "MunicipalId", "MunicipalName", Model.Company.MunicipalId), "Select Municipal", new { @class = "form-control mandatory", id = "MunicipalId" })
+                        @*<i class="fa fa-user"></i>*@
+                        @Html.DropDownListFor(m => m.Company.MunicipalId, new SelectList(Model.Municipals, "MunicipalId", "MunicipalName", Model.Company.MunicipalId), "Select Municipal", new { @class = "input-medium select2me", id = "MunicipalId" })
                     </div>
                 </div>
 
@@ -98,8 +100,8 @@
                         @Html.LabelFor(m => m.Company.SourceId, new { @class = "control-label" })
                     </div>
                     <div class="col-md-3 input-icon ">
-                        <i class="fa fa-file-code-o"></i>
-                        @Html.DropDownListFor(m => m.Company.SourceId, new SelectList(Model.Sources, "SourceId", "SourceName", Model.Company.SourceId), "Select Source", new { @class = "form-control mandatory", id = "SourceId" })
+                        @*<i class="fa fa-file-code-o"></i>*@
+                        @Html.DropDownListFor(m => m.Company.SourceId, new SelectList(Model.Sources, "SourceId", "SourceName", Model.Company.SourceId), "Select Source", new { @class = "input-medium select2me", id = "SourceId" })
                     </div>
                 </div>
 
@@ -161,6 +163,10 @@
 }
 <script>
     $(document).ready(function () {
+        $('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true
+        });
         $("#CityId").on('change', function () {
             LoadMuniciaplByCity();
         });

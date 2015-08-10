@@ -722,6 +722,7 @@
     <Content Include="Content\css\images\sort_desc_disabled.png" />
     <Content Include="Content\css\invoice.css" />
     <Content Include="Content\css\jquery.dataTables.css" />
+    <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\skel.css" />
     <Content Include="Content\css\style-1000px.css" />
     <Content Include="Content\css\style-desktop.css" />
@@ -1773,6 +1774,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_BlankLayout.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
@@ -2796,7 +2798,6 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -2822,7 +2823,6 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\ForgotPassword1.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\UnauthorizedRequest\Index.cshtml" />

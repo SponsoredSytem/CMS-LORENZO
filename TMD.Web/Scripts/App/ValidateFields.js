@@ -16,6 +16,7 @@
             else
                 $(fields[i]).css('border-color', 'gainsboro');
         }
+
         if (missingCounter > 0) {
             toastr.error("Please Enter Fields:" + inCompleteFields);
             //if (e != null) {

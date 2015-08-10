@@ -1,0 +1,115 @@
+﻿@model IList<TMD.Web.Models.Company>
+@{
+    ViewBag.Title = "Companies";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 3;
+}
+
+
+<div class="container-fluid">
+    <header>
+        <h3 class="page-title">
+            @ViewBag.Title
+        </h3>
+    </header>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="portlet-title" style=" padding-bottom: 40px;">
+                <div class="tools">
+                    <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
+                    <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-actions">
+                    <div>
+                        <table class="responsive">
+                            <tr>
+                                <td class="col-md-1">
+                                    <label class="control-label"> Search </label>
+                                </td>
+                                <td class="col-md-2">
+                                    <div class="input-icon">
+                                        <i class="fa fa-search"></i>
+                                        @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "SearchBox", @placeholder = "Search by Name, Email, Address, Telephone" })
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 10px !important; "></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="portlet box blue-hoki">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i>There are @(Model.Count) Companies
+                    </div>
+                    <div class="tools">
+                        <a href="~/Company/Create" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Company</a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-responsive formMinHeight500">
+                        <table id="UserList" class="table table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Telephone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.ActionLink(@item.CompanyName, "Create", new { id = item.CompanyId }) </td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Address</td>
+                                        <td>@item.Telephone</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    jQuery(document).on('keyup', '.listFilter', function (ev) {
+        if (ev.which === 13) {
+            $('#btnFltr').click();
+            // Avoid form submit
+            return false;
+        }
+    });
+    $(document).ready(function () {
+        var oTable=$('#UserList').dataTable({
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "bFilter": true,
+            "bLengthChange": false
+        });
+        $('#btnFltr').on('click', function (e) {
+            var searchN = $('#SearchBox').val();
+            oTable.fnFilter(searchN);
+        });
+
+        $('#btnResetFltr').on('click', function (e) {
+            $('#SearchBox').val("");
+            oTable.fnFilter('');
+        });
+    });
+</script>
+<style type="text/css">
+    .dataTables_filter {
+        display: none !important;
+    }
+</style>
