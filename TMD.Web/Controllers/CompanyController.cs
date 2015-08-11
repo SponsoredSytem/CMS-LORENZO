@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -31,6 +32,7 @@ namespace TMD.Web.Controllers
            
                 var companyData = companyService.GetCompanyResponse(id);
                 companyViewModel.Company = companyData.Company!=null ? companyData.Company.CreateFromServerToClient() : new Company();
+                companyViewModel.CompanyContacts = companyData.CompanyContacts != null ? companyData.CompanyContacts.Select(x => x.CreateFromServerToClient()).ToList() : new List<CompanyContact>();
 
             companyViewModel.Cities = companyData.Cities.Select(x => x.CreateFromServerToClient()).ToList();
             companyViewModel.Sources = companyData.Sources.Select(x => x.CreateFromServerToClient()).ToList();
@@ -53,7 +55,8 @@ namespace TMD.Web.Controllers
                     companyViewModel.Company.RecLastUpdatedBy = User.Identity.GetUserId();
                     companyViewModel.Company.RecLastUpdatedDate = DateTime.Now;
                 }
-                companyService.SaveCompany(companyViewModel.Company.CreateFromClientToServer());
+                var companyContacts = companyViewModel.CompanyContacts.Select(x => x.CreateFromClientToServer(companyViewModel.Company));
+                companyService.SaveCompany(companyViewModel.Company.CreateFromClientToServer(), companyContacts);
 
                 return RedirectToAction("Index");
             }

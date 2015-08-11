@@ -12,12 +12,14 @@ namespace TMD.Implementation.Services
         private readonly ICompanyRepository companyRepository;
         private readonly ICityRepository cityRepository;
         private readonly ISourceRepository sourceRepository;
+        private readonly ICompanyContactRepository companyContactRepository;
 
-        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository)
+        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository)
         {
             this.companyRepository = companyRepository;
             this.cityRepository = cityRepository;
             this.sourceRepository = sourceRepository;
+            this.companyContactRepository = companyContactRepository;
         }
 
         public Company GetCompany(long companyId)
@@ -29,12 +31,18 @@ namespace TMD.Implementation.Services
         {
             CompanyResponseModel responseModel=new CompanyResponseModel();
             //Load Company Data
-            if(companyId!=null)
+            if (companyId != null)
+            {
                 responseModel.Company = companyRepository.Find((long)companyId);
+                //Load Contacts
+                responseModel.CompanyContacts = companyContactRepository.GetCompanyContactsByCompanyId((long)companyId);
+            }
+                
             //Load Cities
             responseModel.Cities = cityRepository.GetAll().ToList();
             //Load Sources
             responseModel.Sources = sourceRepository.GetAll();
+           
             return responseModel;
         }
 
@@ -43,13 +51,25 @@ namespace TMD.Implementation.Services
             return companyRepository.GetAll();
         }
 
-        public long SaveCompany(Company company)
+        public long SaveCompany(Company company, IEnumerable<CompanyContact> companyContacts = null)
         {
             if(company.CompanyId>0)
                 companyRepository.Update(company);
             else
                 companyRepository.Add(company);
+
             companyRepository.SaveChanges();
+
+            if (companyContacts != null)
+            {
+                foreach (var companyContact in companyContacts)
+                {
+                    companyContact.CompanyId = company.CompanyId;
+                    companyContactRepository.Add(companyContact);
+                }
+                companyContactRepository.SaveChanges();
+            }
+            
             return company.CompanyId;
         }
     }

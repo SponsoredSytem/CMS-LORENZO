@@ -33,6 +33,7 @@ namespace TMD.Repository
             unityContainer.RegisterType<ICityRepository, CityRepository>();
             unityContainer.RegisterType<IMunicipalRepository, MunicipalRepository>();
             unityContainer.RegisterType<ISourceRepository, SourceRepository>();
+            unityContainer.RegisterType<ICompanyContactRepository, CompanyContactRepository>();
         }
     }
 }

@@ -9,10 +9,12 @@ namespace TMD.Web.ViewModels
         {
             Cities=new List<City>();
             Municipals=new List<Municipal>();
+            CompanyContacts = new List<CompanyContact>();
         }
         public Company Company { get; set; }
         public List<City> Cities { get; set; }
         public List<Municipal> Municipals { get; set; }
-        public List<Source> Sources { get; set; } 
+        public List<Source> Sources { get; set; }
+        public List<CompanyContact> CompanyContacts { get; set; } 
     }
 }

@@ -10,7 +10,7 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login","Account");
         }
 
         public ActionResult OneColumn()

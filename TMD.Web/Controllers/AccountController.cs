@@ -171,7 +171,7 @@ namespace IdentitySample.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Home", "Admin");
             }
 
         }
@@ -232,7 +232,7 @@ namespace IdentitySample.Controllers
                                            var role = user.AspNetRoles.FirstOrDefault();
                             if (role.Id == Utility.MemberRoleId)
                             {
-                                return RedirectToAction("Index", "Home");
+                                return RedirectToAction("Home", "Admin");
                             }
                             if (string.IsNullOrEmpty(returnUrl))
                                 return RedirectToAction("Home", "Admin");

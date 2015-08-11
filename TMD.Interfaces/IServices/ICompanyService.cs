@@ -9,6 +9,6 @@ namespace TMD.Interfaces.IServices
         Company GetCompany(long companyId);
         CompanyResponseModel GetCompanyResponse(long? companyId);
         IEnumerable<Company> GetAllCompanies();
-        long SaveCompany(Company company);
+        long SaveCompany(Company company, IEnumerable<CompanyContact> companyContacts = null);
     }
 }

@@ -1,6 +1,9 @@
 ﻿.formMinHeight500 {
     min-height: 500px;
 }
+.formMinHeight142_3Rows {
+    min-height: 142px;
+}
 .select2me {
     width: 128% !important;
 }

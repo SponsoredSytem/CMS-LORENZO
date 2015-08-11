@@ -20,6 +20,7 @@
             //check select2 DDL
             if ($(fields[i]).hasClass("select2me") && $(fields[i]).attr("id").indexOf('s2id') == -1 && value.toString().length == 0) {
                 $(fields[i]).parent().css('border', '1px solid red');
+                missingCounter++;
             }
             else if ($(fields[i]).hasClass("select2me") && $(fields[i]).attr("id").indexOf('s2id') == -1) {
                 $(fields[i]).parent().css('border', 'none');
