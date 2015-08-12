@@ -97,7 +97,7 @@
             return false;
         }
     });
-    $(document).ready(function () {
+  
         var oTable=$('#UserList').dataTable({
             "sPaginationType": "full_numbers",
             "iDisplayLength": 10,
@@ -113,7 +113,7 @@
             $('#SearchBox').val("");
             oTable.fnFilter('',0);
         });
-    });
+    
 </script>
 <style type="text/css">
     .dataTables_filter {

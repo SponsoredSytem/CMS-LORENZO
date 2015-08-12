@@ -8,5 +8,7 @@ namespace TMD.Interfaces.IServices
         City GetCity(long cityId);
         IEnumerable<City> GetAllCities();
         long SaveCity(City city);
+
+        bool DeleteCity(City city);
     }
 }
