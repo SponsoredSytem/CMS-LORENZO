@@ -303,6 +303,7 @@
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\LookupController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\NotesCategoryController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -1777,6 +1778,8 @@
     <Content Include="Views\Shared\_BlankLayout.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Lookup\CityCreate.cshtml" />
+    <Content Include="Views\Lookup\City.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
