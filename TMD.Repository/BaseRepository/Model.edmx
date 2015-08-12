@@ -109,17 +109,9 @@
           <Property Name="MunicipalId" Type="bigint" />
           <Property Name="SourceId" Type="bigint" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'cmslorenzo.dbo.CompanyContact' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CompanyContact">
           <Key>
             <PropertyRef Name="CompanyContactId" />
-            <PropertyRef Name="CompanyId" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="RecCreatedDate" />
-            <PropertyRef Name="RecLastUpdatedDate" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecLastUpdatedBy" />
           </Key>
           <Property Name="CompanyContactId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyId" Type="bigint" Nullable="false" />
@@ -930,6 +922,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyContact" EntityType="Self.CompanyContact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataWarehouseDimComapany" EntityType="Self.DataWarehouseDimComapany" Schema="dbo" store:Type="Tables" />
@@ -956,23 +949,6 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySet Name="StagingToyGraderBatchImports" EntityType="Self.StagingToyGraderBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingToyGraderItems" EntityType="Self.StagingToyGraderItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CompanyContact" EntityType="Self.CompanyContact" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [CompanyContact].[CompanyContactId] AS [CompanyContactId], 
-    [CompanyContact].[CompanyId] AS [CompanyId], 
-    [CompanyContact].[FirstName] AS [FirstName], 
-    [CompanyContact].[LastName] AS [LastName], 
-    [CompanyContact].[Position] AS [Position], 
-    [CompanyContact].[PhoneCell] AS [PhoneCell], 
-    [CompanyContact].[PhoneLandLine] AS [PhoneLandLine], 
-    [CompanyContact].[Email] AS [Email], 
-    [CompanyContact].[ContactType] AS [ContactType], 
-    [CompanyContact].[RecCreatedDate] AS [RecCreatedDate], 
-    [CompanyContact].[RecLastUpdatedDate] AS [RecLastUpdatedDate], 
-    [CompanyContact].[RecCreatedBy] AS [RecCreatedBy], 
-    [CompanyContact].[RecLastUpdatedBy] AS [RecLastUpdatedBy]
-    FROM [dbo].[CompanyContact] AS [CompanyContact]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="ProductsStock" EntityType="Self.ProductsStock" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ProductsStock].[ProductId] AS [ProductId], 
@@ -1274,7 +1250,6 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySet Name="Companies" EntityType="TMD.Models.DomainModels.Company" />
           <EntitySet Name="Municipals" EntityType="TMD.Models.DomainModels.Municipal" />
           <EntitySet Name="Sources" EntityType="TMD.Models.DomainModels.Source" />
-          <EntitySet Name="CompanyContacts" EntityType="TMD.Models.DomainModels.CompanyContact" />
           <AssociationSet Name="FK_Municipal_City" Association="TMD.Models.DomainModels.FK_Municipal_City">
             <End Role="City" EntitySet="Cities" />
             <End Role="Municipal" EntitySet="Municipals" />
@@ -1287,6 +1262,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             <End Role="Source" EntitySet="Sources" />
             <End Role="Company" EntitySet="Companies" />
           </AssociationSet>
+          <EntitySet Name="CompanyContacts" EntityType="TMD.Models.DomainModels.CompanyContact" />
           <AssociationSet Name="FK_CompanyContact_Company" Association="TMD.Models.DomainModels.FK_CompanyContact_Company">
             <End Role="Company" EntitySet="Companies" />
             <End Role="CompanyContact" EntitySet="CompanyContacts" />
@@ -2207,31 +2183,6 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Companies" Relationship="TMD.Models.DomainModels.FK_Company_Source" FromRole="Source" ToRole="Company" />
         </EntityType>
-        <EntityType Name="CompanyContact">
-          <Key>
-            <PropertyRef Name="CompanyContactId" />
-            <PropertyRef Name="CompanyId" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="RecCreatedDate" />
-            <PropertyRef Name="RecLastUpdatedDate" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-          </Key>
-          <Property Name="CompanyContactId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyId" Type="Int64" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneCell" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneLandLine" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ContactType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Company" Relationship="TMD.Models.DomainModels.FK_CompanyContact_Company" FromRole="CompanyContact" ToRole="Company" />
-        </EntityType>
         <Association Name="FK_Municipal_City">
           <End Type="TMD.Models.DomainModels.City" Role="City" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.Municipal" Role="Municipal" Multiplicity="*" />
@@ -2268,6 +2219,25 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CompanyContact">
+          <Key>
+            <PropertyRef Name="CompanyContactId" />
+          </Key>
+          <Property Name="CompanyContactId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int64" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneCell" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneLandLine" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContactType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Company" Relationship="TMD.Models.DomainModels.FK_CompanyContact_Company" FromRole="CompanyContact" ToRole="Company" />
+        </EntityType>
         <Association Name="FK_CompanyContact_Company">
           <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.CompanyContact" Role="CompanyContact" Multiplicity="*" />
@@ -2926,10 +2896,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Company" Width="1.5" PointX="21.875" PointY="18.125" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Municipal" Width="1.5" PointX="19.625" PointY="19" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Source" Width="1.5" PointX="19.625" PointY="15.25" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.CompanyContact" Width="1.5" PointX="24.125" PointY="18.625" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Municipal_City" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_Municipal1" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_Source" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.CompanyContact" Width="1.5" PointX="24.125" PointY="18.75" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_CompanyContact_Company" />
       </Diagram>
     </Diagrams>
