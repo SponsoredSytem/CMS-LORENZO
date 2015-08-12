@@ -1780,6 +1780,8 @@
     <Content Include="Views\Company\Index.cshtml" />
     <Content Include="Views\Lookup\CityCreate.cshtml" />
     <Content Include="Views\Lookup\City.cshtml" />
+    <Content Include="Views\Lookup\Sources.cshtml" />
+    <Content Include="Views\Lookup\SourceManage.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

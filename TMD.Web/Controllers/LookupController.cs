@@ -15,13 +15,17 @@ namespace TMD.Web.Controllers
     {
 
         private readonly ICityService cityService;
+        private readonly ISourceService sourceService;
 
-        public LookupController(ICityService cityService)
+        public LookupController(ICityService cityService, ISourceService sourceService)
         {
             this.cityService = cityService;
+            this.sourceService = sourceService;
         }
         //
         // GET: /Lookup/
+
+        #region City
         public ActionResult City()
         {
             IEnumerable<City> cities = cityService.GetAllCities().Select(x => x.CreateFromServerToClient());
@@ -72,7 +76,7 @@ namespace TMD.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteCity(int id)
         {
             string actionMessage;
             try
@@ -90,7 +94,78 @@ namespace TMD.Web.Controllers
             return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
 
 
+        #region Source
+        public ActionResult Sources()
+        {
+            IEnumerable<Source> sources = sourceService.GetAllSources().Select(x => x.CreateFromServerToClient());
+            return View(sources);
+        }
+
+        //
+        // GET: /lookup/Create
+        public ActionResult SourceManage(long? id)
+        {
+            Source model = new Source();
+            if (id != null)
+            {
+                var Source = sourceService.GetSource(id.Value);
+                if (Source != null)
+                    model = Source.CreateFromServerToClient();
+            }
+            return View(model);
+        }
+
+        //
+        // POST: /ExpenseCategory/Create
+        [HttpPost]
+        public ActionResult SourceManage(Source SourceModel)
+        {
+            try
+            {
+                if (SourceModel.SourceId == 0)
+                {
+                    SourceModel.RecCreatedBy = User.Identity.Name;
+                    SourceModel.RecCreatedDate = DateTime.Now;
+                }
+                SourceModel.RecLastUpdatedBy = User.Identity.Name;
+                SourceModel.RecLastUpdatedDate = DateTime.Now;
+
+                if (sourceService.SaveSource(SourceModel.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Source has been saved successfully.", IsSaved = true };
+                }
+
+                return RedirectToAction("Sources", "Lookup");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteSource(int id)
+        {
+            string actionMessage;
+            try
+            {
+                actionMessage = "Deleted";
+                bool result = sourceService.DeleteSource(sourceService.GetSource(id));
+            }
+            catch (Exception exp)
+            {
+                //WebBase.Helper.LogError.Log(exp);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "Source has been used in Munnicipal and cannot be deleted" } };
+                return Json(error);
+            }
+            return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }
