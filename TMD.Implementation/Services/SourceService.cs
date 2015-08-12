@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -26,9 +27,31 @@ namespace TMD.Implementation.Services
 
         public long SaveSource(Source source)
         {
-            sourceRepository.Add(source);
+
+            if (source.SourceId > 0)
+                sourceRepository.Update(source);
+            else
+                sourceRepository.Add(source);
             sourceRepository.SaveChanges();
             return source.SourceId;
+
+            //sourceRepository.Add(source);
+            //sourceRepository.SaveChanges();
+            //return source.SourceId;
+        }
+
+        public bool DeleteSource(Source source)
+        {
+            try
+            {
+                sourceRepository.Delete(source);
+                sourceRepository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return true;
         }
     }
 }

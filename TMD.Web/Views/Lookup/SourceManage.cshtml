@@ -1,11 +1,11 @@
-﻿@model TMD.Web.Models.City
+﻿@model TMD.Web.Models.Source
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Manage Sources";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 24;
 }
 
-@using (Html.BeginForm("CityCreate", "lookup", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("SourceManage", "lookup", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
@@ -15,33 +15,33 @@
                     </a>*@
 
                 <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
-                <a href="~/Lookup/City">
+                <a href="~/Lookup/Sources">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
             </div>
             <div class="caption">
-                <i class="fa fa-male"></i>Create/Update City
+                <i class="fa fa-male"></i>Create/Update Sources
             </div>
         </div>
 
         <div class="portlet-body form">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.CityId)
+                @Html.HiddenFor(m => m.SourceId)
                 @Html.HiddenFor(m => m.RecCreatedBy)
                 @Html.HiddenFor(m => m.RecCreatedDate)
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.CityName,"City Name", new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.SourceName,"Source Name", new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.CityName, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
+                        @Html.TextBoxFor(m => m.SourceName, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
                     </div>
                 </div>
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.CityDescription, "City Description",new { @class = "col-md-3 control-label" })
+                    @Html.LabelFor(m => m.SourceDescription, "Source Description", new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.CityDescription, new { @class = "form-control input-circle", placeholder = "Description" })
+                        @Html.TextAreaFor(m => m.SourceDescription, new { @class = "form-control input-circle", placeholder = "Description" })
                     </div>
                 </div>
             </div>

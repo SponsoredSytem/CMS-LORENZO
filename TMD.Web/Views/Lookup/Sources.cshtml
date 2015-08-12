@@ -1,6 +1,6 @@
-﻿@model IEnumerable<TMD.Web.Models.City>
+﻿@model IEnumerable<TMD.Web.Models.Source>
     @{
-        ViewBag.Title = "City";
+        ViewBag.Title = "Sources";
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
         Session["MenuKey"] = 24;
     }
@@ -57,7 +57,7 @@
                             <i class="fa fa-cogs"></i>There are @(Model.Count()) Cities
                         </div>
                         <div class="tools">
-                            <a href="~/Lookup/CityCreate" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New City</a>
+                            <a href="~/Lookup/SourceManage" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Source</a>
                         </div>
                     </div>
                     <div class="portlet-body">
@@ -76,9 +76,9 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td style="display:none">@item.CityId</td>
-                                            <td>@Html.ActionLink(@item.CityName, "CityCreate", new { id = item.CityId }) </td>
-                                            <td>@item.CityDescription</td>
+                                            <td style="display:none">@item.SourceId</td>
+                                            <td>@Html.ActionLink(@item.SourceName, "SourceManage", new { id = item.SourceId }) </td>
+                                            <td>@item.SourceDescription</td>
                                             <td class="textAlignRight">
                                                 <a class="delete" href="javascript:;">Delete</a>
                                             </td>
@@ -128,7 +128,7 @@
             });
             $('#dataTable').on('click', '.delete', function (e) {
                 debugger
-                var serviceURL = "DeleteCity";
+                var serviceURL = "DeleteSource";
                 e.preventDefault();
 
                 if (confirm("Are you sure to delete this row ?") == false) {
