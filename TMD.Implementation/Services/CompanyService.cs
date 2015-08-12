@@ -60,24 +60,29 @@ namespace TMD.Implementation.Services
                 companyRepository.Add(company);
 
             companyRepository.SaveChanges();
+            var isAnyChangeInContacts = false;
 
+            //update contacs
             if (companyContacts != null)
             {
                 foreach (var companyContact in companyContacts)
                 {
                     companyContact.CompanyId = company.CompanyId;
                     companyContactRepository.Update(companyContact);
+                    isAnyChangeInContacts = true;
                 }
-                companyContactRepository.SaveChanges();
             }
+
             //delete contacts
             if (!string.IsNullOrEmpty(contactsToBeDeleted))
             {
-                var stringListOfIds = contactsToBeDeleted.Split(',');//.Substring(0,contactsToBeDeleted.Length-1)
+                var stringListOfIds = contactsToBeDeleted.Split(',');
                 var longListOfIds = stringListOfIds.Select(Int64.Parse).ToList();
                 companyContactRepository.DeleteAllContactsById(longListOfIds);
-                companyContactRepository.SaveChanges();
+                isAnyChangeInContacts = true;
             }
+            if (isAnyChangeInContacts)
+                companyContactRepository.SaveChanges();
             return company.CompanyId;
         }
     }
