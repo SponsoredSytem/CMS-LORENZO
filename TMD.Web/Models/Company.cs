@@ -35,5 +35,6 @@ namespace TMD.Web.Models
         public long? SourceId { get; set; }
         public string CityName { get; set; }
         public string MunicipalName { get; set; }
+        public string DeletedCompanyContacts { get; set; }
     }
 }

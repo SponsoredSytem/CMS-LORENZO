@@ -56,7 +56,7 @@ namespace TMD.Web.Controllers
                     companyViewModel.Company.RecLastUpdatedDate = DateTime.Now;
                 }
                 var companyContacts = companyViewModel.CompanyContacts.Select(x => x.CreateFromClientToServer(companyViewModel.Company));
-                companyService.SaveCompany(companyViewModel.Company.CreateFromClientToServer(), companyContacts);
+                companyService.SaveCompany(companyViewModel.Company.CreateFromClientToServer(),companyViewModel.Company.DeletedCompanyContacts, companyContacts);
 
                 return RedirectToAction("Index");
             }

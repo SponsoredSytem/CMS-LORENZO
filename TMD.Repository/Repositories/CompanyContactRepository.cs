@@ -32,5 +32,10 @@ namespace TMD.Repository.Repositories
         {
             return DbSet.Where(x => x.CompanyId == companyId);
         }
+
+        public void DeleteAllContactsById(List<long> contactIds)
+        {
+            DbSet.Where(x=>contactIds.Contains(x.CompanyContactId)).ToList().ForEach(y=>DbSet.Remove(y));
+        }
     }
 }

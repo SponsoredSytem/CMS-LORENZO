@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
@@ -51,7 +52,7 @@ namespace TMD.Implementation.Services
             return companyRepository.GetAll();
         }
 
-        public long SaveCompany(Company company, IEnumerable<CompanyContact> companyContacts = null)
+        public long SaveCompany(Company company,string contactsToBeDeleted, IEnumerable<CompanyContact> companyContacts = null)
         {
             if(company.CompanyId>0)
                 companyRepository.Update(company);
@@ -65,11 +66,18 @@ namespace TMD.Implementation.Services
                 foreach (var companyContact in companyContacts)
                 {
                     companyContact.CompanyId = company.CompanyId;
-                    companyContactRepository.Add(companyContact);
+                    companyContactRepository.Update(companyContact);
                 }
                 companyContactRepository.SaveChanges();
             }
-            
+            //delete contacts
+            if (!string.IsNullOrEmpty(contactsToBeDeleted))
+            {
+                var stringListOfIds = contactsToBeDeleted.Split(',');//.Substring(0,contactsToBeDeleted.Length-1)
+                var longListOfIds = stringListOfIds.Select(Int64.Parse).ToList();
+                companyContactRepository.DeleteAllContactsById(longListOfIds);
+                companyContactRepository.SaveChanges();
+            }
             return company.CompanyId;
         }
     }
