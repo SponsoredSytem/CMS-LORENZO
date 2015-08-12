@@ -175,10 +175,12 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Name</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
                                         <th>Position</th>
                                         <th>Cell</th>
                                         <th>Email</th>
+                                        <th>Contacy Type</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -200,6 +202,10 @@
                                                     @Html.DisplayFor(m => m.CompanyContacts[i].FirstName)
                                                 </td>
                                                 <td>
+                                                    @Html.HiddenFor(m => m.CompanyContacts[i].LastName)
+                                                    @Html.DisplayFor(m => m.CompanyContacts[i].LastName)
+                                                </td>
+                                                <td>
                                                     @Html.HiddenFor(m => m.CompanyContacts[i].Position)
                                                     @Html.DisplayFor(m => m.CompanyContacts[i].Position)
                                                 </td>
@@ -211,8 +217,12 @@
                                                     @Html.HiddenFor(m => m.CompanyContacts[i].Email)
                                                     @Html.DisplayFor(m => m.CompanyContacts[i].Email)
                                                 </td>
-                                                <td><a href="javascript:;" class="deleteRow">Edit</a></td>
-                                                <td><a href="javascript:;">X</a></td>
+                                                <td>
+                                                    @Html.HiddenFor(m => m.CompanyContacts[i].ContactType)
+                                                    @Html.DisplayFor(m => m.CompanyContacts[i].ContactType)
+                                                </td>
+                                                <td><a href="javascript:;">Edit</a></td>
+                                                <td><a href="javascript:;" class="deleteRow">X</a></td>
                                             </tr>
                                         }
                                     }
@@ -239,8 +249,8 @@
                             <label class="control-label">First Name</label>
                         </div>
                         <div class="col-md-6 input-icon ">
-                            <i class="fa fa-file-zip-o"></i>
-                            <input type="text" class="form-control" id="ccFirstName"/>
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal" id="ccFirstName" />
                         </div>
                     </div>
                     <div class="row form-group margin-top-20">
@@ -248,8 +258,8 @@
                             <label class="control-label">Last Name</label>
                         </div>
                         <div class="col-md-6 input-icon ">
-                            <i class="fa fa-file-zip-o"></i>
-                            <input type="text" class="form-control" id="ccLastName" />
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal" id="ccLastName" />
                         </div>
                     </div>
                     <div class="row form-group margin-top-20">
@@ -257,7 +267,7 @@
                             <label class="control-label">Position</label>
                         </div>
                         <div class="col-md-6 input-icon ">
-                            <i class="fa fa-file-zip-o"></i>
+                            <i class="fa fa-user-md"></i>
                             <input type="text" class="form-control" id="ccPosition" />
                         </div>
                     </div>
@@ -266,7 +276,7 @@
                             <label class="control-label">Cell#</label>
                         </div>
                         <div class="col-md-6 input-icon ">
-                            <i class="fa fa-file-zip-o"></i>
+                            <i class="fa fa-phone-square"></i>
                             <input type="text" class="form-control" id="ccCell" />
                         </div>
                     </div>
@@ -275,7 +285,7 @@
                             <label class="control-label">Email</label>
                         </div>
                         <div class="col-md-6 input-icon ">
-                            <i class="fa fa-file-zip-o"></i>
+                            <i class="fa fa-envelope"></i>
                             <input type="text" class="form-control" id="ccEmail" />
                         </div>
                     </div>
@@ -284,7 +294,7 @@
                             <label class="control-label">Contact Type</label>
                         </div>
                         <div class="col-md-6 input-icon ">
-                            <i class="fa fa-file-zip-o"></i>
+                            <i class="fa fa-tag"></i>
                             <select class="form-control" id="ccContactType">
                                 <option value="1">Primary</option>
                                 <option value="0">Secondary</option>
@@ -330,14 +340,18 @@
             LoadMuniciaplByCity();
         }
     });
-    $('.deleteRow').on("click", function () {
+    $('.deleteRow').live("click", function () {
         var count = $("#CompanyContactsTableBody").children("tr").length;
-        if (count > 1) {
+        if (count > 0) {
             $(this).parent().parent().remove();
         }
     });
     //add data in row from popup
     $('#CompanyContactsSave').on("click", function () {
+        //validate fields
+        if (!(validateEmail('#ccEmail') && ValidateFieldsByClass("mandatoryModal"))) {
+            return false;
+        }
         var Fname = $("#ccFirstName").val();
         var Lname = $("#ccLastName").val();
         var Position = $("#ccPosition").val();
@@ -354,12 +368,15 @@
             "<input name='CompanyContacts[" + index + "].CompanyContactId' id='CompanyContacts_" + index + "__CompanyContactId' type='hidden' />" +
             "<input name='CompanyContacts[" + index + "].CompanyId' id='CompanyContacts_" + index + "__CompanyId' type='hidden' />" +
             "</td>";
+        var contactType = Type == 1 ? "Primary" : "Secondary";
         //CompanyContacts
         var html = ' <tr data-id=' + index + '>' +
             indexCell +
             '<td>' +
-            '<input id="CompanyContacts_' + index + '__FirstName" name="CompanyContacts[' + index + '].FirstName" type="hidden" value="' + Fname + '">' + Fname + ' ' + Lname+
-            '<input id="CompanyContacts_' + index + '__LastName" name="CompanyContacts[' + index + '].LastName" type="hidden" value="' + Lname + '">' +
+            '<input id="CompanyContacts_' + index + '__FirstName" name="CompanyContacts[' + index + '].FirstName" type="hidden" value="' + Fname + '">' + Fname + 
+           '</td>' +
+            '<td>' +
+            '<input id="CompanyContacts_' + index + '__LastName" name="CompanyContacts[' + index + '].LastName" type="hidden" value="' + Lname + '">' + Lname +
             '</td>' +
             '<td>' +
             '<input id="CompanyContacts_' + index + '__Position" name="CompanyContacts[' + index + '].Position" type="hidden" value="' + Position + '">' + Position +
@@ -368,11 +385,13 @@
             '<input id="CompanyContacts_' + index + '__PhoneCell" name="CompanyContacts[' + index + '].PhoneCell" type="hidden" value="' + Cell + '">' + Cell +
             '</td>' +
             '<td>' +
-            '<input id="CompanyContacts_' + index + '__Email" name="CompanyContacts[' + index + '].Email" type="hidden" value="' + Email + '">' + Email +
-            '<input id="CompanyContacts_' + index + '__ContactType" name="CompanyContacts[' + index + '].ContactType" type="hidden" value="' + Type + '">' +
+                '<input id="CompanyContacts_' + index + '__Email" name="CompanyContacts[' + index + '].Email" type="hidden" value="' + Email + '">' + Email +
+            '</td>' +
+             '<td>' +
+                '<input id="CompanyContacts_' + index + '__ContactType" name="CompanyContacts[' + index + '].ContactType" type="hidden" value="' + Type + '">' + contactType +
             '</td>' +
             '<td><a href="javascript:;">Edit</a></td>' +
-            '<td><a href="javascript:;">X</a></td>' +
+            '<td><a href="javascript:;" class="deleteRow">X</a></td>' +
             '</tr>';
             $('#CompanyContactsTableBody').append(html);
             $("#ContactModal").modal('hide');
@@ -383,6 +402,7 @@
         ////Parse the form again to apply new validations
         //$.validator.unobtrusive.parse("form");
     });
+
     function LoadMuniciaplByCity() {
         var code = $("#CityId").val();
         if (code == "")
