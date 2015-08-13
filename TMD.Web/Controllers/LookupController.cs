@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
@@ -16,11 +17,13 @@ namespace TMD.Web.Controllers
 
         private readonly ICityService cityService;
         private readonly ISourceService sourceService;
+        private readonly IMunicipalService municipalService;
 
-        public LookupController(ICityService cityService, ISourceService sourceService)
+        public LookupController(ICityService cityService, ISourceService sourceService, IMunicipalService municipalService)
         {
             this.cityService = cityService;
             this.sourceService = sourceService;
+            this.municipalService = municipalService;
         }
         //
         // GET: /Lookup/
@@ -161,6 +164,83 @@ namespace TMD.Web.Controllers
                 //WebBase.Helper.LogError.Log(exp);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "Source has been used in Munnicipal and cannot be deleted" } };
+                return Json(error);
+            }
+            return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+
+
+        #region Municipal
+        public ActionResult Municipals()
+        {
+            IEnumerable<Municipal> Municipals = municipalService.GetAllMunicipals().Select(x => x.CreateFromServerToClient());
+            return View(Municipals);
+        }
+
+        //
+        // GET: /lookup/Create
+        public ActionResult MunicipalManage(long? id)
+        {
+            MunicipalViewModel oVM = new MunicipalViewModel();
+            oVM.CityList = cityService.GetAllCities().Select(x => x.CreateFromServerToClient()).ToList();
+            oVM.Municipal = new Municipal();
+            Municipal model = new Municipal();
+            if (id != null)
+            {
+                var Municipal = municipalService.GetMunicipal(id.Value);
+                if (Municipal != null)
+                    model = Municipal.CreateFromServerToClient();
+                oVM.Municipal = model;
+            }
+            return View(oVM);
+        }
+
+        //
+        // POST: /ExpenseCategory/Create
+        [HttpPost]
+        public ActionResult MunicipalManage(MunicipalViewModel MunicipalModel)
+        {
+            try
+            {
+                if (MunicipalModel.Municipal.MunicipalId == 0)
+                {
+                    MunicipalModel.Municipal.RecCreatedBy = User.Identity.Name;
+                    MunicipalModel.Municipal.RecCreatedDate = DateTime.Now;
+                }
+                MunicipalModel.Municipal.RecLastUpdatedBy = User.Identity.Name;
+                MunicipalModel.Municipal.RecLastUpdatedDate = DateTime.Now;
+
+                if (municipalService.SaveMunicipal(MunicipalModel.Municipal.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Municipal has been saved successfully.", IsSaved = true };
+                }
+
+                return RedirectToAction("Municipals", "Lookup");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMunicipal(int id)
+        {
+            string actionMessage;
+            try
+            {
+                actionMessage = "Deleted";
+              //  bool result = municipalService.DeleteMunicipal(municipalService.GetMunicipal(id));
+            }
+            catch (Exception exp)
+            {
+                //WebBase.Helper.LogError.Log(exp);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "Municipal has been used in Munnicipal and cannot be deleted" } };
                 return Json(error);
             }
             return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);

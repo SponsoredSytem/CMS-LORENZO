@@ -16,6 +16,21 @@ namespace TMD.Web.ModelMappers
                 RecCreatedBy = municipal.RecCreatedBy,
                 RecCreatedDate = municipal.RecCreatedDate,
                 RecLastUpdatedBy = municipal.RecLastUpdatedBy,
+                RecLastUpdatedDate = municipal.RecLastUpdatedDate,
+                CityName = municipal.City.CityName
+            };
+        }
+        public static TMD.Models.DomainModels.Municipal CreateFromClientToServer(this Municipal municipal)
+        {
+            return new TMD.Models.DomainModels.Municipal
+            {
+                MunicipalId = municipal.MunicipalId,
+                MunicipalName = municipal.MunicipalName,
+                MunicipalDescription = municipal.MunicipalDescription,
+                CityId = municipal.CityId,
+                RecCreatedBy = municipal.RecCreatedBy,
+                RecCreatedDate = municipal.RecCreatedDate,
+                RecLastUpdatedBy = municipal.RecLastUpdatedBy,
                 RecLastUpdatedDate = municipal.RecLastUpdatedDate
             };
         }
@@ -24,7 +39,8 @@ namespace TMD.Web.ModelMappers
             return new MunicipalApiModel
             {
                 MunicipalId = municipal.MunicipalId,
-                MunicipalName = municipal.MunicipalName
+                MunicipalName = municipal.MunicipalName,
+                CityId = municipal.CityId,
             };
         }
     }

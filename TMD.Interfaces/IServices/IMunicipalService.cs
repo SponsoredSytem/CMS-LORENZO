@@ -9,5 +9,6 @@ namespace TMD.Interfaces.IServices
         IEnumerable<Municipal> GetAllMunicipals();
         long SaveMunicipal(Municipal municipal);
         IEnumerable<Municipal> GetMunicipalsByCityId(long cityId);
+        bool DeleteMunicipal(Municipal city);
     }
 }
