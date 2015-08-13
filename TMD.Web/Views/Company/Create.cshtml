@@ -121,7 +121,7 @@
                     </div>
                     <div class="col-md-3 input-icon select2DDLParent">
                         @*<i class="fa fa-user"></i>*@
-                        @Html.DropDownListFor(m => m.Company.MunicipalId, new SelectList(Model.Municipals, "MunicipalId", "MunicipalName", Model.Company.MunicipalId), "Select Status", new { @class = "input-medium select2me mandatory", id = "StatusId" })
+                        @Html.DropDownListFor(m => m.Company.StatusId, new SelectList(Model.CompanyStatuses, "Id", "Title", Model.Company.StatusId), "Select Status", new { @class = "input-medium select2me mandatory", id = "StatusId" })
                     </div>
                 </div>
 

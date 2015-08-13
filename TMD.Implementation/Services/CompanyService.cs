@@ -15,14 +15,16 @@ namespace TMD.Implementation.Services
         private readonly ISourceRepository sourceRepository;
         private readonly ICompanyContactRepository companyContactRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly ICompanyStatusRepository companyStatusRepository;
 
-        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository, IAspNetUserRepository aspNetUserRepository)
+        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository, IAspNetUserRepository aspNetUserRepository, ICompanyStatusRepository companyStatusRepository)
         {
             this.companyRepository = companyRepository;
             this.cityRepository = cityRepository;
             this.sourceRepository = sourceRepository;
             this.companyContactRepository = companyContactRepository;
             this.aspNetUserRepository = aspNetUserRepository;
+            this.companyStatusRepository = companyStatusRepository;
         }
 
         public Company GetCompany(long companyId)
@@ -48,6 +50,9 @@ namespace TMD.Implementation.Services
 
             //Load Employees
             responseModel.Employees = aspNetUserRepository.GetAllUsersOfEmployeeRole();
+
+            //Load Company Statuses
+            responseModel.CompanyStatuses = companyStatusRepository.GetCompanyStatusesBySortOrder();
 
             return responseModel;
         }

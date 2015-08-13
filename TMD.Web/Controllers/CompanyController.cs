@@ -36,6 +36,7 @@ namespace TMD.Web.Controllers
                 companyViewModel.CompanyContacts = companyData.CompanyContacts != null ? companyData.CompanyContacts.Select(x => x.CreateFromServerToClient()).ToList() : new List<CompanyContact>();
                 
             companyViewModel.Employees = companyData.Employees != null ? companyData.Employees.Select(x => x.CreateEmployeeDdl()).ToList() : new List<EmployeesDropdownModel>();
+            companyViewModel.CompanyStatuses = companyData.CompanyStatuses != null ? companyData.CompanyStatuses.Select(x => x.CreateDropDown()).ToList() : new List<CompanyStatusDropdownModel>();
             companyViewModel.Cities = companyData.Cities.Select(x => x.CreateFromServerToClient()).ToList();
             companyViewModel.Sources = companyData.Sources.Select(x => x.CreateFromServerToClient()).ToList();
             return View(companyViewModel);

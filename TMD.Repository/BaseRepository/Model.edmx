@@ -109,6 +109,7 @@
           <Property Name="MunicipalId" Type="bigint" />
           <Property Name="SourceId" Type="bigint" />
           <Property Name="EmployeeId" Type="nvarchar" MaxLength="128" />
+          <Property Name="StatusId" Type="int" />
         </EntityType>
         <EntityType Name="CompanyContact">
           <Key>
@@ -570,6 +571,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Company_CompanyStatus">
+          <End Role="CompanyStatus" Type="Self.CompanyStatus" Multiplicity="0..1" />
+          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Company_Municipal1">
           <End Role="Municipal" Type="Self.Municipal" Multiplicity="0..1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
@@ -995,6 +1008,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Company" EntitySet="Company" />
           </AssociationSet>
+          <AssociationSet Name="fk_Company_CompanyStatus" Association="Self.fk_Company_CompanyStatus">
+            <End Role="CompanyStatus" EntitySet="CompanyStatus" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
           <AssociationSet Name="FK_Company_Municipal1" Association="Self.FK_Company_Municipal1">
             <End Role="Municipal" EntitySet="Municipal" />
             <End Role="Company" EntitySet="Company" />
@@ -1301,6 +1318,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySet Name="CompanyStatus1" EntityType="TMD.Models.DomainModels.CompanyStatus" />
           <AssociationSet Name="fk_Company_AspNetUsers" Association="TMD.Models.DomainModels.fk_Company_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Company_CompanyStatus" Association="TMD.Models.DomainModels.fk_Company_CompanyStatus">
+            <End Role="CompanyStatus" EntitySet="CompanyStatus1" />
             <End Role="Company" EntitySet="Companies" />
           </AssociationSet>
           </EntityContainer>
@@ -2193,6 +2214,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <NavigationProperty Name="CompanyContacts" Relationship="TMD.Models.DomainModels.FK_CompanyContact_Company" FromRole="Company" ToRole="CompanyContact" />
           <Property Name="EmployeeId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.fk_Company_AspNetUsers" FromRole="Company" ToRole="AspNetUser" />
+          <Property Name="StatusId" Type="Int32" />
+          <NavigationProperty Name="CompanyStatu" Relationship="TMD.Models.DomainModels.fk_Company_CompanyStatus" FromRole="Company" ToRole="CompanyStatus" />
         </EntityType>
         <EntityType Name="Municipal">
           <Key>
@@ -2301,6 +2324,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Companies" Relationship="TMD.Models.DomainModels.fk_Company_CompanyStatus" FromRole="CompanyStatus" ToRole="Company" />
         </EntityType>
         <Association Name="fk_Company_AspNetUsers">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -2311,6 +2335,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Principal>
             <Dependent Role="Company">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Company_CompanyStatus">
+          <End Type="TMD.Models.DomainModels.CompanyStatus" Role="CompanyStatus" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="StatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2809,6 +2845,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Company">
               <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="SourceId" ColumnName="SourceId" />
                 <ScalarProperty Name="MunicipalId" ColumnName="MunicipalId" />
@@ -2982,6 +3019,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
         <AssociationConnector Association="TMD.Models.DomainModels.FK_CompanyContact_Company" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.CompanyStatus" Width="1.5" PointX="19.375" PointY="0.75" />
         <AssociationConnector Association="TMD.Models.DomainModels.fk_Company_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.fk_Company_CompanyStatus" />
       </Diagram>
     </Diagrams>
   </Designer>

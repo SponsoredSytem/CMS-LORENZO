@@ -97,6 +97,7 @@ namespace TMD.Repository.BaseRepository
         public DbSet<City> City { get; set; }
         public DbSet<Municipal> Municipal { get; set; }
         public DbSet<Source> Source { get; set; }
+        public DbSet<CompanyStatus> CompanyStatus { get; set; }
 
         /// <summary>
         /// Staging Ebay

@@ -17,6 +17,7 @@ namespace TMD.Web.ViewModels
         public List<Municipal> Municipals { get; set; }
         public List<Source> Sources { get; set; }
         public List<CompanyContact> CompanyContacts { get; set; }
-        public List<EmployeesDropdownModel> Employees { get; set; } 
+        public List<EmployeesDropdownModel> Employees { get; set; }
+        public List<CompanyStatusDropdownModel> CompanyStatuses { get; set; } 
     }
 }

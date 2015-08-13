@@ -24,9 +24,12 @@ namespace TMD.Models.DomainModels
 
         public string EmployeeId { get; set; }
 
+        public int? StatusId { get; set; }
+
         public virtual Municipal Municipal { get; set; }
         public virtual Source Source { get; set; }
         public virtual ICollection<CompanyContact> CompanyContacts { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual CompanyStatus CompanyStatus { get; set; }
     }
 }

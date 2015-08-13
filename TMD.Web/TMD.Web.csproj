@@ -318,6 +318,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
+    <Compile Include="ModelMappers\CompanyStatusMapper.cs" />
     <Compile Include="ModelMappers\CompanyContactMapper.cs" />
     <Compile Include="ModelMappers\SourceMapper.cs" />
     <Compile Include="ModelMappers\CityMapper.cs" />
@@ -343,9 +344,11 @@
     <Compile Include="Models\AspNetUserModel.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
+    <Compile Include="Models\Common\CompanyStatusDropdownModel.cs" />
     <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\CompanyContact.cs" />
+    <Compile Include="Models\CompanyStatus.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\ExpenseCategoryModel.cs" />
     <Compile Include="Models\ExpenseModel.cs" />
