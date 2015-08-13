@@ -2,7 +2,8 @@
     @{
         ViewBag.Title = "Sources";
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
-        Session["MenuKey"] = 24;
+        Session["MenuKey"] = 6;
+        Session["ParentMenu"] = 1;
     }
 
     <div class="container-fluid">
@@ -18,7 +19,7 @@
                 <div class="portlet box blue-hoki">
                     <div class="portlet-title">
                         <div class="caption">
-                            Cities
+                            Sources
                         </div>
 
                         <div class="tools FilterToolBar">
@@ -54,7 +55,7 @@
                 <div class="portlet box blue-hoki">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-cogs"></i>There are @(Model.Count()) Cities
+                            <i class="fa fa-cogs"></i>There are @(Model.Count()) Sources
                         </div>
                         <div class="tools">
                             <a href="~/Lookup/SourceManage" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Source</a>

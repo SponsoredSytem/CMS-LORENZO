@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "Manage Municipals";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    Session["MenuKey"] = 24;
+    Session["MenuKey"] = 5;
+    Session["ParentMenu"] = 1;
 }
 
 @using (Html.BeginForm("MunicipalManage", "lookup", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
