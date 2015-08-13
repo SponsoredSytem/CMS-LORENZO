@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    Session["MenuKey"] = 24;
+    Session["MenuKey"] = 4;
+    Session["ParentMenu"] = 1;
 }
 
 @using (Html.BeginForm("CityCreate", "lookup", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))

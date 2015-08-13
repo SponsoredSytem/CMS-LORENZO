@@ -156,6 +156,35 @@
                                 <span class="selected"></span>
                             </a>
                         </li>
+
+                        <li class=@( (Session["ParentMenu"] != null && Session["ParentMenu"].ToString() == "1") ? "active open" : "")>
+                            @{
+                            Session["ParentMenu"] = 0;
+                        }
+                            <a href="javascript:;">
+                                <i class="icon-rocket"></i>
+                                <span class="title">Reference Data</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active " : "")>
+                                    <a href="~/Lookup/City">
+                                        City
+                                    </a>
+                                </li>
+                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "5") ? "active " : "")>
+                                    <a href="~/Lookup/Municipals">
+                                        Municipal
+                                    </a>
+                                </li>
+                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "6") ? "active " : "")>
+                                    <a href="~/Lookup/Sources">
+                                        Source
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
                     }
                     @if (User.IsInRole("Admin"))
                     {
