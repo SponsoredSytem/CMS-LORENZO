@@ -5,6 +5,21 @@ namespace TMD.Web.ModelMappers
 {
     public static class CompanyStatusMapper
     {
+        public static CompanyStatus CreateFromClientToServer(this Models.CompanyStatus source)
+        {
+            return new CompanyStatus
+            {
+                StatusId = source.StatusId,
+                StatusTitle = source.StatusTitle,
+                SortOrder = source.SortOrder,
+                StatusDescription = source.StatusDescription,
+                
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate
+            };
+        }
         public static Models.CompanyStatus CreateFromServerToClient(this CompanyStatus source)
         {
             return new Models.CompanyStatus
@@ -13,7 +28,7 @@ namespace TMD.Web.ModelMappers
                 StatusTitle = source.StatusTitle,
                 SortOrder = source.SortOrder,
                 StatusDescription = source.StatusDescription,
-                
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,

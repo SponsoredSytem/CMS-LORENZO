@@ -18,12 +18,14 @@ namespace TMD.Web.Controllers
         private readonly ICityService cityService;
         private readonly ISourceService sourceService;
         private readonly IMunicipalService municipalService;
+        private readonly ICompanyStatusService companyStatusService;
 
-        public LookupController(ICityService cityService, ISourceService sourceService, IMunicipalService municipalService)
+        public LookupController(ICityService cityService, ISourceService sourceService, IMunicipalService municipalService, ICompanyStatusService companyStatusService)
         {
             this.cityService = cityService;
             this.sourceService = sourceService;
             this.municipalService = municipalService;
+            this.companyStatusService = companyStatusService;
         }
         //
         // GET: /Lookup/
@@ -247,5 +249,79 @@ namespace TMD.Web.Controllers
         }
 
         #endregion
+
+
+        #region Company Statuses
+        public ActionResult CompanyStatuses()
+        {
+            IEnumerable<CompanyStatus> companyStatuses= companyStatusService.GetCompanyStatusesBySortOrder().Select(x => x.CreateFromServerToClient());
+            return View(companyStatuses);
+        }
+
+
+        // GET: /lookup/Create
+        public ActionResult CompanyStatusManage(long? id)
+        {
+            CompanyStatus model = new CompanyStatus();
+            if (id != null)
+            {
+                var CompanyStatus = companyStatusService.GetCompanyStatus(id.Value);
+                if (CompanyStatus != null)
+                    model = CompanyStatus.CreateFromServerToClient();
+            }
+            return View(model);
+        }
+
+        //
+        // POST: /ExpenseCategory/Create
+        [HttpPost]
+        public ActionResult CompanyStatusManage(CompanyStatus CompanyStatusModel)
+        {
+            try
+            {
+                if (CompanyStatusModel.StatusId == 0)
+                {
+                    CompanyStatusModel.RecCreatedBy = User.Identity.Name;
+                    CompanyStatusModel.RecCreatedDate = DateTime.Now;
+                }
+                CompanyStatusModel.RecLastUpdatedBy = User.Identity.Name;
+                CompanyStatusModel.RecLastUpdatedDate = DateTime.Now;
+
+                if (companyStatusService.SaveCompanyStatus(CompanyStatusModel.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "CompanyStatus has been saved successfully.", IsSaved = true };
+                }
+
+                return RedirectToAction("CompanyStatuses", "Lookup");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCompanyStatus(int id)
+        {
+            string actionMessage;
+            try
+            {
+                actionMessage = "Deleted";
+                bool result = companyStatusService.DeleteCompanyStatus(companyStatusService.GetCompanyStatus(id));
+            }
+            catch (Exception exp)
+            {
+                //WebBase.Helper.LogError.Log(exp);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "CompanyStatus has been used in Munnicipal and cannot be deleted" } };
+                return Json(error);
+            }
+            return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+
+#endregion
+    
+    
     }
 }
