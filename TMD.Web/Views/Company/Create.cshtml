@@ -114,7 +114,7 @@
                     </div>
                     <div class="col-md-3 input-icon">
                         @*<i class="fa fa-user"></i>*@
-                        @Html.DropDownList("AccountHolder", new SelectList(Model.Employees, "Id", "Name", Model.Company.AccountHolderId), "Select Employee", new { @class = "input-medium select2me", id = "AccountHolderId" })
+                        @Html.DropDownListFor(m => m.Company.AccountHolderId, new SelectList(Model.Employees, "Id", "Name", Model.Company.AccountHolderId), "Select Employee", new { @class = "input-medium select2me", id = "AccountHolderId" })
                     </div>
                     <div class="col-md-2 textAlignRight">
                         @Html.Label("Status", new { @class = "control-label" })

@@ -37,7 +37,7 @@ namespace TMD.Web.ModelMappers
             EmployeesDropdownModel oModel = new EmployeesDropdownModel
             {
                 Id = source.Id,
-                Name = source.FirstName+" "+source.LastName
+                Name = source.FirstName+" "+source.LastName+" - "+source.Email
             };
             return oModel;
 
