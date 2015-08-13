@@ -47,14 +47,14 @@
                 @Html.HiddenFor(m => m.Company.DeletedCompanyContacts, new { @id = "DeletedCompanyContacts" })
                 <div class="row form-group margin-top-20">
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.CompanyName, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.CompanyName, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-file-o"></i>
                         @Html.TextBoxFor(m => m.Company.CompanyName, new { @class = "form-control mandatory", placeholder = "Company Name" })
                     </div>
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.LegalName, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.LegalName, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-file-pdf-o"></i>
@@ -65,14 +65,14 @@
 
                 <div class="row form-group margin-top-20">
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.VATNumber, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.VATNumber, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-file-zip-o"></i>
                         @Html.TextBoxFor(m => m.Company.VATNumber, new { @class = "form-control mandatory", placeholder = "V.A.T Number" })
                     </div>
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.VATOffice, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.VATOffice, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-file-text"></i>
@@ -90,7 +90,7 @@
                         @Html.DropDownList("City", new SelectList(Model.Cities, "CityId", "CityName", Model.Company.CityId), "Select City", new { @class = "input-medium select2me", id = "CityId" })
                     </div>
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.MunicipalId, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.MunicipalId, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon select2DDLParent">
                         @*<i class="fa fa-user"></i>*@
@@ -100,7 +100,7 @@
 
                 <div class="row form-group margin-top-20">
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.SourceId, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.SourceId, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon select2DDLParent">
                         @*<i class="fa fa-file-code-o"></i>*@
@@ -121,20 +121,20 @@
                     </div>
                     <div class="col-md-3 input-icon select2DDLParent">
                         @*<i class="fa fa-user"></i>*@
-                        @Html.DropDownListFor(m => m.Company.StatusId, new SelectList(Model.CompanyStatuses, "Id", "Title", Model.Company.StatusId), "Select Status", new { @class = "input-medium select2me mandatory", id = "StatusId" })
+                        @Html.DropDownListFor(m => m.Company.StatusId, new SelectList(Model.CompanyStatuses, "Id", "Title", Model.Company.StatusId), "Select Status", new { @class = "input-medium select2me", id = "StatusId" })
                     </div>
                 </div>
 
                 <div class="row form-group margin-top-20">
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.Telephone, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.Telephone, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-user"></i>
                         @Html.TextBoxFor(m => m.Company.Telephone, new { @class = "form-control mandatory", placeholder = "Telephone" })
                     </div>
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.Fax, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.Fax, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-user"></i>
@@ -145,7 +145,7 @@
 
                 <div class="row form-group margin-top-20">
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.Email, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.Email, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-user"></i>
@@ -153,7 +153,7 @@
                         @Html.ValidationMessageFor(m => m.Company.Email)
                     </div>
                     <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.Company.Address, new { @class = "control-label" })
+                        @Html.LabelFor(m => m.Company.Address, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-user"></i>
@@ -445,7 +445,7 @@
                 '<td>' +
                 '<input id="CompanyContacts_' + index + '__ContactType" name="CompanyContacts[' + index + '].ContactType" type="hidden" value="' + Type + '"><span id="spanContactType_' + index + '">' + contactType + '</span>' +
                 '</td>' +
-                '<td><a href="javascript:;">Edit</a></td>' +
+                '<td><a href="javascript:;" class="editContact">Edit</a></td>' +
                 '<td><a href="javascript:;" class="deleteRow">X</a></td>' +
                 '</tr>';
             $('#CompanyContactsTableBody').append(html);
