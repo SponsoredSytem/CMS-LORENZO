@@ -10,5 +10,6 @@ namespace TMD.Models.ResponseModels
         public IEnumerable<Municipal> Municipals { get; set; }
         public IEnumerable<Source> Sources { get; set; }
         public IEnumerable<CompanyContact> CompanyContacts { get; set; }
+        public IEnumerable<AspNetUser> Employees { get; set; }
     }
 }

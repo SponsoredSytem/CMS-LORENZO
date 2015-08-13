@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.Models.Common;
 using TMD.Web.ViewModels;
 
 namespace TMD.Web.Controllers
@@ -33,7 +34,8 @@ namespace TMD.Web.Controllers
                 var companyData = companyService.GetCompanyResponse(id);
                 companyViewModel.Company = companyData.Company!=null ? companyData.Company.CreateFromServerToClient() : new Company();
                 companyViewModel.CompanyContacts = companyData.CompanyContacts != null ? companyData.CompanyContacts.Select(x => x.CreateFromServerToClient()).ToList() : new List<CompanyContact>();
-
+                
+            companyViewModel.Employees = companyData.Employees != null ? companyData.Employees.Select(x => x.CreateEmployeeDdl()).ToList() : new List<EmployeesDropdownModel>();
             companyViewModel.Cities = companyData.Cities.Select(x => x.CreateFromServerToClient()).ToList();
             companyViewModel.Sources = companyData.Sources.Select(x => x.CreateFromServerToClient()).ToList();
             return View(companyViewModel);

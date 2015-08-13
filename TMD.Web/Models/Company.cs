@@ -36,5 +36,6 @@ namespace TMD.Web.Models
         public string CityName { get; set; }
         public string MunicipalName { get; set; }
         public string DeletedCompanyContacts { get; set; }
+        public string AccountHolderId { get; set; }
     }
 }

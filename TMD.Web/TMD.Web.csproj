@@ -343,6 +343,7 @@
     <Compile Include="Models\AspNetUserModel.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
+    <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\CompanyContact.cs" />
     <Compile Include="Models\CustomerModel.cs" />

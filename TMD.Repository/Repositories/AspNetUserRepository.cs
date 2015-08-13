@@ -41,6 +41,11 @@ namespace TMD.Repository.Repositories
             //.Where(x => x.AspNetRoles.Any(y => y.Name != "Admin"));//TEmperory check
         }
 
+        public IEnumerable<AspNetUser> GetAllUsersOfEmployeeRole()
+        {
+            return db.Users.Include("AspNetRoles").Where(t => t.AspNetRoles.Any() && t.AspNetRoles.Any(x => x.Name == "Employee"));
+        }
+
         public new IEnumerable<AspNetRole> Roles()
         {
             throw new System.NotImplementedException();

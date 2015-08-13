@@ -7,6 +7,7 @@ namespace TMD.Interfaces.IServices
     {
         AspNetUser FindById(string id);
         IEnumerable<AspNetUser> GetAllUsers();
+        IEnumerable<AspNetUser> GetAllUsersOfEmployeeRole();
         bool UpdateUser(AspNetUser user);
     }
 }

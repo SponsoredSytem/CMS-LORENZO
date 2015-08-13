@@ -6,6 +6,7 @@ namespace TMD.Interfaces.IRepository
     public interface IAspNetUserRepository : IBaseRepository<AspNetUser, string>
     {
         IEnumerable<AspNetUser> GetAllUsers();
+        IEnumerable<AspNetUser> GetAllUsersOfEmployeeRole();
     }
 
 }

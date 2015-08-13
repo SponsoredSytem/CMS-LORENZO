@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using TMD.Models.DomainModels;
 using TMD.Web.Models;
+using TMD.Web.Models.Common;
 
 namespace TMD.Web.ModelMappers
 {
@@ -31,7 +32,16 @@ namespace TMD.Web.ModelMappers
             return oModel;
 
         }
+        public static EmployeesDropdownModel CreateEmployeeDdl(this AspNetUser source)
+        {
+            EmployeesDropdownModel oModel = new EmployeesDropdownModel
+            {
+                Id = source.Id,
+                Name = source.FirstName+" "+source.LastName
+            };
+            return oModel;
 
+        }
         //public static AspNetUser CreateFrom(this AspNetUserModel source)
         //{
         //    AspNetUserModel oModel = new AspNetUserModel

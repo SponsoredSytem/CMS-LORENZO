@@ -28,6 +28,12 @@ namespace TMD.Implementation.Services
         {
             return repository.GetAllUsers();
         }
+
+        public IEnumerable<AspNetUser> GetAllUsersOfEmployeeRole()
+        {
+            return repository.GetAllUsersOfEmployeeRole();
+        }
+
         public bool UpdateUser(AspNetUser user)
         {
             repository.Update(user);

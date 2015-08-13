@@ -93,7 +93,9 @@ function validateEmail(email) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test(oEmail.val())) {
         oEmail.val("");
-        oEmail.attr("placeholder","Enter valid email.");
+        oEmail.css('border-color', 'red');
+        oEmail.attr("placeholder", "Enter valid email.");
+        
         return false;
     } else {
         return true;

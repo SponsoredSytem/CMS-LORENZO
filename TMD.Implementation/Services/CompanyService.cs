@@ -14,13 +14,15 @@ namespace TMD.Implementation.Services
         private readonly ICityRepository cityRepository;
         private readonly ISourceRepository sourceRepository;
         private readonly ICompanyContactRepository companyContactRepository;
+        private readonly IAspNetUserRepository aspNetUserRepository;
 
-        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository)
+        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository, IAspNetUserRepository aspNetUserRepository)
         {
             this.companyRepository = companyRepository;
             this.cityRepository = cityRepository;
             this.sourceRepository = sourceRepository;
             this.companyContactRepository = companyContactRepository;
+            this.aspNetUserRepository = aspNetUserRepository;
         }
 
         public Company GetCompany(long companyId)
@@ -43,7 +45,10 @@ namespace TMD.Implementation.Services
             responseModel.Cities = cityRepository.GetAll().ToList();
             //Load Sources
             responseModel.Sources = sourceRepository.GetAll();
-           
+
+            //Load Employees
+            responseModel.Employees = aspNetUserRepository.GetAllUsersOfEmployeeRole();
+
             return responseModel;
         }
 
