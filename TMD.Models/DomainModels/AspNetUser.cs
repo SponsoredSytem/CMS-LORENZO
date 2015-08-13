@@ -57,6 +57,7 @@ namespace TMD.Models.DomainModels
         public virtual ICollection<StagingEbayItem> StagingEbayItemsCreatedBy { get; set; }
         public virtual ICollection<StagingEbayItem> StagingEbayItemsDeletedBy { get; set; }
         public virtual ICollection<StagingEbayItem> StagingEbayItemsModifiedBy { get; set; }
+        public virtual ICollection<Company> Companies { get; set; }
 
     }
 }

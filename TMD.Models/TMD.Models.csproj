@@ -112,6 +112,7 @@
     <Compile Include="DomainModels\City.cs" />
     <Compile Include="DomainModels\Company.cs" />
     <Compile Include="DomainModels\CompanyContact.cs" />
+    <Compile Include="DomainModels\CompanyStatus.cs" />
     <Compile Include="DomainModels\Configuration.cs" />
     <Compile Include="DomainModels\Expense.cs" />
     <Compile Include="DomainModels\ExpenseCategory.cs" />

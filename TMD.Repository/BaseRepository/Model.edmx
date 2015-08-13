@@ -108,6 +108,7 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="MunicipalId" Type="bigint" />
           <Property Name="SourceId" Type="bigint" />
+          <Property Name="EmployeeId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="CompanyContact">
           <Key>
@@ -122,6 +123,19 @@
           <Property Name="PhoneLandLine" Type="nvarchar" MaxLength="100" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ContactType" Type="nvarchar" MaxLength="50" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompanyStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="StatusDescription" Type="nvarchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -544,6 +558,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Company_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Company_Municipal1">
           <End Role="Municipal" Type="Self.Municipal" Multiplicity="0..1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
@@ -923,6 +949,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyContact" EntityType="Self.CompanyContact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyStatus" EntityType="Self.CompanyStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataWarehouseDimComapany" EntityType="Self.DataWarehouseDimComapany" Schema="dbo" store:Type="Tables" />
@@ -963,6 +990,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryLog" EntitySet="CategoryLog" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Company_AspNetUsers" Association="Self.fk_Company_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Company" EntitySet="Company" />
           </AssociationSet>
           <AssociationSet Name="FK_Company_Municipal1" Association="Self.FK_Company_Municipal1">
             <End Role="Municipal" EntitySet="Municipal" />
@@ -1267,6 +1298,11 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             <End Role="Company" EntitySet="Companies" />
             <End Role="CompanyContact" EntitySet="CompanyContacts" />
           </AssociationSet>
+          <EntitySet Name="CompanyStatus1" EntityType="TMD.Models.DomainModels.CompanyStatus" />
+          <AssociationSet Name="fk_Company_AspNetUsers" Association="TMD.Models.DomainModels.fk_Company_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1325,6 +1361,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <NavigationProperty Name="StagingEbayItemsDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
           <NavigationProperty Name="StagingEbayItemsModifiedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
           <Property Name="UserComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Companies" Relationship="TMD.Models.DomainModels.fk_Company_AspNetUsers" FromRole="AspNetUser" ToRole="Company" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -2154,6 +2191,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <NavigationProperty Name="Municipal" Relationship="TMD.Models.DomainModels.FK_Company_Municipal1" FromRole="Company" ToRole="Municipal" />
           <NavigationProperty Name="Source" Relationship="TMD.Models.DomainModels.FK_Company_Source" FromRole="Company" ToRole="Source" />
           <NavigationProperty Name="CompanyContacts" Relationship="TMD.Models.DomainModels.FK_CompanyContact_Company" FromRole="Company" ToRole="CompanyContact" />
+          <Property Name="EmployeeId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.fk_Company_AspNetUsers" FromRole="Company" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Municipal">
           <Key>
@@ -2247,6 +2286,31 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Principal>
             <Dependent Role="CompanyContact">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CompanyStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusTitle" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="fk_Company_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2745,6 +2809,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Company">
               <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="SourceId" ColumnName="SourceId" />
                 <ScalarProperty Name="MunicipalId" ColumnName="MunicipalId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2808,6 +2873,20 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="CompanyContactId" ColumnName="CompanyContactId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyStatus1">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.CompanyStatus">
+              <MappingFragment StoreEntitySet="CompanyStatus">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+                <ScalarProperty Name="StatusTitle" ColumnName="StatusTitle" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2901,6 +2980,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_Source" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.CompanyContact" Width="1.5" PointX="24.125" PointY="18.75" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_CompanyContact_Company" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.CompanyStatus" Width="1.5" PointX="19.375" PointY="0.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.fk_Company_AspNetUsers" />
       </Diagram>
     </Diagrams>
   </Designer>
