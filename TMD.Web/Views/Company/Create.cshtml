@@ -423,7 +423,7 @@
                 "<input name='CompanyContacts[" + index + "].CompanyContactId' id='CompanyContacts_" + index + "__CompanyContactId' type='hidden' />" +
                 "<input name='CompanyContacts[" + index + "].CompanyId' id='CompanyContacts_" + index + "__CompanyId' type='hidden' />" +
                 "</td>";
-            var contactType = Type == 1 ? "Primary" : Type == 0 ? "Secondary":"";
+            var contactType = Type == 1 ? "Primary" : Type == "" ? "":"Secondary";
             //CompanyContacts
             var html = ' <tr data-id=' + index + '>' +
                 indexCell +
