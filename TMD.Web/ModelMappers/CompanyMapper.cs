@@ -51,8 +51,10 @@ namespace TMD.Web.ModelMappers
                 CityName = source.Municipal.City.CityName,
                 SourceId = source.SourceId,
                 StatusId = source.StatusId,
+                StatusTitle = source.StatusId!=null?source.CompanyStatus.StatusTitle:"",
                 AccountHolderId = source.EmployeeId,
-
+                AccountHolderName = string.IsNullOrEmpty(source.EmployeeId)?"":source.AspNetUser.FirstName+" "+source.AspNetUser.LastName,
+                AccountHolderEmail = string.IsNullOrEmpty(source.EmployeeId)?"":source.AspNetUser.Email,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,

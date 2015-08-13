@@ -66,6 +66,8 @@
                                     <th>Municipal</th>
                                     <th>Telephone</th>
                                     <th>Email</th>
+                                    <th>Account Holder</th>
+                                    <th>Company Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +79,10 @@
                                         <td>@item.CityName</td>
                                         <td>@item.MunicipalName</td>
                                         <td>@item.Telephone</td>
-                                        <td>@item.Email</td></tr>
+                                        <td>@item.Email</td>
+                                        <td title="@item.AccountHolderEmail">@item.AccountHolderName</td>
+                                        <td>@item.StatusTitle</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
