@@ -2215,7 +2215,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="EmployeeId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.fk_Company_AspNetUsers" FromRole="Company" ToRole="AspNetUser" />
           <Property Name="StatusId" Type="Int32" />
-          <NavigationProperty Name="CompanyStatu" Relationship="TMD.Models.DomainModels.fk_Company_CompanyStatus" FromRole="Company" ToRole="CompanyStatus" />
+          <NavigationProperty Name="CompanyStatus" Relationship="TMD.Models.DomainModels.fk_Company_CompanyStatus" FromRole="Company" ToRole="CompanyStatus" />
         </EntityType>
         <EntityType Name="Municipal">
           <Key>

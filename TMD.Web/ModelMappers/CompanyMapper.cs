@@ -21,6 +21,9 @@ namespace TMD.Web.ModelMappers
                 Notes = source.Notes??"",
                 MunicipalId = source.MunicipalId,
                 SourceId = source.SourceId,
+                StatusId = source.StatusId,
+                EmployeeId = source.AccountHolderId,
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -47,6 +50,9 @@ namespace TMD.Web.ModelMappers
                 CityId=source.Municipal.CityId,
                 CityName = source.Municipal.City.CityName,
                 SourceId = source.SourceId,
+                StatusId = source.StatusId,
+                AccountHolderId = source.EmployeeId,
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
