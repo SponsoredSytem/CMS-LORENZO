@@ -119,12 +119,12 @@
             $('#btnFltr').on('click', function (e) {
 
                 var searchN = $('#SearchBox').val();
-                oTable.fnFilter(searchN, 0);
+                oTable.fnFilter(searchN);
             });
 
             $('#btnResetFltr').on('click', function (e) {
                 $('#SearchBox').val("");
-                oTable.fnFilter('', 0);
+                oTable.fnFilter('');
             });
             $('#dataTable').on('click', '.delete', function (e) {
                 debugger

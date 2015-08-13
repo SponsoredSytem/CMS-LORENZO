@@ -1,6 +1,6 @@
-﻿@model IEnumerable<TMD.Web.Models.City>
+﻿@model IEnumerable<TMD.Web.Models.Municipal>
     @{
-        ViewBag.Title = "City";
+        ViewBag.Title = "Municipal";
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
         Session["MenuKey"] = 24;
     }
@@ -18,7 +18,7 @@
                 <div class="portlet box blue-hoki">
                     <div class="portlet-title">
                         <div class="caption">
-                            Cities
+                            Municipals
                         </div>
 
                         <div class="tools FilterToolBar">
@@ -39,7 +39,7 @@
                                         <td class="col-md-2">
                                             <div class="input-icon">
                                                 <i class="fa fa-search"></i>
-                                                @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "SearchBox", @placeholder = "Name/Description" })
+                                                @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "SearchBox", @placeholder = "Name/City/Description" })
                                             </div>
                                         </td>
                                         <td class="col-md-4"></td>
@@ -54,10 +54,10 @@
                 <div class="portlet box blue-hoki">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-cogs"></i>There are @(Model.Count()) Cities
+                            <i class="fa fa-cogs"></i>There are @(Model.Count()) Municipals
                         </div>
                         <div class="tools">
-                            <a href="~/Lookup/CityCreate" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New City</a>
+                            <a href="~/Lookup/MunicipalManage" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Municipal</a>
                         </div>
                     </div>
                     <div class="portlet-body">
@@ -68,6 +68,7 @@
                                     <tr>
                                         <th style="display:none"></th>
                                         <th>Name</th>
+                                        <th>City</th>
                                         <th>Description</th>
                                         <th></th>
                                     </tr>
@@ -76,9 +77,10 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td style="display:none">@item.CityId</td>
-                                            <td>@Html.ActionLink(@item.CityName, "CityCreate", new { id = item.CityId }) </td>
-                                            <td>@item.CityDescription</td>
+                                            <td style="display:none">@item.MunicipalId</td>
+                                            <td>@Html.ActionLink(@item.MunicipalName, "MunicipalManage", new { id = item.MunicipalId }) </td>
+                                            <td>@item.CityName</td>
+                                            <td>@item.MunicipalDescription</td>
                                             <td class="textAlignRight">
                                                 <a class="delete" href="javascript:;">Delete</a>
                                             </td>
@@ -110,7 +112,7 @@
                 "sPaginationType": "full_numbers",
                 "iDisplayLength": 10,
                 "aoColumnDefs": [
-              { 'bSortable': false, 'aTargets': [3] }
+              { 'bSortable': false, 'aTargets': [3,4] }
            ],
                 "bFilter": true,
                 "bLengthChange": false,
@@ -128,7 +130,7 @@
             });
             $('#dataTable').on('click', '.delete', function (e) {
                 debugger
-                var serviceURL = "DeleteCity";
+                var serviceURL = "DeleteMunicipal";
                 e.preventDefault();
 
                 if (confirm("Are you sure to delete this row ?") == false) {

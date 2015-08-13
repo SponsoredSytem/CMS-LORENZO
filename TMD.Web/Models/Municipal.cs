@@ -12,5 +12,7 @@ namespace TMD.Web.Models
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public long CityId { get; set; }
+
+        public string CityName { get; set; }
     }
 }

@@ -445,6 +445,7 @@
     </Compile>
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
+    <Compile Include="ViewModels\MunicipalViewModel.cs" />
     <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="ViewModels\ProductConfigurationViewModel.cs" />
     <Compile Include="ViewModels\ProductCategoryViewModel.cs" />
@@ -1783,6 +1784,8 @@
     <Content Include="Views\Lookup\City.cshtml" />
     <Content Include="Views\Lookup\Sources.cshtml" />
     <Content Include="Views\Lookup\SourceManage.cshtml" />
+    <Content Include="Views\Lookup\MunicipalManage.cshtml" />
+    <Content Include="Views\Lookup\Municipals.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

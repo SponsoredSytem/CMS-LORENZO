@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -34,6 +35,20 @@ namespace TMD.Implementation.Services
         public IEnumerable<Municipal> GetMunicipalsByCityId(long cityId)
         {
             return municipalRepository.GetMunicipalsByCityId(cityId);
+        }
+
+        public bool DeleteMunicipal(Municipal city)
+        {
+            try
+            {
+                municipalRepository.Delete(city);
+                municipalRepository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return true;
         }
     }
 }
