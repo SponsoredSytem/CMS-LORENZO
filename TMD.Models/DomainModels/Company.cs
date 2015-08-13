@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TMD.Models.DomainModels
 {
@@ -20,11 +19,14 @@ namespace TMD.Models.DomainModels
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public Nullable<long> MunicipalId { get; set; }
-        public Nullable<long> SourceId { get; set; }
+        public long? MunicipalId { get; set; }
+        public long? SourceId { get; set; }
+
+        public string EmployeeId { get; set; }
 
         public virtual Municipal Municipal { get; set; }
         public virtual Source Source { get; set; }
         public virtual ICollection<CompanyContact> CompanyContacts { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }
