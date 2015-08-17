@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "Product Categories";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    Session["MenuKey"] = 11;
+    Session["MenuKey"] = 8;
+    Session["ParentMenu"] = 1;
  }
 
 <div class="container-fluid">
@@ -22,7 +23,7 @@
                             <tr>
                                 <th class="tableHeaderWhite">Name</th>
                                 <th class="tableHeaderWhite">Description</th>
-                                <th class="tableHeaderWhite">Main Category</th>
+                                @*<th class="tableHeaderWhite">Main Category</th>*@
                             </tr>
                         </thead>
                         <tbody>
@@ -31,7 +32,7 @@
                                 <tr>
                                     <td>@Html.ActionLink(@item.Name, "Create", new { id = item.CategoryId }) </td>
                                     <td>@item.Description</td>
-                                    <td>@item.ProductMainCategoryName</td>
+                                    @*<td>@item.ProductMainCategoryName</td>*@
                                 </tr>
                             }
                         </tbody>

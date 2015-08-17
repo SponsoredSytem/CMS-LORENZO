@@ -1,6 +1,8 @@
 ﻿@model TMD.Web.ViewModels.ProductCategoryViewModel 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 8;
+    Session["ParentMenu"] = 1;
 }
 
 
@@ -13,7 +15,7 @@
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event) && ValidateDropDown());">Save</button>
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>@*&& ValidateDropDown()*@
                 <a href="~/ProductCategory/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
@@ -23,7 +25,7 @@
             </div>
         </div>
 
-        <div class="portlet-body form">
+        <div class="portlet-body form formMinHeight500">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.ProductCategoryModel.CategoryId)
@@ -36,12 +38,12 @@
                         @Html.TextBoxFor(m => m.ProductCategoryModel.Name, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
                     </div>
                 </div>
-                <div class="form-group margin-top-20">
+                @*<div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductCategoryModel.MainCategoryId, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
                         @Html.DropDownListFor(m => m.ProductCategoryModel.MainCategoryId, new SelectList(Model.ProductMainCategories, "CategoryId", "Name"), "Please select", new { @class = "form-control input-circle", placeholder = "Name" })
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductCategoryModel.Description, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">

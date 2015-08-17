@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using iTextSharp.text;
 using TMD.Interfaces.IServices;
-using TMD.Models.RequestModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.ViewModels;
@@ -12,7 +10,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee")]
     public class ProductCategoryController : BaseController
     {
         private readonly IProductCategoryService productCategoryService;

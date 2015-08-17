@@ -33,6 +33,9 @@ namespace TMD.Web.Models
         [Display(Name = "Category")]
         public long CategoryId { get; set; }
 
+        [Required]
+        [Display(Name = "V.A.T Rate")]
+        public float VATRate { get; set; }
 
         [Display(Name = "Vendor")]
         public long VendorId { get; set; }

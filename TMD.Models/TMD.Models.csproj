@@ -110,10 +110,12 @@
     <Compile Include="DomainModels\AspNetUserLogin.cs" />
     <Compile Include="DomainModels\AspNetUserRole.cs" />
     <Compile Include="DomainModels\City.cs" />
+    <Compile Include="DomainModels\Color.cs" />
     <Compile Include="DomainModels\Company.cs" />
     <Compile Include="DomainModels\CompanyContact.cs" />
     <Compile Include="DomainModels\CompanyStatus.cs" />
     <Compile Include="DomainModels\Configuration.cs" />
+    <Compile Include="DomainModels\Currency.cs" />
     <Compile Include="DomainModels\Expense.cs" />
     <Compile Include="DomainModels\ExpenseCategory.cs" />
     <Compile Include="DomainModels\InventoryItem.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="DomainModels\ProductConfiguration.cs" />
     <Compile Include="DomainModels\ProductMainCategory.cs" />
     <Compile Include="DomainModels\ProductsStock.cs" />
+    <Compile Include="DomainModels\Size.cs" />
     <Compile Include="DomainModels\Source.cs" />
     <Compile Include="DomainModels\StagingEbayBatchImport.cs" />
     <Compile Include="DomainModels\StagingEbayItem.cs" />

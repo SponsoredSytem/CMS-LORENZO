@@ -16,8 +16,8 @@
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue" name="save" onclick="return(ValidateFields(event) && ValidateSalePrice()) ;">Save</button>
-                <button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return (ValidateFields(event) && ValidateSalePrice());">Save & Add New</button>
+                <button type="submit" class="btn btn-circle blue" name="save" onclick="return(ValidateFields(event)) ;">Save</button> @*&& ValidateSalePrice()*@
+                <button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return (ValidateFields(event));">Save & Add New</button>
                 <a href="~/Product/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="portlet-body form">
+        <div class="portlet-body form formMinHeight500">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.ProductModel.ProductId)
@@ -35,69 +35,45 @@
                 @Html.HiddenFor(m => m.ProductModel.RecCreatedDate)
                 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.ProductBarCode, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.ProductBarCode, new { @class = "form-control input-circle searchBarcode", @autofocus = "autofocus", @id = "Barcode" })
-                    </div>
-                </div>
-
-                <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.Name, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Name, new { @class = "form-control input-circle mandatory", @id = "ProductName" })
+                        @Html.TextBoxFor(m => m.ProductModel.Name, new { @class = "form-control input-circle mandatory", @autofocus = "autofocus", @id = "ProductName" })
                         @Html.ValidationMessageFor(model => model.ProductModel.Name)
                     </div>
-                    @if (ViewBag.LastSavedId != null)
-                    {
-                        @Html.Label("Last Saved Product Id", new { @class = "col-md-1 control-label" })
-                        <div class="col-md-2">
-                            @Html.TextBox("LastSavedProductId", (long)ViewBag.LastSavedId, new { @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
-                        </div>
-                    }
-                </div>
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.PurchasePrice, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.PurchasePrice, new { @class = "form-control input-circle mandatory", @id = "PurchasePrice", @onchange = "ShowProfit();" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.PurchasePrice)
-                    </div>
                 </div>
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.ProductModel.ProductCode, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory", @id = "SalePrice", @onchange = "SetMinSalePrice();ShowProfit();" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.SalePrice)
-                    </div>
-
-                    @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
-                    <div class="col-md-2">
-                        @Html.TextBox("Profit", null, new { @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
-                    </div>
-                </div>
-
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle", @id = "MinSalePriceAllowed" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.MinSalePriceAllowed)
+                        @Html.TextBoxFor(m => m.ProductModel.ProductCode, new { @class = "form-control input-circle mandatory", @id = "ProductCode" })
                     </div>
                 </div>
                 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.CategoryId, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x=>x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "form-control input-circle mandatory", @id = "Category" })
+                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "form-control input-circle mandatory", @id = "Category" })
                         @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
                     </div>
-                    
+
                 </div>
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.Comments, new { @class = "col-md-3 control-label" })
+                    @Html.Label("Product Price", new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Comments, new { @class = "form-control input-circle" })
+                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory", @id = "ProductPrice" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.SalePrice)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Currency", new { @class = "form-control input-circle mandatory", @id = "Currency" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductModel.VATRate, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ProductModel.VATRate, new { @class = "form-control input-circle mandatory"})
                     </div>
                 </div>
             </div>
