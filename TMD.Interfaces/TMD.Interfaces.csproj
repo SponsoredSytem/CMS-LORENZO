@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository\ISizeRepository.cs" />
+    <Compile Include="IRepository\IColorRepository.cs" />
+    <Compile Include="IRepository\ICurrencyRepository.cs" />
     <Compile Include="IRepository\ICompanyStatusRepository.cs" />
     <Compile Include="IRepository\ICompanyContactRepository.cs" />
     <Compile Include="IRepository\ISourceRepository.cs" />
@@ -76,6 +79,9 @@
     <Compile Include="IRepository\IProductRepositoy.cs" />
     <Compile Include="IRepository\IProductCategoryRepository.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\ISizeService.cs" />
+    <Compile Include="IServices\IColorService.cs" />
+    <Compile Include="IServices\ICurrencyService.cs" />
     <Compile Include="IServices\ICompanyStatusService.cs" />
     <Compile Include="IServices\ICompanyContactService.cs" />
     <Compile Include="IServices\ISourceService.cs" />

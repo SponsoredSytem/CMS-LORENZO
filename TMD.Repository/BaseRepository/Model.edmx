@@ -425,6 +425,7 @@
           <Property Name="CurrencyId" Type="int" />
           <Property Name="SizeId" Type="int" />
           <Property Name="ColorId" Type="int" />
+          <Property Name="VATRate" Type="float" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
@@ -1894,6 +1895,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <NavigationProperty Name="Color" Relationship="TMD.Models.DomainModels.FK_Products_Color" FromRole="Product" ToRole="Color" />
           <NavigationProperty Name="Currency" Relationship="TMD.Models.DomainModels.FK_Products_Currency" FromRole="Product" ToRole="Currency" />
           <NavigationProperty Name="Size" Relationship="TMD.Models.DomainModels.FK_Products_Size" FromRole="Product" ToRole="Size" />
+          <Property Name="VATRate" Type="Double" />
         </EntityType>
         <EntityType Name="StagingToyGraderItem">
           <Key>
@@ -2809,6 +2811,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="VATRate" ColumnName="VATRate" />
                 <ScalarProperty Name="ColorId" ColumnName="ColorId" />
                 <ScalarProperty Name="SizeId" ColumnName="SizeId" />
                 <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />

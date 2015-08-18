@@ -20,6 +20,10 @@ namespace TMD.Web.ModelMappers
                 SalePrice = source.SalePrice,
                 MinSalePriceAllowed = source.MinSalePriceAllowed,
                 Comments = source.Comments,
+                CurrencyId = source.CurrencyId,
+                ColorId = source.ColorId,
+                SizeId = source.SizeId,
+                VATRate = source.VATRate,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
@@ -42,6 +46,12 @@ namespace TMD.Web.ModelMappers
                 SalePrice = source.SalePrice,
                 MinSalePriceAllowed = source.MinSalePriceAllowed,
                 Comments = source.Comments,
+
+                CurrencyId = source.CurrencyId,
+                ColorId = source.ColorId,
+                SizeId = source.SizeId,
+                VATRate = source.VATRate,
+
                 CategoryName = source.ProductCategory.Name,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

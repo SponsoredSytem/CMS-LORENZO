@@ -21,7 +21,7 @@ namespace TMD.Models.DomainModels
         public int? CurrencyId { get; set; }
         public int? SizeId { get; set; }
         public int? ColorId { get; set; }
-
+        public double? VATRate { get; set; }
         public virtual ICollection<InventoryItem> InventoryItems { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }

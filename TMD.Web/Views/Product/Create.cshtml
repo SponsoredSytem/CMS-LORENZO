@@ -55,7 +55,6 @@
                         @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "form-control input-circle mandatory", @id = "Category" })
                         @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
                     </div>
-
                 </div>
 
                 <div class="form-group margin-top-20">
@@ -65,7 +64,7 @@
                         @Html.ValidationMessageFor(model => model.ProductModel.SalePrice)
                     </div>
                     <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Currency", new { @class = "form-control input-circle mandatory", @id = "Currency" })
+                        @Html.DropDownListFor(model => model.ProductModel.CurrencyId, new SelectList(Model.Currencies, "CurrencyId", "CurrencyCode"), "Select Currency", new { @class = "form-control input-circle mandatory", @id = "Currency" })
                         @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
                     </div>
                 </div>
@@ -74,6 +73,23 @@
                     @Html.LabelFor(m => m.ProductModel.VATRate, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
                         @Html.TextBoxFor(m => m.ProductModel.VATRate, new { @class = "form-control input-circle mandatory"})
+                        @Html.ValidationMessageFor(model => model.ProductModel.VATRate)
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductModel.SizeId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.ProductModel.SizeId, new SelectList(Model.Sizes, "SizeId", "SizeTitle"), "Select Size", new { @class = "form-control input-circle mandatory", @id = "ProductSize" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductModel.ColorId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.ProductModel.ColorId, new SelectList(Model.Colors, "ColorId", "ColorTitle"), "Select Color", new { @class = "form-control input-circle mandatory", @id = "ProductColor" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
                     </div>
                 </div>
             </div>

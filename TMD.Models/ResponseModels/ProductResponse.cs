@@ -14,6 +14,9 @@ namespace TMD.Models.ResponseModels
         /// Product Categories
         /// </summary>
         public IEnumerable<ProductCategory> ProductCategories { get; set; }
+        public IEnumerable<Color> Colors { get; set; }
+        public IEnumerable<Currency> Currencies { get; set; }
+        public IEnumerable<Size> Sizes { get; set; }
 
         public Product Product { get; set; }
     }

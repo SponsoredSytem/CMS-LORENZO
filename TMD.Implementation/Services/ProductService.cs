@@ -14,13 +14,19 @@ namespace TMD.Implementation.Services
         private readonly IInventoryItemRepositoy inventoryItemRepositoy;
         private readonly IOrderItemsRepository orderItemsRepository;
         private readonly IProductCategoryRepository productCategoryRepository;
+        private readonly IColorRepository colorRepository;
+        private readonly ICurrencyRepository currencyRepository;
+        private readonly ISizeRepository sizeRepository;
 
-        public ProductService(IProductRepository productRepository, IInventoryItemRepositoy inventoryItemRepositoy, IOrderItemsRepository orderItemsRepository, IProductCategoryRepository productCategoryRepository)
+        public ProductService(IProductRepository productRepository, IInventoryItemRepositoy inventoryItemRepositoy, IOrderItemsRepository orderItemsRepository, IProductCategoryRepository productCategoryRepository,IColorRepository colorRepository,ICurrencyRepository currencyRepository, ISizeRepository sizeRepository)
         {
             this.productRepository = productRepository;
             this.inventoryItemRepositoy = inventoryItemRepositoy;
             this.orderItemsRepository = orderItemsRepository;
             this.productCategoryRepository = productCategoryRepository;
+            this.colorRepository = colorRepository;
+            this.currencyRepository = currencyRepository;
+            this.sizeRepository = sizeRepository;
         }
 
         public Product GetProduct(long productId)
@@ -66,6 +72,9 @@ namespace TMD.Implementation.Services
                     responseResult.Product = product;
             }
             responseResult.ProductCategories = productCategoryRepository.GetAll().ToList();
+            responseResult.Colors = colorRepository.GetAll().ToList();
+            responseResult.Currencies = currencyRepository.GetAll().ToList();
+            responseResult.Sizes = sizeRepository.GetAll().ToList();
             return responseResult;
         }
 

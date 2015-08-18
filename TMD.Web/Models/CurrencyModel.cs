@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace TMD.Models.DomainModels
+namespace TMD.Web.Models
 {
-    public class Currency
+    public class CurrencyModel
     {
         public int CurrencyId { get; set; }
         public string CurrencyCode { get; set; }
@@ -12,7 +15,5 @@ namespace TMD.Models.DomainModels
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
-
-        public virtual ICollection<Product> Products { get; set; }
     }
 }

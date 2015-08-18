@@ -38,6 +38,9 @@ namespace TMD.Implementation
             unityContainer.RegisterType<ISourceService, SourceService>();
             unityContainer.RegisterType<ICompanyContactService, CompanyContactService>();
             unityContainer.RegisterType<ICompanyStatusService, CompanyStatusService>();
+            unityContainer.RegisterType<ICurrencyService, CurrencyService>();
+            unityContainer.RegisterType<IColorService, ColorService>();
+            unityContainer.RegisterType<ISizeService, SizeService>();
             
         } 
     }

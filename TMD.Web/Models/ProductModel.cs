@@ -35,7 +35,8 @@ namespace TMD.Web.Models
 
         [Required]
         [Display(Name = "V.A.T Rate")]
-        public float VATRate { get; set; }
+        [Range(1, 100, ErrorMessage = "Please enter valid value.")]
+        public double? VATRate { get; set; }
 
         [Display(Name = "Vendor")]
         public long VendorId { get; set; }
@@ -44,7 +45,13 @@ namespace TMD.Web.Models
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
-
+        [Display(Name = "Currency")]
+        public int? CurrencyId { get; set; }
+        [Display(Name = "Size")]
+        public int? SizeId { get; set; }
+        [Display(Name = "Color")]
+        public int? ColorId { get; set; }
+        
 
         //ADDED BY USMAN
         public string CategoryName { get; set; } //To display on Listview

@@ -76,10 +76,17 @@ namespace TMD.Web.Controllers
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             ProductViewModel productViewModel=new ProductViewModel();
             var responseResult = productService.GetProductResponse(id);
+
             if (responseResult.ProductCategories.Any())
                 productViewModel.ProductCategories = responseResult.ProductCategories.Select(x => x.CreateFromServerToClient());
+
+            productViewModel.Sizes = responseResult.Sizes.Select(x => x.CreateFromServerToClient());
+            productViewModel.Colors = responseResult.Colors.Select(x => x.CreateFromServerToClient());
+            productViewModel.Currencies = responseResult.Currencies.Select(x => x.CreateFromServerToClient());
+
             if (responseResult.Product != null)
                 productViewModel.ProductModel = responseResult.Product.CreateFromServerToClient();
+            
             var lastSavedCategoryID = TempData["LastCategoryId"];
             if (lastSavedCategoryID != null)
             {
@@ -110,10 +117,10 @@ namespace TMD.Web.Controllers
                 productViewModel.ProductModel.RecLastUpdatedDate = DateTime.Now;
 
                 //Minimum sale price should not be less than purchase price
-                if (productViewModel.ProductModel.MinSalePriceAllowed <
-                    productViewModel.ProductModel.PurchasePrice)
-                    productViewModel.ProductModel.MinSalePriceAllowed =
-                        productViewModel.ProductModel.SalePrice;
+                //if (productViewModel.ProductModel.MinSalePriceAllowed <
+                //    productViewModel.ProductModel.PurchasePrice)
+                //    productViewModel.ProductModel.MinSalePriceAllowed =
+                //        productViewModel.ProductModel.SalePrice;
                 var lastSavedId = productService.SaveProduct(productViewModel.ProductModel.CreateFromClientToServer());
                 if (lastSavedId > 0)
                 {
