@@ -41,6 +41,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<ICurrencyService, CurrencyService>();
             unityContainer.RegisterType<IColorService, ColorService>();
             unityContainer.RegisterType<ISizeService, SizeService>();
+            unityContainer.RegisterType<IProductImageService, ProductImageService>();
             
         } 
     }

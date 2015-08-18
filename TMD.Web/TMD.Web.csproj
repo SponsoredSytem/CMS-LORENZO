@@ -317,6 +317,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
     <Compile Include="ModelMappers\ColorMapper.cs" />
     <Compile Include="ModelMappers\CompanyStatusMapper.cs" />

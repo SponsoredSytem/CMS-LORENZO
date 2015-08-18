@@ -392,6 +392,20 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="DefaultVendorId" Type="bigint" />
         </EntityType>
+        <EntityType Name="ProductImages">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="IsDefaultImage" Type="bit" Nullable="false" />
+          <Property Name="ContentType" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="ProductMainCategory">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -886,6 +900,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductImages_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductImages" Type="Self.ProductImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductImages">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Products_Color">
           <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -1062,6 +1088,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductConfiguration" EntityType="Self.ProductConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImages" EntityType="Self.ProductImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductMainCategory" EntityType="Self.ProductMainCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
@@ -1177,6 +1204,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <AssociationSet Name="FK_ProductCategory_ProductMainCategory" Association="Self.FK_ProductCategory_ProductMainCategory">
             <End Role="ProductMainCategory" EntitySet="ProductMainCategory" />
             <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImages_Products" Association="Self.FK_ProductImages_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductImages" EntitySet="ProductImages" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Color" Association="Self.FK_Products_Color">
             <End Role="Color" EntitySet="Color" />
@@ -1432,6 +1463,11 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <AssociationSet Name="FK_Products_Size" Association="TMD.Models.DomainModels.FK_Products_Size">
             <End Role="Size" EntitySet="Sizes" />
             <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="ProductImages" EntityType="TMD.Models.DomainModels.ProductImage" />
+          <AssociationSet Name="FK_ProductImages_Products" Association="TMD.Models.DomainModels.FK_ProductImages_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductImage" EntitySet="ProductImages" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1896,6 +1932,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <NavigationProperty Name="Currency" Relationship="TMD.Models.DomainModels.FK_Products_Currency" FromRole="Product" ToRole="Currency" />
           <NavigationProperty Name="Size" Relationship="TMD.Models.DomainModels.FK_Products_Size" FromRole="Product" ToRole="Size" />
           <Property Name="VATRate" Type="Double" />
+          <NavigationProperty Name="ProductImages" Relationship="TMD.Models.DomainModels.FK_ProductImages_Products" FromRole="Product" ToRole="ProductImage" />
         </EntityType>
         <EntityType Name="StagingToyGraderItem">
           <Key>
@@ -2544,6 +2581,33 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Guid" Nullable="false" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="ImageData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="IsDefaultImage" Type="Boolean" Nullable="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_ProductImages_Products" FromRole="ProductImage" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_ProductImages_Products">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductImage" Role="ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3167,6 +3231,21 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductImages">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductImage">
+              <MappingFragment StoreEntitySet="ProductImages">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="IsDefaultImage" ColumnName="IsDefaultImage" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3266,6 +3345,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_Color" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_Currency" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_Size" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductImage" Width="1.5" PointX="14.25" PointY="21.25" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductImages_Products" />
       </Diagram>
     </Diagrams>
   </Designer>

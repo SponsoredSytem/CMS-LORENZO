@@ -28,5 +28,6 @@ namespace TMD.Models.DomainModels
         public virtual Color Color { get; set; }
         public virtual Currency Currency { get; set; }
         public virtual Size Size { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
     }
 }

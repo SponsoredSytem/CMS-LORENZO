@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
 using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
@@ -17,11 +21,13 @@ namespace TMD.Web.Controllers
     {
         private readonly IProductService productService;
         private readonly IProductCategoryService productCategoryService;
+        private readonly IProductImageService productImageService;
 
-        public ProductController(IProductService productService,IProductCategoryService productCategoryService)
+        public ProductController(IProductService productService,IProductCategoryService productCategoryService, IProductImageService productImageService)
         {
             this.productService = productService;
             this.productCategoryService = productCategoryService;
+            this.productImageService = productImageService;
         }
 
         // GET: Products
@@ -124,6 +130,48 @@ namespace TMD.Web.Controllers
                 var lastSavedId = productService.SaveProduct(productViewModel.ProductModel.CreateFromClientToServer());
                 if (lastSavedId > 0)
                 {
+                    //Save image to Db
+                    if (productViewModel.ProductDefaultImage != null)
+                    {
+                        #region Image Saving
+
+                        try
+                        {
+                            var tempStream = productViewModel.ProductDefaultImage.InputStream;
+
+                            //File size must be less than 10MBs
+                            if (productViewModel.ProductDefaultImage.ContentLength > 0 && productViewModel.ProductDefaultImage.ContentLength < 10000000)
+                            {
+                                //reisze the image for facebook optimization
+                                var resizedImage = Utility.ResizeImage(Image.FromStream(tempStream), Utility.GetImageFormat(productViewModel.ProductDefaultImage.ContentType), Convert.ToInt32(ConfigurationManager.AppSettings["ProductImageWidth"]), Convert.ToInt32(ConfigurationManager.AppSettings["ProductImageHeight"]), true);
+
+                                byte[] bytes = new byte[resizedImage.Length];
+                                //copy file content to array
+                                resizedImage.Read(bytes, 0, Convert.ToInt32(resizedImage.Length));
+
+                                ProductImage productImage = new ProductImage
+                                {
+                                    ProductId = lastSavedId,
+                                    IsDefaultImage = true,
+                                    ImageData = bytes,
+                                    ContentType = productViewModel.ProductDefaultImage.ContentType,
+                                    CreatedBy = User.Identity.GetUserId(),
+                                    CreatedDate = DateTime.Now.Date,
+                                    UpdatedBy = User.Identity.GetUserId(),
+                                    UpdatedDate = DateTime.Now.Date,
+                                };
+                                productImageService.AddProductImage(productImage);
+                            }
+
+                        }
+                        catch (Exception exception)
+                        {
+                            TempData["message"] = new MessageViewModel { Message = "There is some problem in saving the image, please try again and upload a correct image.", IsError = true };
+                            return RedirectToAction("UserActivityAdd");
+                        }
+
+                        #endregion
+                    }
                     if (isCreated)
                     {
                         //Product Saved

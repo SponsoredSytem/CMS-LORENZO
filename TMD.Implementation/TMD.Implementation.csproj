@@ -129,6 +129,7 @@
     <Compile Include="Services\CompanyStatusService.cs" />
     <Compile Include="Services\CompanyContactService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Services\ProductImageService.cs" />
     <Compile Include="Services\SizeService.cs" />
     <Compile Include="Services\SourceService.cs" />
     <Compile Include="Services\MunicipalService.cs" />
