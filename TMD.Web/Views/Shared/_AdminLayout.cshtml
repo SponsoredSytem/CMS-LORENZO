@@ -165,6 +165,14 @@
                             </a>
                         </li>
                         
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "21") ? "active " : "")>
+                            <a href="~/Event/Index" class="WhiteColor">
+                                <i class="icon-basket"></i>
+                                <span class="title">Events</span>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                        
                         <li class=@( (Session["ParentMenu"] != null && Session["ParentMenu"].ToString() == "1") ? "active open" : "")>
                             @{
                             Session["ParentMenu"] = 0;

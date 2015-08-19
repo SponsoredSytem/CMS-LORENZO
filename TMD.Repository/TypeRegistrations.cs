@@ -39,6 +39,7 @@ namespace TMD.Repository
             unityContainer.RegisterType<IColorRepository, ColorRepository>();
             unityContainer.RegisterType<ISizeRepository, SizeRepository>();
             unityContainer.RegisterType<IProductImageRepository, ProductImageRepository>();
+            unityContainer.RegisterType<IEventRepository, EventRepository>();
         }
     }
 }

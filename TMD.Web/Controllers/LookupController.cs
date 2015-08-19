@@ -109,6 +109,7 @@ namespace TMD.Web.Controllers
         public ActionResult Sources()
         {
             IEnumerable<Source> sources = sourceService.GetAllSources().Select(x => x.CreateFromServerToClient());
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(sources);
         }
 
@@ -180,6 +181,7 @@ namespace TMD.Web.Controllers
         public ActionResult Currency()
         {
             IEnumerable<CurrencyModel> currencies = currencyService.GetAllCurrencies().Select(x => x.CreateFromServerToClient());
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(currencies);
         }
 
@@ -246,6 +248,7 @@ namespace TMD.Web.Controllers
         public ActionResult Color()
         {
             IEnumerable<ColorModel> colors = colorService.GetAllColors().Select(x => x.CreateFromServerToClient());
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(colors);
         }
 
@@ -312,6 +315,7 @@ namespace TMD.Web.Controllers
         public ActionResult Size()
         {
             IEnumerable<SizeModel> sizes = sizeService.GetAllSizes().Select(x => x.CreateFromServerToClient());
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(sizes);
         }
 
@@ -378,6 +382,7 @@ namespace TMD.Web.Controllers
         public ActionResult Municipals()
         {
             IEnumerable<Municipal> Municipals = municipalService.GetAllMunicipals().Select(x => x.CreateFromServerToClient());
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(Municipals);
         }
 
@@ -453,6 +458,7 @@ namespace TMD.Web.Controllers
         public ActionResult CompanyStatuses()
         {
             IEnumerable<CompanyStatus> companyStatuses= companyStatusService.GetCompanyStatusesBySortOrder().Select(x => x.CreateFromServerToClient());
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(companyStatuses);
         }
 

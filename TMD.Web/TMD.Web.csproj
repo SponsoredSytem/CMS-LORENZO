@@ -299,6 +299,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ConfigurationController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\ExpenseCategoryController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
+    <Compile Include="ModelMappers\EventMapper.cs" />
     <Compile Include="ModelMappers\ColorMapper.cs" />
     <Compile Include="ModelMappers\CompanyStatusMapper.cs" />
     <Compile Include="ModelMappers\CompanyContactMapper.cs" />
@@ -356,6 +358,7 @@
     <Compile Include="Models\CompanyStatus.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\ExpenseCategoryModel.cs" />
     <Compile Include="Models\ExpenseModel.cs" />
     <Compile Include="Models\InventoryItemListModel.cs" />
@@ -1804,6 +1807,8 @@
     <Content Include="Views\Lookup\Color.cshtml" />
     <Content Include="Views\Lookup\Size.cshtml" />
     <Content Include="Views\Lookup\SizeManage.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Event\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
