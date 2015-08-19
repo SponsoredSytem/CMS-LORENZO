@@ -35,27 +35,7 @@
                             <table class="responsive">
                                 <tr>
                                     <td class="col-md-1">
-                                        <label class="control-label"> Barcode </label>
-                                    </td>
-                                    <td class="col-md-2">
-                                        <div class="input-icon">
-                                            <i class="fa fa-search"></i>
-                                            @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "Barcode", @placeholder = "Barcode" })
-                                        </div>
-                                    </td>
-                                    
-                                    <td class="col-md-1">
-                                        <label class="control-label"> Product Code </label>
-                                    </td>
-                                    <td class="col-md-2">
-                                        <div class="input-icon">
-                                            <i class="fa fa-search"></i>
-                                            @Html.TextBox("Product Code", "", new { @class = "searchInputs form-control listFilter", @id = "ProductCode", @placeholder = "Product Code" })
-                                        </div>
-                                    </td>
-
-                                    <td class="col-md-1">
-                                        <label class="control-label"> Product Name </label>
+                                        <label class="control-label"> Name </label>
                                     </td>
                                     <td class="col-md-2">
                                         <div class="input-icon">
@@ -63,25 +43,44 @@
                                             @Html.TextBox("ProductName", "", new { @class = "searchInputs form-control listFilter", @id = "ProductName", @placeholder = "Product Name" })
                                         </div>
                                     </td>
-                                </tr>
-                                <tr style="height: 10px !important; "></tr>
-                                    <tr>
                                     <td class="col-md-1">
                                         <label class="control-label"> Category </label>
                                     </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "searchInputs form-control listFilter", @id = "Category" })
+                                        </div>
+                                    </td>
+
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Size </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.TextBox("Can Size", "", new { @class = "searchInputs form-control listFilter", @id = "CanSize", @placeholder = "Can Size" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height: 10px !important; "></tr>
+                                    <tr>
+                                        <td class="col-md-1">
+                                            <label class="control-label"> Color </label>
+                                        </td>
                                         <td class="col-md-2">
                                             <div class="input-icon">
                                                 <i class="fa fa-search"></i>
-                                                @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "searchInputs form-control listFilter", @id = "Category" })
+                                                @Html.TextBox("Color", "", new { @class = "searchInputs form-control listFilter", @id = "Color", @placeholder = "Color" })
                                             </div>
                                         </td>
                                         <td class="col-md-1">
-                                            <label class="control-label"> Price </label>
+                                            <label class="control-label"> Product Price </label>
                                         </td>
                                         <td class="col-md-2">
                                             <div class="input-icon">
                                                 <i class="fa fa-search"></i>
-                                                @Html.TextBox("ProductPrice", "", new { @class = "searchInputs form-control listFilter", @id = "ProductPrice", @placeholder = "Sale/Cost Price" })
+                                                @Html.TextBox("ProductPrice", "", new { @class = "searchInputs form-control listFilter", @id = "ProductPrice", @placeholder = "Product Price" })
                                             </div>
                                         </td>
                                     </tr>
@@ -93,15 +92,13 @@
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th class="tableHeaderWhite">Product Code</th>
+                                <th></th>
                                 <th class="tableHeaderWhite">Name</th>
                                 <th class="tableHeaderWhite">Category</th>
-                                <th class="tableHeaderWhite">Sale Price</th>
-                                @if (isAdmin)
-                                {
-                                    <th class="tableHeaderWhite">Cost Price</th>
-                                    <th></th>
-                                }
+                                <th class="tableHeaderWhite">Size</th>
+                                <th class="tableHeaderWhite">Color</th>
+                                <th class="tableHeaderWhite">Product Price</th>
+                                <th></th>
                             </tr>
                         </thead>
                         
@@ -130,35 +127,24 @@
 
         var columns;
         var columnDefs;
-        if ('@isAdmin' == "True") {
-            columns = [
-                { "data": "ProductId" },
+        columns = [
+                { "data": "ProductDefaultImageTag" },
                 { "data": "Name" },
                 { "data": "CategoryName" },
+                { "data": "SizeTitle" },
+                { "data": "ColorTitle" },
                 { "data": "SalePrice" },
-                { "data": "PurchasePrice" },
                 {
                     "orderable": false,
                     "data": null,
                     "defaultContent": "<a class='edit'  href='javascript:;'>Edit</a>",
                     "class": "textAlignRight"
                 }
-            ];
-            columnDefs = [
-                { 'bSortable': false, 'aTargets': [5] }
-            ];
-        } else {
-            columns = [
-                { "data": "ProductId" },
-                { "data": "Name" },
-                { "data": "CategoryName" },
-                { "data": "SalePrice" }
-            ];
-            columnDefs = [
-                { 'bSortable': false, 'aTargets': [3] }
-            ];
-        }
-            
+        ];
+        columnDefs = [
+            { 'bSortable': false, 'aTargets': [0,4] }
+        ];
+
         var oTable = $('#dataTable').dataTable({
             "iDisplayLength": 11,
             "displayStart": start || 0,
@@ -182,8 +168,8 @@
                     params.SortBy = params.order[0].column;
                     params.IsAsc = params.order[0].dir === "asc";
 
-                    params.ProductCode = $('#ProductCode').val();
-                    params.Barcode = $('#Barcode').val();
+                    params.CanSize = $('#CanSize').val();
+                    params.Color = $('#Color').val();
                     params.Category = $('#Category').val();
                     params.Name = $('#ProductName').val();
                     params.PurchasePrice = $('#ProductPrice').val();
@@ -195,8 +181,8 @@
         });
 
         $('#btnResetFltr').on('click', function(e) {
-            $('#ProductCode').val("");
-            $('#Barcode').val("");
+            $('#CanSize').val("");
+            $('#Color').val("");
             $('#Category').val("");
             $('#ProductName').val("");
             $('#ProductPrice').val("");
@@ -212,6 +198,6 @@
 
         });
     });
-    
+
     function fnActivityComplete(data, e) {}
 </script>

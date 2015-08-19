@@ -5,8 +5,8 @@ namespace TMD.Models.RequestModels
     public class ProductSearchRequest : GetPagedListRequest
     {
         public string Name { get; set; }
-        public string Barcode { get; set; }
-        public long ProductCode{ get; set; }
+        public string Color { get; set; }
+        public string CanSize { get; set; }
         public long Category { get; set; }
         public decimal PurchasePrice { get; set; }
 

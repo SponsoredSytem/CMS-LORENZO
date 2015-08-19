@@ -36,6 +36,9 @@ namespace TMD.Web.ModelMappers
 
         public static ProductModel CreateFromServerToClient(this Product source)
         {
+            var ProductDefaultImageId = source.ProductImages.FirstOrDefault(x => x.IsDefaultImage) != null
+                ? Convert.ToString(source.ProductImages.FirstOrDefault(x => x.IsDefaultImage).ImageId)
+                : "";
             return new ProductModel
             {
                 CategoryId = source.CategoryId,
@@ -54,7 +57,10 @@ namespace TMD.Web.ModelMappers
                 SizeId = source.SizeId,
                 VATRate = source.VATRate,
 
-                ProductDefaultImageId = source.ProductImages.FirstOrDefault(x => x.IsDefaultImage) != null ? Convert.ToString(source.ProductImages.FirstOrDefault(x => x.IsDefaultImage).ImageId) : "",
+                ColorTitle = source.Color!=null?source.Color.ColorTitle:"",
+                SizeTitle = source.Size!=null?source.Size.SizeTitle:"",
+                ProductDefaultImageTag = string.IsNullOrEmpty(ProductDefaultImageId)?"": "<img src='/Product/ProductImage?imageId=" + ProductDefaultImageId + "' width='100%'/>",
+                ProductDefaultImageId = ProductDefaultImageId,
                 CategoryName = source.ProductCategory.Name,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

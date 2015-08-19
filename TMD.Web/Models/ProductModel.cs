@@ -53,6 +53,10 @@ namespace TMD.Web.Models
         [Display(Name = "Color")]
         public int? ColorId { get; set; }
         public string ProductDefaultImageId { get; set; }
+        public string ProductDefaultImageTag{ get; set; }
+
+        public string SizeTitle { get; set; }
+        public string ColorTitle { get; set; }
 
         //ADDED BY USMAN
         public string CategoryName { get; set; } //To display on Listview

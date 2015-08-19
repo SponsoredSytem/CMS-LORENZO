@@ -50,11 +50,11 @@ namespace TMD.Repository.Repositories
             Expression<Func<Product, bool>> query =
                     s => (
                             (
-                            (searchRequest.ProductCode==0 || s.ProductId.Equals(searchRequest.ProductCode))
-                            && (string.IsNullOrEmpty(searchRequest.Barcode) || s.ProductBarCode.Contains(searchRequest.Barcode))
+                            (string.IsNullOrEmpty(searchRequest.Color) || s.Color.ColorTitle == searchRequest.Color)
+                            && (string.IsNullOrEmpty(searchRequest.CanSize) || s.Size.SizeTitle == searchRequest.CanSize)
                             && (string.IsNullOrEmpty(searchRequest.Name) || s.Name.Contains(searchRequest.Name))
                             && (searchRequest.Category == 0 || s.CategoryId.Equals(searchRequest.Category))
-                            && (searchRequest.PurchasePrice == 0 || s.PurchasePrice.Equals(searchRequest.PurchasePrice) || s.SalePrice.Equals(searchRequest.PurchasePrice))
+                            && (searchRequest.PurchasePrice == 0 || s.SalePrice.Equals(searchRequest.PurchasePrice))
                             )
                         );
             IEnumerable<Product> result =
