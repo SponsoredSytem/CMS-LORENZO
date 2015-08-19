@@ -100,6 +100,16 @@
                         @Html.ValidationMessageFor(model => model.ProductDefaultImage)
                     </div>
                 </div>
+                @if (Model.ProductModel!=null && !string.IsNullOrEmpty(Model.ProductModel.ProductDefaultImageId))
+                {
+                    @Html.HiddenFor(m=>m.ProductModel.ProductDefaultImageId)
+                    <div class="form-group margin-top-20">
+                        @Html.Label("Product Image", new { @class = "col-md-3 control-label requiredLabel" })
+                        <div class="col-md-4">
+                            <img src="~/Product/ProductImage?imageId=@Model.ProductModel.ProductDefaultImageId" width="100%"/>
+                        </div>
+                    </div>
+                }
             </div>
 
         </div>

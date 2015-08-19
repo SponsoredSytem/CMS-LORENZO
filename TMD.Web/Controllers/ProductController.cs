@@ -151,6 +151,7 @@ namespace TMD.Web.Controllers
 
                                 ProductImage productImage = new ProductImage
                                 {
+                                    ImageId = productViewModel.ProductModel.ProductDefaultImageId != null ? new Guid(productViewModel.ProductModel.ProductDefaultImageId) : Guid.NewGuid(),
                                     ProductId = lastSavedId,
                                     IsDefaultImage = true,
                                     ImageData = bytes,
@@ -200,48 +201,20 @@ namespace TMD.Web.Controllers
             }
         }
 
-        // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        #region User Activity Image
+        public ActionResult ProductImage(Guid imageId)
         {
-            return View();
-        }
+            //pas id to service, and load image data
+            var image = productImageService.GetProductImage(imageId);
 
-        // POST: Product/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            //JOHN: Modified UpdatedDate to use Specific string date format.  Different Geo date formats could cause a bad URL Structure depending on seperators
+            if (image != null && image.ImageData != null)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                string ext = image.ContentType.Split('/')[1];
+                return File(image.ImageData, image.ContentType, "IMG_" + image.ImageId + ((DateTime)image.UpdatedDate).ToString("yyyyMMdd_HHmmss") + "." + ext);
             }
-            catch
-            {
-                return View();
-            }
+            return File(new byte[] { }, "image/png", "null.png");
         }
-
-        // GET: Product/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Product/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        #endregion
     }
 }

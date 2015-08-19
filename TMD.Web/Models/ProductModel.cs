@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TMD.Web.Models
 {
@@ -51,7 +52,7 @@ namespace TMD.Web.Models
         public int? SizeId { get; set; }
         [Display(Name = "Color")]
         public int? ColorId { get; set; }
-        
+        public string ProductDefaultImageId { get; set; }
 
         //ADDED BY USMAN
         public string CategoryName { get; set; } //To display on Listview

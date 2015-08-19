@@ -1,4 +1,6 @@
-﻿using TMD.Models.DomainModels;
+﻿using System;
+using System.Linq;
+using TMD.Models.DomainModels;
 using TMD.Web.Models;
 using TMD.Web.ViewModels.ApiModels;
 
@@ -52,6 +54,7 @@ namespace TMD.Web.ModelMappers
                 SizeId = source.SizeId,
                 VATRate = source.VATRate,
 
+                ProductDefaultImageId = source.ProductImages.FirstOrDefault(x => x.IsDefaultImage) != null ? Convert.ToString(source.ProductImages.FirstOrDefault(x => x.IsDefaultImage).ImageId) : "",
                 CategoryName = source.ProductCategory.Name,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

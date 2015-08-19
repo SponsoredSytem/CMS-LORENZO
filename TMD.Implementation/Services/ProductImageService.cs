@@ -1,4 +1,5 @@
-﻿using TMD.Interfaces.IRepository;
+﻿using System;
+using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
 
@@ -13,14 +14,14 @@ namespace TMD.Implementation.Services
             this.productImageRepository = productImageRepository;
         }
 
-        public ProductImage GetProductImage(string imageId)
+        public ProductImage GetProductImage(Guid imageId)
         {
             return productImageRepository.Find(imageId);
         }
 
         public bool AddProductImage(ProductImage productImage)
         {
-            productImageRepository.Add(productImage);
+            productImageRepository.Update(productImage);
             productImageRepository.SaveChanges();
             return true;
         }

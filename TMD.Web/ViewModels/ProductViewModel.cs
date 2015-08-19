@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 using TMD.Web.Models;
 
@@ -16,6 +16,7 @@ namespace TMD.Web.ViewModels
         public IEnumerable<ColorModel> Colors { get; set; }
         public IEnumerable<CurrencyModel> Currencies { get; set; }
         public IEnumerable<SizeModel> Sizes { get; set; }
+        [Display(Name = "Upload Product Image")]
         public HttpPostedFileBase ProductDefaultImage { get; set; }
     }
 }

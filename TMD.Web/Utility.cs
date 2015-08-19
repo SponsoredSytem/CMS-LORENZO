@@ -140,13 +140,17 @@ namespace TMD.Web
             int newHeight;
             if (preserveAspectRatio)
             {
-                int originalWidth = image.Width;
-                int originalHeight = image.Height;
-                float percentWidth = (float)width / (float)originalWidth;
-                float percentHeight = (float)height / (float)originalHeight;
-                float percent = percentHeight < percentWidth ? percentHeight : percentWidth;
-                newWidth = (int)(originalWidth * percent);
-                newHeight = (int)(originalHeight * percent);
+                //int originalWidth = image.Width;
+                //int originalHeight = image.Height;
+                //float percentWidth = (float)width / (float)originalWidth;
+                //float percentHeight = (float)height / (float)originalHeight;
+                //float percent = percentHeight < percentWidth ? percentHeight : percentWidth;
+                //newWidth = (int)(originalWidth * percent);
+                //newHeight = (int)(originalHeight * percent);
+
+                //save pic in original resolution
+                newWidth = image.Width;
+                newHeight = image.Height;
             }
             else
             {

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
@@ -30,6 +31,11 @@ namespace TMD.Repository.Repositories
         public ProductImage GetProductDefaultImage(long productId)
         {
             return DbSet.FirstOrDefault(x => x.IsDefaultImage && x.ProductId==productId);
+        }
+
+        public ProductImage Find(Guid? id)
+        {
+            return DbSet.FirstOrDefault(x => x.ImageId==id);
         }
     }
 }
