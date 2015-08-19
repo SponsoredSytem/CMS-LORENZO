@@ -10,8 +10,8 @@ namespace TMD.Web.ModelMappers
             return new SizeModel
             {
                 SizeId = size.SizeId,
-                SizeTitle = size.SizeTitle,
-                SizeValue = size.SizeValue,
+                SizeTitle = size.SizeValue,
+                SizeValue = size.SizeTitle,
                 SizeDescription = size.SizeDescription,
                 RecCreatedBy = size.RecCreatedBy,
                 RecCreatedDate = size.RecCreatedDate,
@@ -25,8 +25,8 @@ namespace TMD.Web.ModelMappers
             return new Size
             {
                 SizeId = size.SizeId,
-                SizeTitle = size.SizeTitle,
-                SizeValue = size.SizeValue,
+                SizeTitle = size.SizeValue,
+                SizeValue = size.SizeTitle,
                 SizeDescription = size.SizeDescription,
                 RecCreatedBy = size.RecCreatedBy,
                 RecCreatedDate = size.RecCreatedDate,

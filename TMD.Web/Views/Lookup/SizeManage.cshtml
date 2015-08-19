@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Manage Size";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    Session["MenuKey"] = 9;
+    Session["MenuKey"] = 12;
     Session["ParentMenu"] = 1;
 }
 
@@ -33,16 +33,16 @@
                 @Html.HiddenFor(m => m.RecCreatedDate)
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.SizeTitle, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.SizeTitle, "Size Title (10 digits)", new { @class = "col-md-3 control-label requiredLabel"})
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.SizeTitle, new { @class = "form-control input-circle mandatory", placeholder = "Size Title" })
+                        @Html.TextBoxFor(m => m.SizeTitle, new { @class = "form-control input-circle mandatory", placeholder = "Size Title", @maxlength = 10 })
                     </div>
                 </div>
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.SizeValue, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.SizeValue, "Size Value  (50 digits)", new { @class = "col-md-3 control-label requiredLabel"})
                     <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.SizeValue, new { @class = "form-control input-circle mandatory", placeholder = "Size Value" })
+                        @Html.TextAreaFor(m => m.SizeValue, new { @class = "form-control input-circle mandatory", placeholder = "Size Value", @maxlength = 50 })
                     </div>
                 </div>
                 

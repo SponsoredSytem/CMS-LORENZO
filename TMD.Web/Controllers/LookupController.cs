@@ -348,7 +348,7 @@ namespace TMD.Web.Controllers
 
                 return RedirectToAction("Size", "Lookup");
             }
-            catch
+            catch (Exception exp)
             {
                 return View();
             }
@@ -361,7 +361,7 @@ namespace TMD.Web.Controllers
             try
             {
                 actionMessage = "Deleted";
-                bool result = colorService.DeleteColor(colorService.GetColor(id));
+                bool result = sizeService.DeleteSize(sizeService.GetSize(id));
             }
             catch (Exception exp)
             {

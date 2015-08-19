@@ -33,16 +33,16 @@
                 @Html.HiddenFor(m => m.RecCreatedDate)
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.CurrencyCode, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.CurrencyCode, "Currency Code (10 Digits)",new { @class = "col-md-3 control-label requiredLabel"})
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "form-control input-circle mandatory", placeholder = "Currency Code" })
+                        @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "form-control input-circle mandatory", placeholder = "Currency Code", @maxlength = 10 })
                     </div>
                 </div>
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.CurrencySymbol, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.CurrencySymbol, "Currency Symbol (10 Digits)", new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.CurrencySymbol, new { @class = "form-control input-circle mandatory", placeholder = "Currency Symbol" })
+                        @Html.TextAreaFor(m => m.CurrencySymbol, new { @class = "form-control input-circle mandatory", placeholder = "Currency Symbol", @maxlength = 10 })
                     </div>
                 </div>
             </div>
