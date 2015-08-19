@@ -30,7 +30,7 @@ namespace TMD.Implementation.Services
 
         public long SaveColor(Color color)
         {
-            colorRepository.Add(color);
+            colorRepository.Update(color);
             colorRepository.SaveChanges();
             return color.ColorId;
         }

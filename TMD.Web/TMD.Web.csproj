@@ -1800,6 +1800,8 @@
     <Content Include="Views\Lookup\CompanyStatusManage.cshtml" />
     <Content Include="Views\Lookup\Currency.cshtml" />
     <Content Include="Views\Lookup\CurrencyManage.cshtml" />
+    <Content Include="Views\Lookup\ColorManage.cshtml" />
+    <Content Include="Views\Lookup\Color.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

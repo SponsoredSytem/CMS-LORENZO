@@ -245,28 +245,28 @@ namespace TMD.Web.Controllers
         #region Color
         public ActionResult Color()
         {
-            IEnumerable<CurrencyModel> currencies = currencyService.GetAllCurrencies().Select(x => x.CreateFromServerToClient());
-            return View(currencies);
+            IEnumerable<ColorModel> colors = colorService.GetAllColors().Select(x => x.CreateFromServerToClient());
+            return View(colors);
         }
 
         public ActionResult ColorManage(int? id)
         {
-            var model = new CurrencyModel();
+            var model = new ColorModel();
             if (id != null)
             {
-                var currency = currencyService.GetCurrency(id.Value);
-                if (currency != null)
-                    model = currency.CreateFromServerToClient();
+                var color = colorService.GetColor(id.Value);
+                if (color != null)
+                    model = color.CreateFromServerToClient();
             }
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult ColorManage(CurrencyModel model)
+        public ActionResult ColorManage(ColorModel model)
         {
             try
             {
-                if (model.CurrencyId == 0)
+                if (model.ColorId == 0)
                 {
                     model.RecCreatedBy = User.Identity.Name;
                     model.RecCreatedDate = DateTime.Now;
@@ -274,13 +274,13 @@ namespace TMD.Web.Controllers
                 model.RecLastUpdatedBy = User.Identity.Name;
                 model.RecLastUpdatedDate = DateTime.Now;
 
-                if (currencyService.SaveCurrency(model.CreateFromClientToServer()) > 0)
+                if (colorService.SaveColor(model.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
-                    TempData["message"] = new MessageViewModel { Message = "Currency has been saved successfully.", IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = "Color has been saved successfully.", IsSaved = true };
                 }
 
-                return RedirectToAction("Currency", "Lookup");
+                return RedirectToAction("Color", "Lookup");
             }
             catch
             {
@@ -289,19 +289,19 @@ namespace TMD.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult ColorCurrency(int id)
+        public ActionResult DeleteColor(int id)
         {
             string actionMessage;
             try
             {
                 actionMessage = "Deleted";
-                bool result = currencyService.DeleteCurrency(currencyService.GetCurrency(id));
+                bool result = colorService.DeleteColor(colorService.GetColor(id));
             }
             catch (Exception exp)
             {
                 //WebBase.Helper.LogError.Log(exp);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "Currency has been used in Product and cannot be deleted" } };
+                Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "Color has been used in Product and cannot be deleted" } };
                 return Json(error);
             }
             return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);

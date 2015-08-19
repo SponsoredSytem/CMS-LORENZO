@@ -201,7 +201,21 @@
                                         Product Categories
                                     </a>
                                 </li>
-
+                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "9") ? "active " : "")>
+                                    <a href="~/Lookup/Color">
+                                        Colors
+                                    </a>
+                                </li>
+                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "10") ? "active " : "")>
+                                    <a href="~/Lookup/Currency">
+                                        Currencies
+                                    </a>
+                                </li>
+                                @*<li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "11") ? "active " : "")>
+                                    <a href="~/Lookup/Size">
+                                        Sizes
+                                    </a>
+                                </li>*@
                             </ul>
                         </li>
                     }

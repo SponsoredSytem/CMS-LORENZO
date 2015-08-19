@@ -26,7 +26,7 @@ namespace TMD.Implementation.Services
 
         public long SaveCurrency(Currency currency)
         {
-            currencyRepository.Add(currency);
+            currencyRepository.Update(currency);
             currencyRepository.SaveChanges();
             return currency.CurrencyId;
         }

@@ -1,8 +1,8 @@
-﻿@model IEnumerable<TMD.Web.Models.CurrencyModel>
+﻿@model IEnumerable<TMD.Web.Models.ColorModel>
     @{
-        ViewBag.Title = "Currencies";
+        ViewBag.Title = "Colors";
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
-        Session["MenuKey"] = 10;
+        Session["MenuKey"] = 9;
         Session["ParentMenu"] = 1;
     }
 
@@ -19,7 +19,7 @@
                 <div class="portlet box blue-hoki">
                     <div class="portlet-title">
                         <div class="caption">
-                            Currencies
+                            Colors
                         </div>
 
                         <div class="tools FilterToolBar">
@@ -40,7 +40,7 @@
                                         <td class="col-md-2">
                                             <div class="input-icon">
                                                 <i class="fa fa-search"></i>
-                                                @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "SearchBox", @placeholder = "Code/Symbol" })
+                                                @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "SearchBox", @placeholder = "Title/Value/Description" })
                                             </div>
                                         </td>
                                         <td class="col-md-4"></td>
@@ -55,10 +55,10 @@
                 <div class="portlet box blue-hoki">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-cogs"></i>There are @(Model.Count()) Currencies
+                            <i class="fa fa-cogs"></i>There are @(Model.Count()) Colors
                         </div>
                         <div class="tools">
-                            <a href="~/Lookup/CurrencyManage" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Currency</a>
+                            <a href="~/Lookup/ColorManage" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Color</a>
                         </div>
                     </div>
                     <div class="portlet-body">
@@ -68,8 +68,9 @@
                                 <thead>
                                     <tr>
                                         <th style="display:none"></th>
-                                        <th>Code</th>
-                                        <th>Symbol</th>
+                                        <th>Title</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -77,9 +78,10 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td style="display:none">@item.CurrencyId</td>
-                                            <td>@Html.ActionLink(@item.CurrencyCode, "CurrencyManage", new { id = item.CurrencyId }) </td>
-                                            <td>@item.CurrencySymbol</td>
+                                            <td style="display:none">@item.ColorId</td>
+                                            <td>@Html.ActionLink(@item.ColorTitle, "ColorManage", new { id = item.ColorId }) </td>
+                                            <td>@item.ColorValue</td>
+                                            <td>@item.ColorDescription</td>
                                             <td class="textAlignRight">
                                                 <a class="delete" href="javascript:;">Delete</a>
                                             </td>
@@ -128,7 +130,7 @@
                 oTable.fnFilter('');
             });
             $('#dataTable').on('click', '.delete', function (e) {
-                var serviceURL = "DeleteCurrency";
+                var serviceURL = "DeleteColor";
                 e.preventDefault();
 
                 if (confirm("Are you sure to delete this row ?") == false) {
