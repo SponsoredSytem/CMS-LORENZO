@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using TMD.Models.DomainModels;
 using TMD.Web.Models;
@@ -59,7 +60,7 @@ namespace TMD.Web.ModelMappers
 
                 ColorTitle = source.Color!=null?source.Color.ColorTitle:"",
                 SizeTitle = source.Size!=null?source.Size.SizeTitle:"",
-                ProductDefaultImageTag = string.IsNullOrEmpty(ProductDefaultImageId)?"": "<img src='/Product/ProductImage?imageId=" + ProductDefaultImageId + "' width='100%'/>",
+                ProductDefaultImageTag = string.IsNullOrEmpty(ProductDefaultImageId)?"": "<img src='"+ConfigurationManager.AppSettings["HostURL"]+"/Product/ProductImage?imageId=" + ProductDefaultImageId + "' width='100%'/>",
                 ProductDefaultImageId = ProductDefaultImageId,
                 CategoryName = source.ProductCategory.Name,
                 RecCreatedBy = source.RecCreatedBy,

@@ -1,0 +1,9 @@
+delete from products
+delete from InventoryItems
+delete from productimages
+delete from ProductCategory
+delete from OrderItems
+delete from [events]
+delete from color
+delete from currency
+delete from Size

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TMD.Web.Models.CompanyStatus>
+﻿@using System.Configuration
+@model IEnumerable<TMD.Web.Models.CompanyStatus>
     @{
         ViewBag.Title = "Company Statuses";
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -107,73 +108,74 @@
         </form>
     </div>
 
-    <script type="text/javascript">
-         $(document).ready(function () {
-             var oTable = $('#dataTable').dataTable({
-                "sPaginationType": "full_numbers",
-                "iDisplayLength": 10,
-                "aoColumnDefs": [
-              { 'bSortable': false, 'aTargets': [2,4] }
-           ],
-                "bFilter": true,
-                "bLengthChange": false,
-            });
-
-            $('#btnFltr').on('click', function (e) {
-
-                var searchN = $('#SearchBox').val();
-                oTable.fnFilter(searchN);
-            });
-
-            $('#btnResetFltr').on('click', function (e) {
-                $('#SearchBox').val("");
-                oTable.fnFilter('');
-            });
-            $('#dataTable').on('click', '.delete', function (e) {
-                debugger
-                var serviceURL = "DeleteCompanyStatus";
-                e.preventDefault();
-
-                if (confirm("Are you sure to delete this row ?") == false) {
-                    return;
-                }
-
-                var nRow = $(this).parents('tr')[0];
-                var aData = oTable.fnGetData(nRow);
-                $.ajax({
-                    type: "POST",
-                    url: serviceURL,
-                    data: "{id:" + aData[0] + "}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: successFunc,
-                    error: errorFunc
-                });
-
-                function successFunc(data, status) {
-                    toastr.success(data.response);
-                    var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
-
-                        displayLength = oTable.fnSettings()._iDisplayLength,
-                        displayStart = oTable.fnSettings()._iDisplayStart;
-
-                    oTable.fnDeleteRow(nRow, null, false);
-                    var page = Math.ceil(displayStart / displayLength);
-
-                    if (totalRcd > page * displayLength)
-                        oTable.fnPageChange(page);
-                    else
-                        oTable.fnPageChange(page - 1);
-                }
-
-                function errorFunc(e, status) {
-                    toastr.error(e.responseJSON.ErrorMessage);
-                }
-
-
-            });
+<script type="text/javascript">
+    var hostURL = '@ConfigurationManager.AppSettings["HostURL"]';
+    $(document).ready(function () {
+        var oTable = $('#dataTable').dataTable({
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [2,4] }
+            ],
+            "bFilter": true,
+            "bLengthChange": false,
         });
-    </script>
+
+        $('#btnFltr').on('click', function (e) {
+
+            var searchN = $('#SearchBox').val();
+            oTable.fnFilter(searchN);
+        });
+
+        $('#btnResetFltr').on('click', function (e) {
+            $('#SearchBox').val("");
+            oTable.fnFilter('');
+        });
+        $('#dataTable').on('click', '.delete', function (e) {
+         
+            var serviceURL = hostURL + "/Lookup/DeleteCompanyStatus";
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this row ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: "{id:" + aData[0] + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+
+            function successFunc(data, status) {
+                toastr.success(data.response);
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
+
+                    displayLength = oTable.fnSettings()._iDisplayLength,
+                    displayStart = oTable.fnSettings()._iDisplayStart;
+
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if (totalRcd > page * displayLength)
+                    oTable.fnPageChange(page);
+                else
+                    oTable.fnPageChange(page - 1);
+            }
+
+            function errorFunc(e, status) {
+                toastr.error(e.responseJSON.ErrorMessage);
+            }
+
+
+        });
+    });
+</script>
 
     <style type="text/css">
         .dataTables_filter {

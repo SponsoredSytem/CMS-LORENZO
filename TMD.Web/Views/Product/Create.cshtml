@@ -17,7 +17,7 @@
                     </a>*@
 
                 <button type="submit" class="btn btn-circle blue" name="save" onclick="return(ValidateFields(event)) ;">Save</button> @*&& ValidateSalePrice()*@
-                <button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return (ValidateFields(event));">Save & Add New</button>
+                @*<button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return (ValidateFields(event));">Save & Add New</button>*@
                 <a href="~/Product/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
@@ -94,9 +94,9 @@
                 </div>
                 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductDefaultImage, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.ProductDefaultImage, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductDefaultImage, new { @class = "form-control input-circle mandatory", type = "file", accept = "image/jpg,image/jpeg,image/png,image/gif" })
+                        @Html.TextBoxFor(m => m.ProductDefaultImage, new { @class = "form-control input-circle", type = "file", accept = "image/jpg,image/jpeg,image/png,image/gif" })
                         @Html.ValidationMessageFor(model => model.ProductDefaultImage)
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                 {
                     @Html.HiddenFor(m=>m.ProductModel.ProductDefaultImageId)
                     <div class="form-group margin-top-20">
-                        @Html.Label("Product Image", new { @class = "col-md-3 control-label requiredLabel" })
+                        @Html.Label("Product Image", new { @class = "col-md-3 control-label" })
                         <div class="col-md-4">
                             <img src="~/Product/ProductImage?imageId=@Model.ProductModel.ProductDefaultImageId" width="100%"/>
                         </div>

@@ -35,7 +35,7 @@ namespace TMD.Web.Models
         public long CategoryId { get; set; }
 
         [Required]
-        [Display(Name = "V.A.T Rate")]
+        [Display(Name = "V.A.T Rate %")]
         [Range(1, 100, ErrorMessage = "Please enter valid value.")]
         public double? VATRate { get; set; }
 
