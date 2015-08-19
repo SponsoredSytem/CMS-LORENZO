@@ -308,6 +308,72 @@ namespace TMD.Web.Controllers
         }
         #endregion
 
+        #region Size
+        public ActionResult Size()
+        {
+            IEnumerable<SizeModel> sizes = sizeService.GetAllSizes().Select(x => x.CreateFromServerToClient());
+            return View(sizes);
+        }
+
+        public ActionResult SizeManage(int? id)
+        {
+            var model = new SizeModel();
+            if (id != null)
+            {
+                var size = sizeService.GetSize(id.Value);
+                if (size != null)
+                    model = size.CreateFromServerToClient();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SizeManage(SizeModel model)
+        {
+            try
+            {
+                if (model.SizeId == 0)
+                {
+                    model.RecCreatedBy = User.Identity.Name;
+                    model.RecCreatedDate = DateTime.Now;
+                }
+                model.RecLastUpdatedBy = User.Identity.Name;
+                model.RecLastUpdatedDate = DateTime.Now;
+
+                if (sizeService.SaveSize(model.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Size has been saved successfully.", IsSaved = true };
+                }
+
+                return RedirectToAction("Color", "Lookup");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteSize(int id)
+        {
+            string actionMessage;
+            try
+            {
+                actionMessage = "Deleted";
+                bool result = colorService.DeleteColor(colorService.GetColor(id));
+            }
+            catch (Exception exp)
+            {
+                //WebBase.Helper.LogError.Log(exp);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "Size has been used in Product and cannot be deleted" } };
+                return Json(error);
+            }
+            return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #region Municipal
         public ActionResult Municipals()
         {

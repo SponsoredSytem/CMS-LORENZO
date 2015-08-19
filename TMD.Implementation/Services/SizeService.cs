@@ -19,19 +19,19 @@ namespace TMD.Implementation.Services
             return sizeRepository.Find(sizeId);
         }
 
-        public IEnumerable<Size> GetAllColors()
+        public IEnumerable<Size> GetAllSizes()
         {
             return sizeRepository.GetAll();
         }
 
-        public long SaveColor(Size size)
+        public long SaveSize(Size size)
         {
-            sizeRepository.Add(size);
+            sizeRepository.Update(size);
             sizeRepository.SaveChanges();
             return size.SizeId;
         }
 
-        public bool DeleteColor(Size size)
+        public bool DeleteSize(Size size)
         {
             sizeRepository.Delete(size);
             sizeRepository.SaveChanges();

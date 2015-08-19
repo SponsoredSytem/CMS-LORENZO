@@ -1802,6 +1802,8 @@
     <Content Include="Views\Lookup\CurrencyManage.cshtml" />
     <Content Include="Views\Lookup\ColorManage.cshtml" />
     <Content Include="Views\Lookup\Color.cshtml" />
+    <Content Include="Views\Lookup\Size.cshtml" />
+    <Content Include="Views\Lookup\SizeManage.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
