@@ -102,6 +102,7 @@ namespace TMD.Repository.BaseRepository
         public DbSet<Color> Color { get; set; }
         public DbSet<Size> Size { get; set; }
         public DbSet<ProductImage> ProductImage { get; set; }
+        public DbSet<Event> Event { get; set; }
 
         /// <summary>
         /// Staging Ebay
