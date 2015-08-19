@@ -346,7 +346,7 @@ namespace TMD.Web.Controllers
                     TempData["message"] = new MessageViewModel { Message = "Size has been saved successfully.", IsSaved = true };
                 }
 
-                return RedirectToAction("Color", "Lookup");
+                return RedirectToAction("Size", "Lookup");
             }
             catch
             {
