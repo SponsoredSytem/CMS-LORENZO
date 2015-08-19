@@ -19,17 +19,21 @@ namespace TMD.Web.Controllers
         private readonly ISourceService sourceService;
         private readonly IMunicipalService municipalService;
         private readonly ICompanyStatusService companyStatusService;
+        private readonly ICurrencyService currencyService;
+        private readonly IColorService colorService;
+        private readonly ISizeService sizeService;
 
-        public LookupController(ICityService cityService, ISourceService sourceService, IMunicipalService municipalService, ICompanyStatusService companyStatusService)
+        public LookupController(ICityService cityService, ISourceService sourceService, IMunicipalService municipalService, ICompanyStatusService companyStatusService, ICurrencyService currencyService, IColorService colorService, ISizeService sizeService)
         {
             this.cityService = cityService;
             this.sourceService = sourceService;
             this.municipalService = municipalService;
             this.companyStatusService = companyStatusService;
+            this.currencyService = currencyService;
+            this.colorService = colorService;
+            this.sizeService = sizeService;
         }
-        //
-        // GET: /Lookup/
-
+        
         #region City
         public ActionResult City()
         {
@@ -100,8 +104,7 @@ namespace TMD.Web.Controllers
         }
 
         #endregion
-
-
+        
         #region Source
         public ActionResult Sources()
         {
@@ -173,7 +176,137 @@ namespace TMD.Web.Controllers
 
         #endregion
 
+        #region Currency
+        public ActionResult Currency()
+        {
+            IEnumerable<CurrencyModel> currencies = currencyService.GetAllCurrencies().Select(x => x.CreateFromServerToClient());
+            return View(currencies);
+        }
 
+        public ActionResult CurrencyManage(int? id)
+        {
+            var model = new CurrencyModel();
+            if (id != null)
+            {
+                var currency = currencyService.GetCurrency(id.Value);
+                if (currency != null)
+                    model = currency.CreateFromServerToClient();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CurrencyManage(CurrencyModel model)
+        {
+            try
+            {
+                if (model.CurrencyId == 0)
+                {
+                    model.RecCreatedBy = User.Identity.Name;
+                    model.RecCreatedDate = DateTime.Now;
+                }
+                model.RecLastUpdatedBy = User.Identity.Name;
+                model.RecLastUpdatedDate = DateTime.Now;
+
+                if (currencyService.SaveCurrency(model.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Currency has been saved successfully.", IsSaved = true };
+                }
+
+                return RedirectToAction("Currency", "Lookup");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCurrency(int id)
+        {
+            string actionMessage;
+            try
+            {
+                actionMessage = "Deleted";
+                bool result = currencyService.DeleteCurrency(currencyService.GetCurrency(id));
+            }
+            catch (Exception exp)
+            {
+                //WebBase.Helper.LogError.Log(exp);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "Currency has been used in Product and cannot be deleted" } };
+                return Json(error);
+            }
+            return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Color
+        public ActionResult Color()
+        {
+            IEnumerable<CurrencyModel> currencies = currencyService.GetAllCurrencies().Select(x => x.CreateFromServerToClient());
+            return View(currencies);
+        }
+
+        public ActionResult ColorManage(int? id)
+        {
+            var model = new CurrencyModel();
+            if (id != null)
+            {
+                var currency = currencyService.GetCurrency(id.Value);
+                if (currency != null)
+                    model = currency.CreateFromServerToClient();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ColorManage(CurrencyModel model)
+        {
+            try
+            {
+                if (model.CurrencyId == 0)
+                {
+                    model.RecCreatedBy = User.Identity.Name;
+                    model.RecCreatedDate = DateTime.Now;
+                }
+                model.RecLastUpdatedBy = User.Identity.Name;
+                model.RecLastUpdatedDate = DateTime.Now;
+
+                if (currencyService.SaveCurrency(model.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Currency has been saved successfully.", IsSaved = true };
+                }
+
+                return RedirectToAction("Currency", "Lookup");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ColorCurrency(int id)
+        {
+            string actionMessage;
+            try
+            {
+                actionMessage = "Deleted";
+                bool result = currencyService.DeleteCurrency(currencyService.GetCurrency(id));
+            }
+            catch (Exception exp)
+            {
+                //WebBase.Helper.LogError.Log(exp);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Dictionary<string, object> error = new Dictionary<string, object> { { "ErrorMessage", "Currency has been used in Product and cannot be deleted" } };
+                return Json(error);
+            }
+            return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
 
         #region Municipal
         public ActionResult Municipals()
@@ -250,7 +383,6 @@ namespace TMD.Web.Controllers
 
         #endregion
 
-
         #region Company Statuses
         public ActionResult CompanyStatuses()
         {
@@ -321,7 +453,5 @@ namespace TMD.Web.Controllers
         }
 
 #endregion
-    
-    
     }
 }
