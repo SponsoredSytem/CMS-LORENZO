@@ -5,6 +5,9 @@ namespace TMD.Web.Models
     public class EventModel
     {
         public long EventId { get; set; }
+        [Display(Name = "Company")]
+        public long? CompanyId { get; set; }
+        public string CompanyName { get; set; }
         [Display(Name = "Event Description")]
         public string EventDescription { get; set; }
         [Display(Name = "Event Date")]

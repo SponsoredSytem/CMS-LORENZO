@@ -237,6 +237,7 @@
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CompanyId" Type="bigint" />
         </EntityType>
         <EntityType Name="ExpenseCategory">
           <Key>
@@ -804,6 +805,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Events_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Expenses_ExpenseCategory">
           <End Role="ExpenseCategory" Type="Self.ExpenseCategory" Multiplicity="1" />
           <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
@@ -1194,6 +1207,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Events" EntitySet="Events" />
           </AssociationSet>
+          <AssociationSet Name="FK_Events_Company" Association="Self.FK_Events_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
           <AssociationSet Name="FK_Expenses_ExpenseCategory" Association="Self.FK_Expenses_ExpenseCategory">
             <End Role="ExpenseCategory" EntitySet="ExpenseCategory" />
             <End Role="Expenses" EntitySet="Expenses" />
@@ -1501,6 +1518,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySet Name="Events" EntityType="TMD.Models.DomainModels.Event" />
           <AssociationSet Name="FK_Events_AspNetUsers" Association="TMD.Models.DomainModels.FK_Events_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Company" Association="TMD.Models.DomainModels.FK_Events_Company">
+            <End Role="Company" EntitySet="Companies" />
             <End Role="Event" EntitySet="Events" />
           </AssociationSet>
           </EntityContainer>
@@ -2404,6 +2425,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.fk_Company_AspNetUsers" FromRole="Company" ToRole="AspNetUser" />
           <Property Name="StatusId" Type="Int32" />
           <NavigationProperty Name="CompanyStatus" Relationship="TMD.Models.DomainModels.fk_Company_CompanyStatus" FromRole="Company" ToRole="CompanyStatus" />
+          <NavigationProperty Name="Events" Relationship="TMD.Models.DomainModels.FK_Events_Company" FromRole="Company" ToRole="Event" />
         </EntityType>
         <EntityType Name="Municipal">
           <Key>
@@ -2655,6 +2677,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_Events_AspNetUsers" FromRole="Event" ToRole="AspNetUser" />
+          <Property Name="CompanyId" Type="Int64" />
+          <NavigationProperty Name="Company" Relationship="TMD.Models.DomainModels.FK_Events_Company" FromRole="Event" ToRole="Company" />
         </EntityType>
         <Association Name="FK_Events_AspNetUsers">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -2665,6 +2689,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Principal>
             <Dependent Role="Event">
               <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Company">
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3309,6 +3345,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Event">
               <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
@@ -3422,6 +3459,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductImages_Products" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Event" Width="1.5" PointX="5.25" PointY="0.75" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Events_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Events_Company" />
       </Diagram>
     </Diagrams>
   </Designer>

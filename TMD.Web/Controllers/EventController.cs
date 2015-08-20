@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
@@ -14,47 +15,56 @@ namespace TMD.Web.Controllers
     public class EventController : Controller
     {
         private readonly IEventService eventService;
+        private readonly ICompanyService companyService;
 
-        public EventController(IEventService eventService)
+        public EventController(IEventService eventService, ICompanyService companyService)
         {
             this.eventService = eventService;
+            this.companyService = companyService;
         }
 
         // GET: Event
         public ActionResult Index()
         {
-            IEnumerable<EventModel> events = eventService.GetAllEvents().ToList().Select(x => x.CreateFromServerToClient());
+            EventListViewModel listViewModel=new EventListViewModel();
+            listViewModel.Events = eventService.GetAllEvents().ToList().Select(x => x.CreateFromServerToClient());
+            listViewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(events);
+            return View(listViewModel);
         }
 
         public ActionResult Create(int? id)
         {
-            var model = new EventModel();
-            model.EventDate = DateTime.Now;
-            if (id != null)
+            var viewModel = new EventViewModel
             {
-                var evenT = eventService.GetEvent(id.Value);
-                if (evenT != null)
-                    model = evenT.CreateFromServerToClient();
-            }
-            return View(model);
+                EventModel =
+                {
+                    EventDate = DateTime.Now.Date
+                }
+            };
+            viewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
+            if (id == null) return View(viewModel);
+
+            var evenT = eventService.GetEvent(id.Value);
+            if (evenT != null)
+                viewModel.EventModel = evenT.CreateFromServerToClient();
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(EventModel model)
+        public ActionResult Create(EventViewModel viewModel)
         {
             try
             {
-                if (model.EventId == 0)
+                if (viewModel.EventModel.EventId == 0)
                 {
-                    model.RecCreatedBy = User.Identity.GetUserId();
-                    model.RecCreatedDate = DateTime.Now;
+                    viewModel.EventModel.RecCreatedBy = User.Identity.GetUserId();
+                    viewModel.EventModel.RecCreatedDate = DateTime.Now;
                 }
-                model.RecLastUpdatedBy = User.Identity.GetUserId();
-                model.RecLastUpdatedDate = DateTime.Now;
+                viewModel.EventModel.RecLastUpdatedBy = User.Identity.GetUserId();
+                viewModel.EventModel.RecLastUpdatedDate = DateTime.Now;
 
-                if (eventService.SaveEvent(model.CreateFromClientToServer()) > 0)
+                if (eventService.SaveEvent(viewModel.EventModel.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
                     TempData["message"] = new MessageViewModel { Message = "Event has been saved successfully.", IsSaved = true };

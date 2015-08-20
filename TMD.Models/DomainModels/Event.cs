@@ -9,7 +9,9 @@
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public long? CompanyId { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

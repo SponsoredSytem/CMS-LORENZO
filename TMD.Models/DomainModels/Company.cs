@@ -31,5 +31,6 @@ namespace TMD.Models.DomainModels
         public virtual ICollection<CompanyContact> CompanyContacts { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual CompanyStatus CompanyStatus { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
     }
 }

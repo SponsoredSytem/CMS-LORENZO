@@ -12,7 +12,8 @@ namespace TMD.Web.ModelMappers
                 EventId = source.EventId,
                 EventDescription = source.EventDescription,
                 EventDate = source.EventDate,
-
+                CompanyId=source.CompanyId,
+                CompanyName = source.Company!=null?source.Company.CompanyName:"",
                 RecCreatedByName = source.AspNetUser.FirstName+" "+source.AspNetUser.LastName,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
@@ -28,6 +29,7 @@ namespace TMD.Web.ModelMappers
                 EventId = source.EventId,
                 EventDescription = source.EventDescription,
                 EventDate = source.EventDate,
+                CompanyId = source.CompanyId,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

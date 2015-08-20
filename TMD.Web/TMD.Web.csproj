@@ -458,6 +458,8 @@
     </Compile>
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
+    <Compile Include="ViewModels\EventListViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\MunicipalViewModel.cs" />
     <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="ViewModels\ProductConfigurationViewModel.cs" />
@@ -741,6 +743,7 @@
     <Content Include="Content\css\invoice.css" />
     <Content Include="Content\css\jquery.dataTables.css" />
     <Content Include="Content\css\select2.css" />
+    <Content Include="Content\css\select2.png" />
     <Content Include="Content\css\skel.css" />
     <Content Include="Content\css\style-1000px.css" />
     <Content Include="Content\css\style-desktop.css" />
