@@ -171,6 +171,8 @@
           <Property Name="CurrencyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CurrencyCode" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="CurrencySymbol" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExchangeRate" Type="float" Nullable="false" />
+          <Property Name="IsBaseCurrency" Type="bit" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
@@ -2587,6 +2589,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="TMD.Models.DomainModels.FK_Products_Currency" FromRole="Currency" ToRole="Product" />
+          <Property Name="ExchangeRate" Type="Double" Nullable="false" />
+          <Property Name="IsBaseCurrency" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
@@ -3302,6 +3306,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Currencies">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Currency">
               <MappingFragment StoreEntitySet="Currency">
+                <ScalarProperty Name="IsBaseCurrency" ColumnName="IsBaseCurrency" />
+                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />

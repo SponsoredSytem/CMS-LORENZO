@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
@@ -25,5 +26,10 @@ namespace TMD.Repository.Repositories
             get { return db.Currency; }
         }
         #endregion
+
+        public Currency GetBaseCurrency()
+        {
+            return DbSet.FirstOrDefault(x => x.IsBaseCurrency);
+        }
     }
 }

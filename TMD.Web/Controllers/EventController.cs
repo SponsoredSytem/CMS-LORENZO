@@ -28,7 +28,7 @@ namespace TMD.Web.Controllers
         {
             EventListViewModel listViewModel=new EventListViewModel();
             listViewModel.Events = eventService.GetAllEvents().ToList().Select(x => x.CreateFromServerToClient());
-            listViewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
+            //listViewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(listViewModel);
         }

@@ -14,5 +14,10 @@ namespace TMD.Web.Models
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
+
+        [Display(Name = "Exchange Rate")]
+        public double ExchangeRate { get; set; }
+        [Display(Name = "Is Base Currency?")]
+        public bool IsBaseCurrency { get; set; }
     }
 }

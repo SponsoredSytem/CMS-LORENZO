@@ -13,6 +13,9 @@ namespace TMD.Web.ModelMappers
                 CurrencyCode = currency.CurrencyCode,
                 CurrencySymbol = currency.CurrencySymbol,
                 Description = currency.Description,
+                ExchangeRate = currency.ExchangeRate,
+                IsBaseCurrency = currency.IsBaseCurrency,
+
                 RecCreatedBy = currency.RecCreatedBy,
                 RecCreatedDate = currency.RecCreatedDate,
                 RecLastUpdatedBy = currency.RecLastUpdatedBy,
@@ -27,6 +30,9 @@ namespace TMD.Web.ModelMappers
                 CurrencyCode = currency.CurrencyCode,
                 CurrencySymbol = currency.CurrencySymbol,
                 Description = currency.Description,
+                ExchangeRate = currency.ExchangeRate,
+                IsBaseCurrency = currency.IsBaseCurrency,
+
                 RecCreatedBy = currency.RecCreatedBy,
                 RecCreatedDate = currency.RecCreatedDate,
                 RecLastUpdatedBy = currency.RecLastUpdatedBy,

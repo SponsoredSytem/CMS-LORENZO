@@ -13,6 +13,8 @@ namespace TMD.Models.DomainModels
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
 
+        public double ExchangeRate { get; set; }
+        public bool IsBaseCurrency { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

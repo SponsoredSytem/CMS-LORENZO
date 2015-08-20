@@ -5,6 +5,7 @@
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
         Session["MenuKey"] = 10;
         Session["ParentMenu"] = 1;
+        var isBaseCurrency = "No";
     }
 
     <div class="container-fluid">
@@ -71,16 +72,19 @@
                                         <th style="display:none"></th>
                                         <th>Code</th>
                                         <th>Symbol</th>
+                                        <th>Base Currency</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
+                                        isBaseCurrency = item.IsBaseCurrency ? "Yes" : "No";
                                         <tr>
                                             <td style="display:none">@item.CurrencyId</td>
                                             <td>@Html.ActionLink(@item.CurrencyCode, "CurrencyManage", new { id = item.CurrencyId }) </td>
                                             <td>@item.CurrencySymbol</td>
+                                            <td>@isBaseCurrency</td>
                                             <td class="textAlignRight">
                                                 <a class="delete" href="javascript:;">Delete</a>
                                             </td>
