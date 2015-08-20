@@ -72,6 +72,7 @@
                                         <th style="display:none"></th>
                                         <th>Code</th>
                                         <th>Symbol</th>
+                                        <th>Exchange Rate</th>
                                         <th>Base Currency</th>
                                         <th></th>
                                     </tr>
@@ -84,6 +85,7 @@
                                             <td style="display:none">@item.CurrencyId</td>
                                             <td>@Html.ActionLink(@item.CurrencyCode, "CurrencyManage", new { id = item.CurrencyId }) </td>
                                             <td>@item.CurrencySymbol</td>
+                                            <td>@item.ExchangeRate</td>
                                             <td>@isBaseCurrency</td>
                                             <td class="textAlignRight">
                                                 <a class="delete" href="javascript:;">Delete</a>
