@@ -3,6 +3,7 @@
     ViewBag.Title = "Companies";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 3;
+    var companyEventsUrl = "";
 }
 
 
@@ -68,12 +69,18 @@
                                     <th>Email</th>
                                     <th>Account Holder</th>
                                     <th>Company Status</th>
+                                    <th>Company Events</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
+                                    {
+                                        companyEventsUrl = string.IsNullOrEmpty(item.CompanyEventsUrl) ? "" : "<a href='" + item.CompanyEventsUrl + "'>Events</a>";
+                                    }
+                                    ;
+                                    
+                                <tr>
                                         <td>@Html.ActionLink(@item.CompanyName, "Create", new { id = item.CompanyId }) </td>
                                         <td>@item.VATNumber</td>
                                         <td>@item.CityName</td>
@@ -82,7 +89,9 @@
                                         <td>@item.Email</td>
                                         <td title="@item.AccountHolderEmail">@item.AccountHolderName</td>
                                         <td>@item.StatusTitle</td>
+                                        <td>@Html.Raw(companyEventsUrl)</td>
                                     </tr>
+                                    
                                 }
                             </tbody>
                         </table>

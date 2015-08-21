@@ -3,6 +3,8 @@
     ViewBag.Title = "Event";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 21;
+
+    var companyName = Session["CompanyIdForEvent"] != null ? Model.Companies.FirstOrDefault(x => x.CompanyId == Convert.ToInt64(Session["CompanyIdForEvent"].ToString())).CompanyName : "";
 }
 <link rel="stylesheet" type="text/css" href="~/Content/css/select2.css" />
 <script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
@@ -21,7 +23,7 @@
                 </a>
             </div>
             <div class="caption">
-                <i class="fa fa-male"></i>Create/Update Event
+                <i class="fa fa-male"></i>Create/Update @companyName Event
             </div>
         </div>
 

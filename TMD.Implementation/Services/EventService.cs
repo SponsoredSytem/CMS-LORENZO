@@ -19,9 +19,9 @@ namespace TMD.Implementation.Services
             return eventRepository.Find(eventId);
         }
 
-        public IEnumerable<Event> GetAllEvents()
+        public IEnumerable<Event> GetAllEvents(long? id)
         {
-            return eventRepository.GetAll();
+            return id == null ? eventRepository.GetAll() : eventRepository.GetCompanyEvents((long)id);
         }
 
         public long SaveEvent(Event Event)

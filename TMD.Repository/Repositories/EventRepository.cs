@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
@@ -25,5 +27,10 @@ namespace TMD.Repository.Repositories
             get { return db.Event; }
         }
         #endregion
+
+        public IEnumerable<Event> GetCompanyEvents(long companyId)
+        {
+            return DbSet.Where(x => x.CompanyId==companyId);
+        }
     }
 }

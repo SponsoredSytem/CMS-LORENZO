@@ -1,4 +1,6 @@
-﻿using TMD.Models.DomainModels;
+﻿using System.Configuration;
+using System.Linq;
+using TMD.Models.DomainModels;
 
 namespace TMD.Web.ModelMappers
 {
@@ -58,7 +60,9 @@ namespace TMD.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = source.RecLastUpdatedDate
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+
+                CompanyEventsUrl = source.Events.Any() ? ConfigurationManager.AppSettings["HostURL"] + "/Event/Index/" + source.CompanyId : "",
             };
         }
     }

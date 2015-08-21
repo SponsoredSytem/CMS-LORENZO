@@ -24,8 +24,8 @@ namespace TMD.Web.Controllers
         // GET: Company
         public ActionResult Index()
         {
-
-            return View(companyService.GetAllCompanies().ToList().Select(x=>x.CreateFromServerToClient()).ToList());
+            var companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient()).ToList();
+            return View(companies);
         }
         public ActionResult Create(long? id)
         {

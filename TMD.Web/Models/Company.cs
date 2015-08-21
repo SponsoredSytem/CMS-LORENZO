@@ -41,5 +41,7 @@ namespace TMD.Web.Models
         public string AccountHolderEmail { get; set; }
         public int? StatusId { get; set; }
         public string StatusTitle { get; set; }
+
+        public string CompanyEventsUrl { get; set; }
     }
 }

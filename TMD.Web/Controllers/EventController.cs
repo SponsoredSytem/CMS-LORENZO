@@ -24,11 +24,22 @@ namespace TMD.Web.Controllers
         }
 
         // GET: Event
-        public ActionResult Index()
+        public ActionResult Index(long? id)
         {
+            
             EventListViewModel listViewModel=new EventListViewModel();
-            listViewModel.Events = eventService.GetAllEvents().ToList().Select(x => x.CreateFromServerToClient());
+            var events = eventService.GetAllEvents(id).ToList();
+            listViewModel.Events = events.Select(x => x.CreateFromServerToClient());
             //listViewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
+            if (id != null && listViewModel.Events.FirstOrDefault() != null)
+            {
+                ViewBag.Company = listViewModel.Events.FirstOrDefault().CompanyName;
+                Session["CompanyIdForEvent"] = id;
+            }
+            else
+            {
+                Session["CompanyIdForEvent"] = null;
+            }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(listViewModel);
         }
@@ -42,6 +53,8 @@ namespace TMD.Web.Controllers
                     EventDate = DateTime.Now.Date
                 }
             };
+            if (Session["CompanyIdForEvent"] != null)
+                viewModel.EventModel.CompanyId = Convert.ToInt64(Session["CompanyIdForEvent"].ToString());
             viewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
             if (id == null) return View(viewModel);
 

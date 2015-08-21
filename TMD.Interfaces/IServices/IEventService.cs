@@ -6,7 +6,7 @@ namespace TMD.Interfaces.IServices
     public interface IEventService
     {
         Event GetEvent(int eventId);
-        IEnumerable<Event> GetAllEvents();
+        IEnumerable<Event> GetAllEvents(long? id);
         long SaveEvent(Event Event);
 
         bool DeleteEvent(Event Event);
