@@ -12,9 +12,14 @@ namespace TMD.Web.ModelMappers
                 EventId = source.EventId,
                 EventDescription = source.EventDescription,
                 EventDate = source.EventDate,
-                CompanyId=source.CompanyId,
+                CompanyId = source.CompanyId,
+                StatusId = source.EventStatusId,
+                ReminderDate = source.ReminderDate,
+                ReminderNote = source.ReminderNote,
+
                 CompanyName = source.Company!=null?source.Company.CompanyName:"",
                 RecCreatedByName = source.AspNetUser.FirstName+" "+source.AspNetUser.LastName,
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -30,6 +35,9 @@ namespace TMD.Web.ModelMappers
                 EventDescription = source.EventDescription,
                 EventDate = source.EventDate,
                 CompanyId = source.CompanyId,
+                EventStatusId = source.StatusId,
+                ReminderDate = source.ReminderDate,
+                ReminderNote = source.ReminderNote,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

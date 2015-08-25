@@ -239,7 +239,22 @@
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="CompanyId" Type="bigint" />
+          <Property Name="CompanyId" Type="bigint" Nullable="false" />
+          <Property Name="EventStatusId" Type="int" Nullable="false" />
+          <Property Name="ReminderDate" Type="datetime" Nullable="false" />
+          <Property Name="ReminderNote" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="ExpenseCategory">
           <Key>
@@ -808,7 +823,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Events_Company">
-          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
           <End Role="Events" Type="Self.Events" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
@@ -816,6 +831,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Principal>
             <Dependent Role="Events">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_EventStatus">
+          <End Role="EventStatus" Type="Self.EventStatus" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="EventStatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1117,6 +1144,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySet Name="DataWarehouseDimProductType" EntityType="Self.DataWarehouseDimProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataWarehouseFactSale" EntityType="Self.DataWarehouseFactSale" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventStatus" EntityType="Self.EventStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExpenseCategory" EntityType="Self.ExpenseCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" Schema="dbo" store:Type="Tables" />
@@ -1211,6 +1239,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           </AssociationSet>
           <AssociationSet Name="FK_Events_Company" Association="Self.FK_Events_Company">
             <End Role="Company" EntitySet="Company" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_EventStatus" Association="Self.FK_Events_EventStatus">
+            <End Role="EventStatus" EntitySet="EventStatus" />
             <End Role="Events" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_Expenses_ExpenseCategory" Association="Self.FK_Expenses_ExpenseCategory">
@@ -1524,6 +1556,11 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           </AssociationSet>
           <AssociationSet Name="FK_Events_Company" Association="TMD.Models.DomainModels.FK_Events_Company">
             <End Role="Company" EntitySet="Companies" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <EntitySet Name="EventStatus1" EntityType="TMD.Models.DomainModels.EventStatus" />
+          <AssociationSet Name="FK_Events_EventStatus" Association="TMD.Models.DomainModels.FK_Events_EventStatus">
+            <End Role="EventStatus" EntitySet="EventStatus1" />
             <End Role="Event" EntitySet="Events" />
           </AssociationSet>
           </EntityContainer>
@@ -2680,9 +2717,13 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int64" Nullable="false" />
+          <Property Name="EventStatusId" Type="Int32" Nullable="false" />
+          <Property Name="ReminderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReminderNote" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_Events_AspNetUsers" FromRole="Event" ToRole="AspNetUser" />
-          <Property Name="CompanyId" Type="Int64" />
           <NavigationProperty Name="Company" Relationship="TMD.Models.DomainModels.FK_Events_Company" FromRole="Event" ToRole="Company" />
+          <NavigationProperty Name="EventStatus" Relationship="TMD.Models.DomainModels.FK_Events_EventStatus" FromRole="Event" ToRole="EventStatus" />
         </EntityType>
         <Association Name="FK_Events_AspNetUsers">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -2697,7 +2738,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Events_Company">
-          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.Event" Role="Event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
@@ -2705,6 +2746,31 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Principal>
             <Dependent Role="Event">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EventStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusTitle" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Events" Relationship="TMD.Models.DomainModels.FK_Events_EventStatus" FromRole="EventStatus" ToRole="Event" />
+        </EntityType>
+        <Association Name="FK_Events_EventStatus">
+          <End Type="TMD.Models.DomainModels.EventStatus" Role="EventStatus" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventStatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3351,6 +3417,9 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Event">
               <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="ReminderNote" ColumnName="ReminderNote" />
+                <ScalarProperty Name="ReminderDate" ColumnName="ReminderDate" />
+                <ScalarProperty Name="EventStatusId" ColumnName="EventStatusId" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
@@ -3359,6 +3428,19 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
                 <ScalarProperty Name="EventDate" ColumnName="EventDate" />
                 <ScalarProperty Name="EventDescription" ColumnName="EventDescription" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventStatus1">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.EventStatus">
+              <MappingFragment StoreEntitySet="EventStatus">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="StatusTitle" ColumnName="StatusTitle" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3463,9 +3545,11 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_Size" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductImage" Width="1.5" PointX="14.25" PointY="21.25" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductImages_Products" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Event" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Event" Width="1.5" PointX="24.125" PointY="13" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Events_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Events_Company" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.EventStatus" Width="1.5" PointX="16.375" PointY="9.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Events_EventStatus" />
       </Diagram>
     </Diagrams>
   </Designer>

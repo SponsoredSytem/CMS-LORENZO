@@ -117,6 +117,7 @@
     <Compile Include="DomainModels\Configuration.cs" />
     <Compile Include="DomainModels\Currency.cs" />
     <Compile Include="DomainModels\Event.cs" />
+    <Compile Include="DomainModels\EventStatus.cs" />
     <Compile Include="DomainModels\Expense.cs" />
     <Compile Include="DomainModels\ExpenseCategory.cs" />
     <Compile Include="DomainModels\InventoryItem.cs" />

@@ -27,31 +27,62 @@
             </div>
         </div>
 
-        <div class="portlet-body form formMinHeight500">
-            <div class="container-fluid">
+        <div class="portlet-body form ">
+            <div class="container-fluid formMinHeight500">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.EventModel.EventId)
                 @Html.HiddenFor(m => m.EventModel.RecCreatedBy)
                 @Html.HiddenFor(m => m.EventModel.RecCreatedDate)
 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.EventModel.EventDate, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.EventModel.EventDate, "{0:d}", new { @class = "form-control input-circle mandatory datepicker", placeholder = "Event Date", @id="EventDate" })
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.EventModel.EventDate, new { @class = "control-label requiredLabel" })
                     </div>
-                </div>
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.EventModel.CompanyId, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "input-large select2me mandatory", id = "CompanyId" })
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-o"></i>
+                        @Html.TextBoxFor(m => m.EventModel.EventDate, "{0:d}", new { @class = "form-control mandatory datepicker", placeholder = "Event Date", @id = "EventDate" })
+                    </div>
+                    
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.EventModel.ReminderDate, new { @class = "control-label requiredLabel" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-o"></i>
+                        @Html.TextBoxFor(m => m.EventModel.ReminderDate, "{0:d}", new { @class = "form-control mandatory datepicker", placeholder = "Reminder Date", @id = "ReminderDate" })
                     </div>
                 </div>
 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.EventModel.EventDescription, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.EventModel.EventDescription, new { @class = "form-control input-circle mandatory", placeholder = "Event Description", rows = 4 })
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.EventModel.CompanyId, new { @class = "control-label requiredLabel" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "input-medium select2me mandatory", id = "CompanyId" })
+                    </div>
+
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.EventModel.StatusId, new { @class = "control-label requiredLabel" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(m => m.EventModel.StatusId, new SelectList(Model.EventStatuses, "StatusId", "StatusTitle", Model.EventModel.StatusId), "Select Status", new { @class = "input-medium select2me mandatory", id = "StatusId" })
+                    </div>
+                </div>
+
+                <div class="row form-group margin-top-20">
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.EventModel.ReminderNote, new { @class = "control-label requiredLabel" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-o"></i>
+                        @Html.TextAreaFor(m => m.EventModel.ReminderNote, new { @class = "form-control mandatory", placeholder = "Reminder Note", rows = 4 })
+                    </div>
+                    
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.EventModel.EventDescription, new { @class = "control-label requiredLabel" })
+                    </div>
+                    <div class="col-md-3 input-icon ">
+                        <i class="fa fa-file-o"></i>
+                        @Html.TextAreaFor(m => m.EventModel.EventDescription, new { @class = "form-control mandatory", placeholder = "Event Description", rows = 4 })
                     </div>
                 </div>
             </div>
@@ -66,9 +97,13 @@
             changeMonth: true,
             changeYear: true
         });
-
-        $('.select2me').select2({
-            allowClear: false
+        $("#ReminderDate").datepicker({
+            changeMonth: true,
+            changeYear: true
         });
+
+        //$('.select2me').select2({
+        //    allowClear: false
+        //});
     });
 </script>

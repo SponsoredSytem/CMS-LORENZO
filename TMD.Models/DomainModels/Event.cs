@@ -9,9 +9,13 @@
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public long? CompanyId { get; set; }
+        public long CompanyId { get; set; }
+        public int EventStatusId { get; set; }
+        public System.DateTime ReminderDate { get; set; }
+        public string ReminderNote { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Company Company { get; set; }
+        public virtual EventStatus EventStatus { get; set; }
     }
 }

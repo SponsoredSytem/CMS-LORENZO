@@ -103,6 +103,7 @@ namespace TMD.Repository.BaseRepository
         public DbSet<Size> Size { get; set; }
         public DbSet<ProductImage> ProductImage { get; set; }
         public DbSet<Event> Event { get; set; }
+        public DbSet<EventStatus> EventStatus { get; set; }
 
         /// <summary>
         /// Staging Ebay

@@ -19,8 +19,6 @@
         cityIdSelected = (long)Model.Company.CityId;
     }
 }
-<link rel="stylesheet" type="text/css" href="~/Content/css/select2.css" />
-<script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
 
 @using (Html.BeginForm("Create", "Company", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -347,6 +345,9 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" type="text/css" href="~/Content/css/select2.css" />
+<script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
+
 <script>
     var hostURL = '@ConfigurationManager.AppSettings["HostURL"]';
     $(document).ready(function () {
@@ -368,10 +369,9 @@
         });
 
         
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true
-        });
+        //$('#CityId').select2({
+        //    allowClear: false
+        //});
         $("#CityId").on('change', function () {
             LoadMuniciaplByCity();
         });

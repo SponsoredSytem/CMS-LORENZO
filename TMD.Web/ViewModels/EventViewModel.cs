@@ -7,10 +7,12 @@ namespace TMD.Web.ViewModels
     {
         public EventViewModel()
         {
-            this.EventModel=new EventModel();
+            EventModel=new EventModel();
             Companies = new List<Company>();
+            EventStatuses = new List<EventStatus>();
         }
         public EventModel EventModel { get; set; }
         public IEnumerable<Company> Companies { get; set; }
+        public IEnumerable<EventStatus> EventStatuses { get; set; }
     }
 }

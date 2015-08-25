@@ -43,6 +43,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<ISizeService, SizeService>();
             unityContainer.RegisterType<IProductImageService, ProductImageService>();
             unityContainer.RegisterType<IEventService, EventService>();
+            unityContainer.RegisterType<IEventStatusService, EventStatusService>();
         } 
     }
 }

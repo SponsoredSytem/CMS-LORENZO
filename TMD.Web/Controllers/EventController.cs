@@ -16,11 +16,13 @@ namespace TMD.Web.Controllers
     {
         private readonly IEventService eventService;
         private readonly ICompanyService companyService;
+        private readonly IEventStatusService eventStatusService;
 
-        public EventController(IEventService eventService, ICompanyService companyService)
+        public EventController(IEventService eventService, ICompanyService companyService, IEventStatusService eventStatusService)
         {
             this.eventService = eventService;
             this.companyService = companyService;
+            this.eventStatusService = eventStatusService;
         }
 
         // GET: Event
@@ -50,12 +52,15 @@ namespace TMD.Web.Controllers
             {
                 EventModel =
                 {
-                    EventDate = DateTime.Now.Date
+                    EventDate = DateTime.Now.Date,
+                    ReminderDate = DateTime.Now.Date
                 }
             };
             if (Session["CompanyIdForEvent"] != null)
                 viewModel.EventModel.CompanyId = Convert.ToInt64(Session["CompanyIdForEvent"].ToString());
+
             viewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
+            viewModel.EventStatuses = eventStatusService.GetAllActiveEventStatuses().ToList().Select(x => x.CreateFromServerToClient());
             if (id == null) return View(viewModel);
 
             var evenT = eventService.GetEvent(id.Value);

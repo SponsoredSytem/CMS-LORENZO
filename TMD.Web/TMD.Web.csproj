@@ -320,6 +320,7 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
+    <Compile Include="ModelMappers\EventStatusMapper.cs" />
     <Compile Include="ModelMappers\EventMapper.cs" />
     <Compile Include="ModelMappers\ColorMapper.cs" />
     <Compile Include="ModelMappers\CompanyStatusMapper.cs" />
@@ -359,6 +360,7 @@
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\EventStatus.cs" />
     <Compile Include="Models\ExpenseCategoryModel.cs" />
     <Compile Include="Models\ExpenseModel.cs" />
     <Compile Include="Models\InventoryItemListModel.cs" />
@@ -742,6 +744,7 @@
     <Content Include="Content\css\images\sort_desc_disabled.png" />
     <Content Include="Content\css\invoice.css" />
     <Content Include="Content\css\jquery.dataTables.css" />
+    <Content Include="Content\css\select2-spinner.gif" />
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.png" />
     <Content Include="Content\css\skel.css" />
