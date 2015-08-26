@@ -242,7 +242,7 @@
           <Property Name="CompanyId" Type="bigint" Nullable="false" />
           <Property Name="EventStatusId" Type="int" Nullable="false" />
           <Property Name="ReminderDate" Type="datetime" Nullable="false" />
-          <Property Name="ReminderNote" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ReminderNote" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="EventStatus">
           <Key>
@@ -2720,7 +2720,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="CompanyId" Type="Int64" Nullable="false" />
           <Property Name="EventStatusId" Type="Int32" Nullable="false" />
           <Property Name="ReminderDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ReminderNote" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ReminderNote" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_Events_AspNetUsers" FromRole="Event" ToRole="AspNetUser" />
           <NavigationProperty Name="Company" Relationship="TMD.Models.DomainModels.FK_Events_Company" FromRole="Event" ToRole="Company" />
           <NavigationProperty Name="EventStatus" Relationship="TMD.Models.DomainModels.FK_Events_EventStatus" FromRole="Event" ToRole="EventStatus" />

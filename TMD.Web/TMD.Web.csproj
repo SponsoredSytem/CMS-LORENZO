@@ -754,6 +754,10 @@
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\toastr.css" />
     <Content Include="Content\css\toastr.min.css" />
+    <Content Include="Content\DateTimePicker\DateTimePicker-ltie9.css" />
+    <Content Include="Content\DateTimePicker\DateTimePicker-ltie9.js" />
+    <Content Include="Content\DateTimePicker\DateTimePicker.css" />
+    <Content Include="Content\DateTimePicker\DateTimePicker.js" />
     <Content Include="Content\frontend\layout\css\custom.css" />
     <Content Include="Content\frontend\layout\css\style-responsive.css" />
     <Content Include="Content\frontend\layout\css\style.css" />
@@ -1737,6 +1741,7 @@
     <Content Include="Scripts\App\ValidateFields.js" />
     <Content Include="Scripts\InventoryScripts.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
+    <Content Include="Scripts\jquery.pulsate.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\js\html5shiv.js" />
     <Content Include="Scripts\js\init.js" />

@@ -12,7 +12,8 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class EventController : Controller
+    [Authorize(Roles = "Employee")]
+    public class EventController : BaseController
     {
         private readonly IEventService eventService;
         private readonly ICompanyService companyService;
@@ -35,14 +36,23 @@ namespace TMD.Web.Controllers
             //listViewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
             if (id != null && listViewModel.Events.FirstOrDefault() != null)
             {
-                ViewBag.Company = listViewModel.Events.FirstOrDefault().CompanyName;
+                ViewBag.Company = "of <span style='color:#FF8E81;'>" + listViewModel.Events.FirstOrDefault().CompanyName + "</span>";
                 Session["CompanyIdForEvent"] = id;
+                
             }
             else
             {
                 Session["CompanyIdForEvent"] = null;
             }
+            if (listViewModel.Events.Any())
+            {
+                var today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,23,59,59);
+                var tomorrow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 23, 59, 59);
+                listViewModel.TodaysEvents = listViewModel.Events.Count(x => x.EventDate >= DateTime.Now && x.EventDate <= today);
+                listViewModel.TomorrowsEvents = listViewModel.Events.Count(x => x.EventDate > today && x.EventDate <= tomorrow);
+            }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            
             return View(listViewModel);
         }
 
@@ -50,17 +60,22 @@ namespace TMD.Web.Controllers
         {
             var viewModel = new EventViewModel
             {
-                EventModel =
-                {
-                    EventDate = DateTime.Now.Date,
-                    ReminderDate = DateTime.Now.Date
-                }
+                //EventModel =
+                //{
+                //    EventDateString = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
+                //    ReminderDate = DateTime.Now
+                //}
             };
-            if (Session["CompanyIdForEvent"] != null)
-                viewModel.EventModel.CompanyId = Convert.ToInt64(Session["CompanyIdForEvent"].ToString());
-
             viewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
             viewModel.EventStatuses = eventStatusService.GetAllActiveEventStatuses().ToList().Select(x => x.CreateFromServerToClient());
+
+            if (Session["CompanyIdForEvent"] != null)
+            {
+                viewModel.EventModel.CompanyId = Convert.ToInt64(Session["CompanyIdForEvent"].ToString());
+                ViewBag.Company = "of <span style='color:#FF8E81;'>" + viewModel.Companies.FirstOrDefault(x => x.CompanyId == Convert.ToInt64(Session["CompanyIdForEvent"].ToString())).CompanyName + "</span>";
+            }
+
+            
             if (id == null) return View(viewModel);
 
             var evenT = eventService.GetEvent(id.Value);

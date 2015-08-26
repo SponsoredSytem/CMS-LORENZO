@@ -12,6 +12,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize(Roles = "Employee")]
     public class LookupController : BaseController
     {
 

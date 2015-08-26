@@ -1,26 +1,31 @@
 ﻿@using System.Configuration
 @model TMD.Web.ViewModels.EventListViewModel
     @{
-        ViewBag.Title = "Event";
+        ViewBag.Title = "Events";
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
         Session["MenuKey"] = 21;
     }
 
 
 <div class="container-fluid">
-        @*<header>
-                <h3 class="page-title">
-                    @ViewBag.Title
-                </h3>
-
-            </header>*@
+    <header>
+        <h3 class="page-title">
+            @ViewBag.Title @Html.Raw(ViewBag.Company)
+        </h3>
+    </header>
+    <label id="pulsate-crazy-target" style="padding:5px;font-weight: bold;font-size: 15px;width: 100%">
+        Today's Remaining Events:
+        <span style="margin-right:15px;" class="text-danger" id="TodaysEvents">@Model.TodaysEvents</span>
+        Tomorrow's Events:
+        <span style="margin-right:15px;" class="text-danger" id="TomorrowsEvents">@Model.TomorrowsEvents</span>
+    </label>
         <div class="row-fluid">
             <div class="span12">
 
                 <div class="portlet box blue-hoki">
                     <div class="portlet-title">
                         <div class="caption">
-                          @ViewBag.Company Events
+                          Filters
                         </div>
 
                         <div class="tools FilterToolBar">
@@ -41,7 +46,7 @@
                                         <td class="col-md-2">
                                             <div class="input-icon">
                                                 <i class="fa fa-search"></i>
-                                                @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "SearchBox", @placeholder = "Date/Company/Description/Account" })
+                                                @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "SearchBox", @placeholder = "Date/Note/Status/Company/Account" })
                                             </div>
                                         </td>
                                         @*<td class="col-md-1">
@@ -68,7 +73,7 @@
                             <i class="fa fa-cogs"></i>There are @(Model.Events.Count()) Events
                         </div>
                         <div class="tools">
-                            <a href="~/Event/Create" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Event</a>
+                            <a href="~/Event/Create" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Event @Html.Raw(ViewBag.Company)</a>
                         </div>
                         
                     </div>
@@ -79,9 +84,11 @@
                                 <thead>
                                     <tr>
                                         <th style="display:none"></th>
-                                        <th>Date</th>
+                                        <th>Event Date</th>
+                                        <th>Reminder Date</th>
+                                        <th>Reminder Note</th>
+                                        <th>Status</th>
                                         <th>Company</th>
-                                        <th>Description</th>
                                         <th>Account</th>
                                         <th></th>
                                     </tr>
@@ -91,9 +98,11 @@
                                     {
                                         <tr>
                                             <td style="display:none">@item.EventId</td>
-                                            <td>@Html.ActionLink(@item.EventDate.ToShortDateString(), "Create", new { id = item.EventId }) </td>
+                                            <td>@Html.ActionLink(item.EventDate.ToString("MM/dd/yyyy HH:mm"), "Create", new { id = item.EventId }) </td>
+                                            <td>@item.ReminderDate.ToString("MM/dd/yyyy HH:mm") </td>
+                                            <td>@item.ReminderNote</td>
+                                            <td>@item.StatusTitle</td>
                                             <td>@item.CompanyName</td>
-                                            <td>@item.EventDescription</td>
                                             <td>@item.RecCreatedByName</td>
                                             <td class="textAlignRight">
                                                 <a class="delete" href="javascript:;">Delete</a>
@@ -129,6 +138,16 @@
         $('#CompanyId').select2({
             allowClear: false
         });
+
+        //lightup points
+        $('#pulsate-crazy-target').pulsate({
+            color: "#e80c4d",
+            reach: 50,
+            repeat: 5,
+            speed: 800,
+            glow: true
+        });
+
         var oTable = $('#dataTable').dataTable({
             "sPaginationType": "full_numbers",
             "iDisplayLength": 10,
@@ -138,10 +157,12 @@
                   null,
                   null,
                   null,
+                  null,
+                  null,
                    { "bSearchable": false }
             ],
             "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [3] }
+                { 'bSortable': false, 'aTargets': [7] }
             ],
             "bFilter": true,
             "bLengthChange": false,

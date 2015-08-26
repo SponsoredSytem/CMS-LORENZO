@@ -18,7 +18,9 @@
             
             <div class="portlet box blue-hoki">
                 <div class="portlet-title">
-                    
+                    <div class="caption">
+                        Filters
+                    </div>
                     <div class="tools FilterToolBar">
                         <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
                         <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
@@ -61,7 +63,8 @@
                         <table id="UserList" class="table table-striped table-responsive">
                             <thead>
                                 <tr>
-                                    <th>Company Name</th>
+                                    <th>Name</th>
+                                    <th>Events</th>
                                     <th>V.A.T Number</th>
                                     <th>City</th>
                                     <th>Municipal</th>
@@ -69,19 +72,19 @@
                                     <th>Email</th>
                                     <th>Account Holder</th>
                                     <th>Company Status</th>
-                                    <th>Company Events</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
                                     {
-                                        companyEventsUrl = string.IsNullOrEmpty(item.CompanyEventsUrl) ? "" : "<a href='" + item.CompanyEventsUrl + "'>Events</a>";
+                                        companyEventsUrl = string.IsNullOrEmpty(item.CompanyEventsUrl) ? "" : "<a target='_blank' href='" + item.CompanyEventsUrl + "'>View</a>";
                                     }
                                     ;
                                     
                                 <tr>
-                                        <td>@Html.ActionLink(@item.CompanyName, "Create", new { id = item.CompanyId }) </td>
+                                    <td>@Html.ActionLink(@item.CompanyName, "Create", new { id = item.CompanyId }) </td>
+                                        <td>@Html.Raw(companyEventsUrl)</td>
                                         <td>@item.VATNumber</td>
                                         <td>@item.CityName</td>
                                         <td>@item.MunicipalName</td>
@@ -89,7 +92,6 @@
                                         <td>@item.Email</td>
                                         <td title="@item.AccountHolderEmail">@item.AccountHolderName</td>
                                         <td>@item.StatusTitle</td>
-                                        <td>@Html.Raw(companyEventsUrl)</td>
                                     </tr>
                                     
                                 }
@@ -116,7 +118,10 @@
             "sPaginationType": "full_numbers",
             "iDisplayLength": 10,
             "bFilter": true,
-            "bLengthChange": false
+            "bLengthChange": false,
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [1] }
+            ],
         });
         $('#btnFltr').on('click', function (e) {
             var searchN = $('#SearchBox').val();

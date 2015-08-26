@@ -1,4 +1,5 @@
-﻿using TMD.Models.DomainModels;
+﻿using System;
+using TMD.Models.DomainModels;
 using TMD.Web.Models;
 
 namespace TMD.Web.ModelMappers
@@ -17,7 +18,11 @@ namespace TMD.Web.ModelMappers
                 ReminderDate = source.ReminderDate,
                 ReminderNote = source.ReminderNote,
 
+                EventDateString = source.EventDate.ToString("MM/dd/yyyy HH:mm"),
+                ReminderDateString = source.ReminderDate.ToString("MM/dd/yyyy HH:mm"),
+
                 CompanyName = source.Company!=null?source.Company.CompanyName:"",
+                StatusTitle = source.EventStatus.StatusTitle,
                 RecCreatedByName = source.AspNetUser.FirstName+" "+source.AspNetUser.LastName,
 
                 RecCreatedBy = source.RecCreatedBy,
@@ -33,10 +38,10 @@ namespace TMD.Web.ModelMappers
             {
                 EventId = source.EventId,
                 EventDescription = source.EventDescription,
-                EventDate = source.EventDate,
+                EventDate = Convert.ToDateTime(source.EventDateString),
                 CompanyId = source.CompanyId,
                 EventStatusId = source.StatusId,
-                ReminderDate = source.ReminderDate,
+                ReminderDate = Convert.ToDateTime(source.ReminderDateString),
                 ReminderNote = source.ReminderNote,
 
                 RecCreatedBy = source.RecCreatedBy,

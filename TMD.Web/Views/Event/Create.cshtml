@@ -4,10 +4,15 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 21;
 
-    var companyName = Session["CompanyIdForEvent"] != null ? Model.Companies.FirstOrDefault(x => x.CompanyId == Convert.ToInt64(Session["CompanyIdForEvent"].ToString())).CompanyName : "";
 }
 <link rel="stylesheet" type="text/css" href="~/Content/css/select2.css" />
 <script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
+
+@* DateTime Picker *@
+<link href="~/Content/DateTimePicker/DateTimePicker-ltie9.css" rel="stylesheet" />
+<link href="~/Content/DateTimePicker/DateTimePicker.css" rel="stylesheet" />
+<script src="~/Content/DateTimePicker/DateTimePicker-ltie9.js"></script>
+<script src="~/Content/DateTimePicker/DateTimePicker.js"></script>
 @using (Html.BeginForm("Create", "Event", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="portlet box blue-hoki">
@@ -23,7 +28,7 @@
                 </a>
             </div>
             <div class="caption">
-                <i class="fa fa-male"></i>Create/Update @companyName Event
+                <i class="fa fa-male"></i>Create/Update Event @Html.Raw(ViewBag.Company)
             </div>
         </div>
 
@@ -40,24 +45,25 @@
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-file-o"></i>
-                        @Html.TextBoxFor(m => m.EventModel.EventDate, "{0:d}", new { @class = "form-control mandatory datepicker", placeholder = "Event Date", @id = "EventDate" })
+                        @Html.TextBoxFor(m => m.EventModel.EventDateString, new { @class = "form-control mandatory cursorHand", placeholder = "Event Date", @readonly = true, data_field = "datetime", @id = "EventDate" })
                     </div>
+                    <div class="col-md-2 textAlignRight">
+                        @Html.LabelFor(m => m.EventModel.CompanyId, new { @class = "control-label requiredLabel" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "input-medium select2me mandatory", id = "CompanyId" })
+                    </div>
+                    
+                </div>
+                
+                <div class="row form-group margin-top-20">
                     
                     <div class="col-md-2 textAlignRight">
                         @Html.LabelFor(m => m.EventModel.ReminderDate, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3 input-icon ">
                         <i class="fa fa-file-o"></i>
-                        @Html.TextBoxFor(m => m.EventModel.ReminderDate, "{0:d}", new { @class = "form-control mandatory datepicker", placeholder = "Reminder Date", @id = "ReminderDate" })
-                    </div>
-                </div>
-
-                <div class="row form-group margin-top-20">
-                    <div class="col-md-2 textAlignRight">
-                        @Html.LabelFor(m => m.EventModel.CompanyId, new { @class = "control-label requiredLabel" })
-                    </div>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "input-medium select2me mandatory", id = "CompanyId" })
+                        @Html.TextBoxFor(m => m.EventModel.ReminderDateString, new { @class = "form-control mandatory cursorHand", placeholder = "Reminder Date", @readonly = true, data_field = "datetime", @id = "ReminderDate" })
                     </div>
 
                     <div class="col-md-2 textAlignRight">
@@ -85,6 +91,7 @@
                         @Html.TextAreaFor(m => m.EventModel.EventDescription, new { @class = "form-control mandatory", placeholder = "Event Description", rows = 4 })
                     </div>
                 </div>
+                <div id="dtBox"></div>
             </div>
 
         </div>
@@ -93,14 +100,19 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#EventDate").datepicker({
-            changeMonth: true,
-            changeYear: true
+        //$("#EventDate").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true
+        //});
+        $("#dtBox").DateTimePicker({
+            mode: "datetime",
+            dateSeparator: "/",
+            dateTimeFormat: "MM/dd/yyyy HH:mm:ss",
         });
-        $("#ReminderDate").datepicker({
-            changeMonth: true,
-            changeYear: true
-        });
+        //$("#ReminderDate").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true
+        //});
 
         //$('.select2me').select2({
         //    allowClear: false

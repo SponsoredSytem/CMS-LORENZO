@@ -12,7 +12,7 @@ using TMD.Web.ViewModels;
 namespace TMD.Web.Controllers
 {
     [Authorize(Roles = "Employee")]
-    public class CompanyController : Controller
+    public class CompanyController : BaseController
     {
         private readonly ICompanyService companyService;
 

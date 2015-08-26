@@ -12,5 +12,7 @@ namespace TMD.Web.ViewModels
         }
         public IEnumerable<EventModel> Events { get; set; }
         public IEnumerable<Company> Companies { get; set; }
+        public int TodaysEvents { get; set; }
+        public int TomorrowsEvents { get; set; }
     }
 }

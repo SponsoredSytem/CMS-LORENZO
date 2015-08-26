@@ -9,6 +9,7 @@ namespace TMD.Web.Models
         public long CompanyId { get; set; }
         [Display(Name = "Event Status")]
         public int StatusId { get; set; }
+        public string StatusTitle { get; set; }
         public string CompanyName { get; set; }
         [Display(Name = "Event Description")]
         public string EventDescription { get; set; }
@@ -23,5 +24,7 @@ namespace TMD.Web.Models
         public string RecCreatedBy { get; set; }
         public string RecCreatedByName { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public string EventDateString { get; set; }
+        public string ReminderDateString { get; set; }
     }
 }
