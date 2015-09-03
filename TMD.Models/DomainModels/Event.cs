@@ -13,6 +13,10 @@
         public int EventStatusId { get; set; }
         public System.DateTime ReminderDate { get; set; }
         public string ReminderNote { get; set; }
+        public int EventLengthMinutes { get; set; }
+        public int EventType { get; set; }
+
+
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Company Company { get; set; }

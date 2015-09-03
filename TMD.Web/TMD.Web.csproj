@@ -969,6 +969,9 @@
     <Content Include="Content\frontend\pages\scripts\layerslider-init.js" />
     <Content Include="Content\frontend\pages\scripts\portfolio.js" />
     <Content Include="Content\frontend\pages\scripts\revo-slider-init.js" />
+    <Content Include="Content\fullcalendar\fullcalendar.min.css" />
+    <Content Include="Content\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\fullcalendar\moment.min.js" />
     <Content Include="Content\global\componentsGlobal.css" />
     <Content Include="Content\global\css\components.css" />
     <Content Include="Content\global\css\plugins.css" />
@@ -1820,6 +1823,7 @@
     <Content Include="Views\Lookup\SizeManage.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
+    <Content Include="Views\Event\Calendar.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
@@ -2990,7 +2994,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23866</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:23867/</IISUrl>
+          <IISUrl>http://localhost:29658/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

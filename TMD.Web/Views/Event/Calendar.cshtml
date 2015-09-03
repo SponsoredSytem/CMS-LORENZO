@@ -1,0 +1,320 @@
+﻿@model TMD.Web.ViewModels.EventViewModel
+@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 22;
+    Session["ParentMenu"] = 2;
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/css/select2.css" />
+<script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
+
+
+<script src="~/Content/fullcalendar/moment.min.js"></script>
+<link href="~/Content/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
+<script src="~/Content/fullcalendar/fullcalendar.min.js"></script>
+
+@* DateTime Picker *@
+@*<link href="~/Content/DateTimePicker/DateTimePicker-ltie9.css" rel="stylesheet" />
+<link href="~/Content/DateTimePicker/DateTimePicker.css" rel="stylesheet" />
+<script src="~/Content/DateTimePicker/DateTimePicker-ltie9.js"></script>
+<script src="~/Content/DateTimePicker/DateTimePicker.js"></script>*@
+
+<div class="row formMinHeight500">
+    <div class="col-md-12">
+        <!-- BEGIN PORTLET-->
+        <div class="portlet box blue-madison calendar">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-calendar"></i>Calendar
+                </div>
+            </div>
+            <div class="portlet-body light-grey">
+                <div id="calendar">
+                </div>
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+</div>
+<div id="popupEventForm" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Add New Event</h4>
+            </div>
+            <div class="modal-body">
+                <div class="scroller" style="height:400px" data-always-visible="1" data-rail-visible1="1">
+                    <input type="hidden" id="eventID" />
+                    <input type="hidden" id="recCreatedBy" />
+                    <input type="hidden" id="recCreatedDate" />
+                    
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Company</label>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "input-medium select2me mandatoryModal", id = "CompanyId" })
+                        </div>
+                    </div>
+                    
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Event Type</label>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(m => m.EventModel.StatusId, new SelectList(Model.EventStatuses, "StatusId", "StatusTitle", Model.EventModel.StatusId), "Select Status", new { @class = "input-medium select2me mandatoryModal", id = "StatusId" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Event Title</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal" id="eventTitle" />
+                        </div>
+                    </div>
+                    
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Event Date</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal datepicker" id="eventDate"/>
+                        </div>
+                    </div>
+                    
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Event Time</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal" id="eventTime" />
+                        </div>
+                    </div>
+                    
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Event Duration</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal" id="eventDuration" placeholder="Duration in minutes" />
+                        </div>
+                    </div>
+                    
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Reminder Date</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal datepicker" id="ReminderDate" />
+                        </div>
+                    </div>
+
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Reminder Note</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal" id="ReminderNote" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnPopupDelete" data-dismiss="modal" class="btn">Delete Event</button>
+                <button type="button" id="btnPopupCancel" data-dismiss="modal" class="btn">Cancel</button>
+                <button type="button" id="btnPopupSave" data-dismiss="modal" class="btn btn-primary">Save event</button>
+            </div>
+            
+            <div id="dtBox"></div>
+        </div>
+    </div>
+</div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                var sourceFullView = { url: '/Event/GetCalendarEvents/' };
+                var sourceSummaryView = { url: '/Event/GetCalendarSummary/' };
+                var calLoading = true;
+
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'title',
+                        center: '',
+                        right: 'prev,next,today,month,agendaWeek,agendaDay'
+                    },
+                    defaultView: 'month',
+                    editable: false,
+                    allDaySlot: false,
+                    selectable: true,
+                    slotDuration: '00:05:00',
+                    events: '/Event/GetCalendarEvents/',
+
+                    eventClick: function (calEvent, jsEvent, view) {
+                        $("#CompanyId").select2('val', calEvent.companyid);
+                        $("#StatusId").select2('val', calEvent.statusId);
+                        $('#eventID').val(calEvent.id);
+                        $('#eventTitle').val(calEvent.title);
+                        $('#eventDate').val(calEvent.eventDate);
+                        $('#eventTime').val(calEvent.eventTime);
+                        $('#eventDuration').val(calEvent.duration);
+                        $('#ReminderNote').val(calEvent.reminderNote);
+                        $('#ReminderDate').val(calEvent.reminderDate);
+                        $('#recCreatedDate').val(calEvent.recCreatedDate);
+                        $('#recCreatedBy').val(calEvent.recCreatedBy);
+                        $("#popupEventForm").modal('toggle');
+                    },
+
+                    //eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
+                    //    if (confirm("Confirm move?")) {
+                    //        UpdateEvent(event.id, event.start);
+                    //    }
+                    //    else {
+                    //        revertFunc();
+                    //    }
+                    //},
+
+                    //eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
+
+                    //    if (confirm("Confirm change appointment length?")) {
+                    //        UpdateEvent(event.id, event.start, event.end);
+                    //    }
+                    //    else {
+                    //        revertFunc();
+                    //    }
+                    //},
+
+
+
+                    dayClick: function (date, jsEvent, view) {
+                        var dt = new Date();
+                        var time = moment(date).format('h:mm') == "12:00" ? dt.getHours() + ":" + dt.getMinutes() : moment(date).format('h:mm');
+
+                        $('#eventTitle').val("");
+                        $('#eventDate').val(moment(date).format('MM/DD/YYYY'));
+                        $('#eventTime').val(time);
+                        ShowEventPopup(date);
+                    },
+
+                    viewRender: function (view, element) {
+                        if (!calLoading) {
+                            if (view.name == 'month') {
+                                $('#calendar').fullCalendar('removeEventSource', sourceFullView);
+                                $('#calendar').fullCalendar('removeEvents');
+                                $('#calendar').fullCalendar('addEventSource', sourceSummaryView);
+                            }
+                            else {
+                                $('#calendar').fullCalendar('removeEventSource', sourceSummaryView);
+                                $('#calendar').fullCalendar('removeEvents');
+                                $('#calendar').fullCalendar('addEventSource', sourceFullView);
+                            }
+                        }
+                    }
+                });
+
+                calLoading = false;
+
+            });
+            function ShowEventPopup(date) {
+                ClearPopupFormValues();
+                //$('#popupEventForm').show();
+                $("#popupEventForm").modal('toggle');
+                $('#eventTitle').focus();
+            }
+
+            function ClearPopupFormValues() {
+                $("#CompanyId").select2('val', '');
+                $("#StatusId").select2('val', '');
+                $('#eventID').val("");
+                $('#eventTitle').val("");
+                $('#eventDuration').val("");
+                $('#ReminderNote').val("");
+                $('#ReminderDate').val("");
+            }
+
+            function UpdateEvent(eventId, eventStart, eventEnd) {
+
+                var dataRow = {
+                    'ID': eventId,
+                    'NewEventStart': eventStart,
+                    'NewEventEnd': eventEnd
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: "/Home/UpdateEvent",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(dataRow)
+                });
+            }
+            $('#btnPopupCancel').click(function () {
+                $("#popupEventForm").modal('toggle');
+                ClearPopupFormValues();
+            });
+
+            $('#btnPopupDelete').click(function () {
+                $("#popupEventForm").modal('toggle');
+                
+                $.ajax({
+                    type: 'POST',
+                    url: "/Event/DeleteEvent",
+                    data: { id: $('#eventID').val() },
+                    success: function (response) {
+                        if (response.response == "Deleted") {
+                            $('#calendar').fullCalendar('refetchEvents');
+                            alert('Event has been deleted!');
+                        }
+                        else {
+                            alert('Error, could not delete event!');
+                        }
+                    }
+                });
+                ClearPopupFormValues();
+            });
+            //data: "{id:" + $('#eventID').val() + "}",
+            $('#btnPopupSave').click(function () {
+
+                $("#popupEventForm").modal('toggle');
+
+                var dataRow = {
+                    'EventDescription': $('#eventTitle').val(),
+                    'EventDateString': $('#eventDate').val() + " " + $('#eventTime').val(),
+                    'EventDuration': $('#eventDuration').val(),
+                    'CompanyId': $('#CompanyId').val(),
+                    'StatusId': $('#StatusId').val(),
+                    'ReminderNote': $('#ReminderNote').val(),
+                    'ReminderDateString': $('#ReminderDate').val(),
+                    'EventId':$('#eventID').val(),
+                    'RecCreatedBy':$('#recCreatedBy').val(),
+                    'RecCreatedDate': $('#recCreatedDate').val()
+                };
+
+                ClearPopupFormValues();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "/Event/SaveEvent",
+                    data: dataRow,
+                    success: function (response) {
+                        if (response == 'True') {
+                            $('#calendar').fullCalendar('refetchEvents');
+                            alert('Event saved!');
+                        }
+                        else {
+                            alert('Error, could not save event!');
+                        }
+                    }
+                });
+            });
+        </script>

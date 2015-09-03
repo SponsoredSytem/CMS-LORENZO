@@ -243,6 +243,8 @@
           <Property Name="EventStatusId" Type="int" Nullable="false" />
           <Property Name="ReminderDate" Type="datetime" Nullable="false" />
           <Property Name="ReminderNote" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EventLengthMinutes" Type="int" Nullable="false" />
+          <Property Name="EventType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EventStatus">
           <Key>
@@ -2724,6 +2726,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_Events_AspNetUsers" FromRole="Event" ToRole="AspNetUser" />
           <NavigationProperty Name="Company" Relationship="TMD.Models.DomainModels.FK_Events_Company" FromRole="Event" ToRole="Company" />
           <NavigationProperty Name="EventStatus" Relationship="TMD.Models.DomainModels.FK_Events_EventStatus" FromRole="Event" ToRole="EventStatus" />
+          <Property Name="EventLengthMinutes" Type="Int32" Nullable="false" />
+          <Property Name="EventType" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Events_AspNetUsers">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -3417,6 +3421,8 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Event">
               <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EventLengthMinutes" ColumnName="EventLengthMinutes" />
                 <ScalarProperty Name="ReminderNote" ColumnName="ReminderNote" />
                 <ScalarProperty Name="ReminderDate" ColumnName="ReminderDate" />
                 <ScalarProperty Name="EventStatusId" ColumnName="EventStatusId" />

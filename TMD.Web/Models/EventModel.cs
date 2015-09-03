@@ -26,5 +26,8 @@ namespace TMD.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public string EventDateString { get; set; }
         public string ReminderDateString { get; set; }
+
+        public int EventDuration { get; set; }
+
     }
 }

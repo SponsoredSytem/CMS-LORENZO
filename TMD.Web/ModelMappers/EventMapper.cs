@@ -17,6 +17,7 @@ namespace TMD.Web.ModelMappers
                 StatusId = source.EventStatusId,
                 ReminderDate = source.ReminderDate,
                 ReminderNote = source.ReminderNote,
+                EventDuration = source.EventLengthMinutes,
 
                 EventDateString = source.EventDate.ToString("MM/dd/yyyy HH:mm"),
                 ReminderDateString = source.ReminderDate.ToString("MM/dd/yyyy HH:mm"),
@@ -43,6 +44,7 @@ namespace TMD.Web.ModelMappers
                 EventStatusId = source.StatusId,
                 ReminderDate = Convert.ToDateTime(source.ReminderDateString),
                 ReminderNote = source.ReminderNote,
+                EventLengthMinutes = source.EventDuration,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

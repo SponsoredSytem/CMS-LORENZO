@@ -164,15 +164,30 @@
                                 <span class="selected"></span>
                             </a>
                         </li>
-                        
-                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "21") ? "active " : "")>
-                            <a href="~/Event/Index" class="WhiteColor">
+
+                        <li class=@( (Session["ParentMenu"] != null && Session["ParentMenu"].ToString() == "2") ? "active open" : "")>
+                            @{
+                                            Session["ParentMenu"] = 0;
+                            }
+                            <a href="javascript:;">
                                 <i class="icon-basket"></i>
                                 <span class="title">Events</span>
-                                <span class="selected"></span>
+                                <span class="arrow "></span>
                             </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "21") ? "active " : "")>
+                                    <a href="~/Event/Index">
+                                        Events
+                                    </a>
+                                </li>
+                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "22") ? "active " : "")>
+                                    <a href="~/Event/Calendar">
+                                        Calendar
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        
+
                         <li class=@( (Session["ParentMenu"] != null && Session["ParentMenu"].ToString() == "1") ? "active open" : "")>
                             @{
                             Session["ParentMenu"] = 0;
@@ -259,7 +274,7 @@
         }
     </div>
     <div class="clearfix"></div>
-            <div class="page-footer">
+            <div class="page-footer" style="position: relative">
                 <div class="page-footer-inner">
                     2015 &copy; UI theme by InnoSTARK.
                 </div>

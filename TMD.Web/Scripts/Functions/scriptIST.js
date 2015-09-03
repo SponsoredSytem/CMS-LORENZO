@@ -216,8 +216,7 @@ function GregorianToHijri(englishCalendar,arabicCalendar) {
 $(document).ready(function () {
     $(".datepicker").datepicker({
         changeMonth: true,
-        changeYear: true,
-        maxDate:new Date()
+        changeYear: true
     });
     $(".datepickerDefaultDate").datepicker({
         changeMonth: true,

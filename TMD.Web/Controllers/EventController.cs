@@ -56,6 +56,17 @@ namespace TMD.Web.Controllers
             return View(listViewModel);
         }
 
+        public ActionResult Calendar()
+        {
+            var viewModel = new EventViewModel
+            {
+                Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient()),
+                EventStatuses =
+                    eventStatusService.GetAllActiveEventStatuses().ToList().Select(x => x.CreateFromServerToClient())
+            };
+
+            return View(viewModel);
+        }
         public ActionResult Create(int? id)
         {
             var viewModel = new EventViewModel
@@ -128,6 +139,66 @@ namespace TMD.Web.Controllers
                 return Json(error);
             }
             return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCalendarEvents(DateTime start, DateTime end)
+        {
+            var events = eventService.GetAllEvents(null).ToList();
+            var eventList = from e in events
+                            select new
+                            {
+                                id=e.EventId,
+                                title = e.EventDescription,
+                                start = string.Format("{0:yyyy-MM-dd}", e.EventDate) + "T" + string.Format("{0:HH:mm:ss}", e.EventDate),
+                                end = string.Format("{0:yyyy-MM-dd}", e.EventDate.AddMinutes(e.EventLengthMinutes)) + "T" + string.Format("{0:HH:mm:ss}", e.EventDate.AddMinutes(e.EventLengthMinutes)),
+                                allDay = false,
+                                companyid=e.CompanyId,
+                                statusId=e.EventStatusId,
+                                duration=e.EventLengthMinutes,
+                                reminderNote=e.ReminderNote,
+                                reminderDate=e.ReminderDate.ToShortDateString(),
+                                eventDate=e.EventDate.ToShortDateString(),
+                                eventTime=e.EventDate.ToShortTimeString(),
+                                recCreatedBy=e.RecCreatedBy,
+                                recCreatedDate=e.RecCreatedDate.ToString("G")
+                            };
+            var rows = eventList.ToArray();
+            return Json(rows, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetCalendarSummary(DateTime start, DateTime end)
+        {
+            var events = eventService.GetAllEvents(null).ToList();
+            var eventList = from e in events
+                            select new
+                            {
+                                title = e.EventDescription,
+                                start = string.Format("{0:yyyy-MM-dd}", e.EventDate) + "T" + string.Format("{0:HH:mm:ss}", e.EventDate),
+                                end = string.Format("{0:yyyy-MM-dd}", e.EventDate.AddMinutes(e.EventLengthMinutes)) + "T" + string.Format("{0:HH:mm:ss}", e.EventDate.AddMinutes(e.EventLengthMinutes)),
+                                allDay = false,
+                                companyid = e.CompanyId,
+                                statusId = e.EventStatusId,
+                                duration = e.EventLengthMinutes,
+                                reminderNote = e.ReminderNote,
+                                reminderDate = e.ReminderDate.ToShortDateString(),
+                                eventDate = e.EventDate.ToShortDateString(),
+                                eventTime = e.EventDate.ToShortTimeString(),
+                                recCreatedBy = e.RecCreatedBy,
+                                recCreatedDate = e.RecCreatedDate.ToString("G")
+                            };
+            var rows = eventList.ToArray();
+            return Json(rows, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool SaveEvent(EventModel eventModel)
+        {
+            if (eventModel.EventId == 0)
+            {
+                eventModel.RecCreatedBy = User.Identity.GetUserId();
+                eventModel.RecCreatedDate = DateTime.Now;
+            }
+            eventModel.RecLastUpdatedBy = User.Identity.GetUserId();
+            eventModel.RecLastUpdatedDate = DateTime.Now;
+            return (eventService.SaveEvent(eventModel.CreateFromClientToServer()) > 0);
         }
     }
 }
