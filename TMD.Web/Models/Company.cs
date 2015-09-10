@@ -8,11 +8,11 @@ namespace TMD.Web.Models
         public long CompanyId { get; set; }
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
-        [Display(Name = "Legal Name")]
+        [Display(Name = "Company Legal Name")]
         public string LegalName { get; set; }
-        [Display(Name = "V.A.T Number")]
+        [Display(Name = "Tax Number")]
         public string VATNumber { get; set; }
-        [Display(Name = "V.A.T Office")]
+        [Display(Name = "Tax District")]
         public string VATOffice { get; set; }
         public string Address { get; set; }
         public string Telephone { get; set; }
@@ -21,6 +21,7 @@ namespace TMD.Web.Models
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string Email { get; set; }
+        [Display(Name = "Comments")]
         public string Notes { get; set; }
         [Display(Name = "Description")]
         public string CompanyDescription { get; set; }
@@ -30,7 +31,7 @@ namespace TMD.Web.Models
         public string RecLastUpdatedBy { get; set; }
         [Display(Name = "Municipal")]
         public long? MunicipalId { get; set; }
-        public long CityId { get; set; }
+        public long? CityId { get; set; }
         [Display(Name = "Source")]
         public long? SourceId { get; set; }
         public string CityName { get; set; }
@@ -42,6 +43,20 @@ namespace TMD.Web.Models
         public int? StatusId { get; set; }
         public string StatusTitle { get; set; }
 
+        [Display(Name = "First Name")]
+        public string IndividualFirstName { get; set; }
+        [Display(Name = "Last Name")]
+        public string IndividualLastName { get; set; }
+        [Display(Name = "Cell Phone")]
+        public string CellPhone { get; set; }
         public string CompanyEventsUrl { get; set; }
+
+        [Display(Name = "Is Company?")]
+        public bool IsCompany { get; set; }
+        public string Website { get; set; }
+
+        [Display(Name = "Refrence Company")]
+        public long? RefrenceCompanyId { get; set; }
+        public long? BelongingCompanyId { get; set; }
     }
 }

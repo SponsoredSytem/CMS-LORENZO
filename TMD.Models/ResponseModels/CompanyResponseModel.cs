@@ -12,5 +12,7 @@ namespace TMD.Models.ResponseModels
         public IEnumerable<CompanyContact> CompanyContacts { get; set; }
         public IEnumerable<AspNetUser> Employees { get; set; }
         public IEnumerable<CompanyStatus> CompanyStatuses { get; set; }
+        public IEnumerable<Company> Companies { get; set; }
+        public IEnumerable<Company> CompaniesAndIndividuals { get; set; }
     }
 }

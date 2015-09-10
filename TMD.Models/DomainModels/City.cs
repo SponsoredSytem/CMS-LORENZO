@@ -13,5 +13,6 @@ namespace TMD.Models.DomainModels
         public string RecLastUpdatedBy { get; set; }
 
         public virtual ICollection<Municipal> Municipals { get; set; }
+        public virtual ICollection<Company> Companies { get; set; }
     }
 }

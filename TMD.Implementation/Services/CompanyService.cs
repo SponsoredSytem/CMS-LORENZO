@@ -54,6 +54,12 @@ namespace TMD.Implementation.Services
             //Load Company Statuses
             responseModel.CompanyStatuses = companyStatusRepository.GetCompanyStatusesBySortOrder();
 
+            //Load Companies And Individuals
+            responseModel.CompaniesAndIndividuals = companyRepository.GetAll();
+
+            //Load Companies
+            responseModel.Companies = companyRepository.GetCompanies();
+
             return responseModel;
         }
 

@@ -24,8 +24,9 @@ namespace TMD.Web.Controllers
         // GET: Company
         public ActionResult Index()
         {
-            var companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient()).ToList();
-            return View(companies);
+            var companies = companyService.GetAllCompanies().ToList();
+            var companiesModel = companies.Select(x => x.CreateFromServerToClient()).ToList();
+            return View(companiesModel);
         }
         public ActionResult Create(long? id)
         {
@@ -39,6 +40,8 @@ namespace TMD.Web.Controllers
             companyViewModel.CompanyStatuses = companyData.CompanyStatuses != null ? companyData.CompanyStatuses.Select(x => x.CreateDropDown()).ToList() : new List<CompanyStatusDropdownModel>();
             companyViewModel.Cities = companyData.Cities.Select(x => x.CreateFromServerToClient()).ToList();
             companyViewModel.Sources = companyData.Sources.Select(x => x.CreateFromServerToClient()).ToList();
+            companyViewModel.CompaniesAndIndividuals = companyData.CompaniesAndIndividuals.Select(x => x.CreateFromServerToClient()).ToList();
+            companyViewModel.Companies = companyData.Companies.Select(x => x.CreateFromServerToClient()).ToList();
             return View(companyViewModel);
         }
         [HttpPost]

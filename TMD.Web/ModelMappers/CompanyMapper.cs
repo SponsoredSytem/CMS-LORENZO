@@ -26,6 +26,15 @@ namespace TMD.Web.ModelMappers
                 StatusId = source.StatusId,
                 EmployeeId = source.AccountHolderId,
 
+                CellPhone = source.CellPhone,
+                IndividualFirstName = source.IndividualFirstName,
+                IndividualLastName = source.IndividualLastName,
+                IsCompany = source.IsCompany,
+                Website = source.Website,
+                RefrenceCompanyId = source.RefrenceCompanyId,
+                BelongingCompanyId = source.BelongingCompanyId,
+                CityId = source.CityId,
+                
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -37,7 +46,7 @@ namespace TMD.Web.ModelMappers
             return new Models.Company
             {
                 CompanyId = source.CompanyId,
-                CompanyName = source.CompanyName,
+                CompanyName = source.IsCompany?source.CompanyName:source.IndividualFirstName+" "+source.IndividualLastName,
                 LegalName = source.LegalName,
                 CompanyDescription = source.CompanyDescription,
                 Email = source.Email,
@@ -48,9 +57,9 @@ namespace TMD.Web.ModelMappers
                 VATOffice = source.VATOffice,
                 Notes = source.Notes,
                 MunicipalId = source.MunicipalId,
-                MunicipalName = source.Municipal.MunicipalName,
-                CityId=source.Municipal.CityId,
-                CityName = source.Municipal.City.CityName,
+                //MunicipalName = source.Municipal.MunicipalName,
+                CityName = source.City.CityName,
+                CityId=source.CityId,
                 SourceId = source.SourceId,
                 StatusId = source.StatusId,
                 StatusTitle = source.StatusId!=null?source.CompanyStatus.StatusTitle:"",
@@ -61,6 +70,14 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
+
+                CellPhone = source.CellPhone,
+                IndividualFirstName = source.IndividualFirstName,
+                IndividualLastName = source.IndividualLastName,
+                IsCompany = source.IsCompany,
+                Website = source.Website,
+                RefrenceCompanyId = source.RefrenceCompanyId,
+                BelongingCompanyId = source.BelongingCompanyId,
 
                 CompanyEventsUrl = source.Events.Any() ? ConfigurationManager.AppSettings["HostURL"] + "/Event/Index/" + source.CompanyId : "",
             };

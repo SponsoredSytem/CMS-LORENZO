@@ -39,9 +39,9 @@
     return true;
 }
 
-function ValidateFieldsByClass(ClassName) {
+function ValidateFieldsByClass(className) {
     var missingCounter = 0;
-    var fields = $('.'+ClassName); //Array for all textboxes
+    var fields = $('.'+className); //Array for all textboxes
     var inCompleteFields = "";
     for (var i = 0; i < fields.length; i++) {
         var value = $(fields[i]).val();

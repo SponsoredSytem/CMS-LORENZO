@@ -64,14 +64,12 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Is Company?</th>
                                     <th>Events</th>
-                                    <th>V.A.T Number</th>
                                     <th>City</th>
-                                    <th>Municipal</th>
                                     <th>Telephone</th>
                                     <th>Email</th>
-                                    <th>Account Holder</th>
-                                    <th>Company Status</th>
+                                    <th>Website</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,14 +82,12 @@
                                     
                                 <tr>
                                     <td>@Html.ActionLink(@item.CompanyName, "Create", new { id = item.CompanyId }) </td>
+                                    <td>@(item.IsCompany ? "Yes" : "No")</td>
                                         <td>@Html.Raw(companyEventsUrl)</td>
-                                        <td>@item.VATNumber</td>
                                         <td>@item.CityName</td>
-                                        <td>@item.MunicipalName</td>
                                         <td>@item.Telephone</td>
                                         <td>@item.Email</td>
-                                        <td title="@item.AccountHolderEmail">@item.AccountHolderName</td>
-                                        <td>@item.StatusTitle</td>
+                                        <td>@item.Website</td>
                                     </tr>
                                     
                                 }
@@ -120,7 +116,7 @@
             "bFilter": true,
             "bLengthChange": false,
             "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [1] }
+                { 'bSortable': false, 'aTargets': [2] }
             ],
         });
         $('#btnFltr').on('click', function (e) {

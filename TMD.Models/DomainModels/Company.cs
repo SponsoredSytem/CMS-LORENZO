@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TMD.Models.DomainModels
 {
@@ -21,10 +22,16 @@ namespace TMD.Models.DomainModels
         public string RecLastUpdatedBy { get; set; }
         public long? MunicipalId { get; set; }
         public long? SourceId { get; set; }
-
         public string EmployeeId { get; set; }
-
         public int? StatusId { get; set; }
+        public bool IsCompany { get; set; }
+        public string Website { get; set; }
+        public long? RefrenceCompanyId { get; set; }
+        public string IndividualFirstName { get; set; }
+        public string IndividualLastName { get; set; }
+        public string CellPhone { get; set; }
+        public long? CityId { get; set; }
+        public long? BelongingCompanyId { get; set; }
 
         public virtual Municipal Municipal { get; set; }
         public virtual Source Source { get; set; }
@@ -32,5 +39,10 @@ namespace TMD.Models.DomainModels
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual CompanyStatus CompanyStatus { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<Company> CompaniesWhereIamRefrenced { get; set; }
+        public virtual Company RefrenceCompany { get; set; }
+        public virtual City City { get; set; }
+        public virtual ICollection<Company> BelongingsOfTheCompany { get; set; }
+        public virtual Company BelongingCompany { get; set; }
     }
 }

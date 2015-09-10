@@ -105,24 +105,32 @@
             <PropertyRef Name="CompanyId" />
           </Key>
           <Property Name="CompanyId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="LegalName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="VATNumber" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="VATOffice" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Telephone" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Fax" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="200" />
+          <Property Name="IndividualFirstName" Type="nvarchar" MaxLength="200" />
+          <Property Name="IndividualLastName" Type="nvarchar" MaxLength="200" />
+          <Property Name="LegalName" Type="nvarchar(max)" />
+          <Property Name="VATNumber" Type="nvarchar(max)" />
+          <Property Name="VATOffice" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="20" />
+          <Property Name="CellPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="20" />
           <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CompanyDescription" Type="nvarchar" MaxLength="500" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CityId" Type="bigint" />
           <Property Name="MunicipalId" Type="bigint" />
           <Property Name="SourceId" Type="bigint" />
           <Property Name="EmployeeId" Type="nvarchar" MaxLength="128" />
           <Property Name="StatusId" Type="int" />
+          <Property Name="IsCompany" Type="bit" Nullable="false" />
+          <Property Name="Website" Type="nvarchar(max)" />
+          <Property Name="RefrenceCompanyId" Type="bigint" />
+          <Property Name="BelongingCompanyId" Type="bigint" />
         </EntityType>
         <EntityType Name="CompanyContact">
           <Key>
@@ -660,6 +668,42 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Company_BelongingCompany">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Company1" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Company1">
+              <PropertyRef Name="BelongingCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Company1" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Company1">
+              <PropertyRef Name="RefrenceCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Company_CompanyStatus">
           <End Role="CompanyStatus" Type="Self.CompanyStatus" Multiplicity="0..1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
@@ -1187,6 +1231,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Company" EntitySet="Company" />
           </AssociationSet>
+          <AssociationSet Name="FK_Company_BelongingCompany" Association="Self.FK_Company_BelongingCompany">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Company1" EntitySet="Company" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_City" Association="Self.FK_Company_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_Company" Association="Self.FK_Company_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Company1" EntitySet="Company" />
+          </AssociationSet>
           <AssociationSet Name="fk_Company_CompanyStatus" Association="Self.fk_Company_CompanyStatus">
             <End Role="CompanyStatus" EntitySet="CompanyStatus" />
             <End Role="Company" EntitySet="Company" />
@@ -1564,6 +1620,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <AssociationSet Name="FK_Events_EventStatus" Association="TMD.Models.DomainModels.FK_Events_EventStatus">
             <End Role="EventStatus" EntitySet="EventStatus1" />
             <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_Company" Association="TMD.Models.DomainModels.FK_Company_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Company1" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_City" Association="TMD.Models.DomainModels.FK_Company_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_BelongingCompany" Association="TMD.Models.DomainModels.FK_Company_BelongingCompany">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Company1" EntitySet="Companies" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -2437,21 +2505,22 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Municipals" Relationship="TMD.Models.DomainModels.FK_Municipal_City" FromRole="City" ToRole="Municipal" />
+          <NavigationProperty Name="Companies" Relationship="TMD.Models.DomainModels.FK_Company_City" FromRole="City" ToRole="Company" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="CompanyId" />
           </Key>
           <Property Name="CompanyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="VATNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="VATOffice" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Telephone" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Fax" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VATNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VATOffice" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CompanyDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -2467,6 +2536,19 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="StatusId" Type="Int32" />
           <NavigationProperty Name="CompanyStatus" Relationship="TMD.Models.DomainModels.fk_Company_CompanyStatus" FromRole="Company" ToRole="CompanyStatus" />
           <NavigationProperty Name="Events" Relationship="TMD.Models.DomainModels.FK_Events_Company" FromRole="Company" ToRole="Event" />
+          <Property Name="IsCompany" Type="Boolean" Nullable="false" />
+          <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RefrenceCompanyId" Type="Int64" />
+          <NavigationProperty Name="CompaniesWhereIamRefrenced" Relationship="TMD.Models.DomainModels.FK_Company_Company" FromRole="Company" ToRole="Company1" />
+          <NavigationProperty Name="RefrenceCompany" Relationship="TMD.Models.DomainModels.FK_Company_Company" FromRole="Company1" ToRole="Company" />
+          <Property Name="IndividualFirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IndividualLastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CellPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="BelongingCompanyId" Type="Int64" />
+          <NavigationProperty Name="City" Relationship="TMD.Models.DomainModels.FK_Company_City" FromRole="Company" ToRole="City" />
+          <NavigationProperty Name="BelongingsOfTheCompany" Relationship="TMD.Models.DomainModels.FK_Company_BelongingCompany" FromRole="Company" ToRole="Company1" />
+          <NavigationProperty Name="BelongingCompany" Relationship="TMD.Models.DomainModels.FK_Company_BelongingCompany" FromRole="Company1" ToRole="Company" />
         </EntityType>
         <EntityType Name="Municipal">
           <Key>
@@ -2775,6 +2857,42 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Principal>
             <Dependent Role="Event">
               <PropertyRef Name="EventStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_Company">
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Company" Role="Company1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Company1">
+              <PropertyRef Name="RefrenceCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_City">
+          <End Type="TMD.Models.DomainModels.City" Role="City" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Company_BelongingCompany">
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Company" Role="Company1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Company1">
+              <PropertyRef Name="BelongingCompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3277,6 +3395,14 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Company">
               <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="BelongingCompanyId" ColumnName="BelongingCompanyId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="IndividualLastName" ColumnName="IndividualLastName" />
+                <ScalarProperty Name="IndividualFirstName" ColumnName="IndividualFirstName" />
+                <ScalarProperty Name="RefrenceCompanyId" ColumnName="RefrenceCompanyId" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="IsCompany" ColumnName="IsCompany" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="SourceId" ColumnName="SourceId" />
@@ -3472,7 +3598,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="79">
+      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="57">
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
@@ -3556,6 +3682,9 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Events_Company" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.EventStatus" Width="1.5" PointX="16.375" PointY="9.75" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Events_EventStatus" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_Company" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_City" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_BelongingCompany" />
       </Diagram>
     </Diagrams>
   </Designer>

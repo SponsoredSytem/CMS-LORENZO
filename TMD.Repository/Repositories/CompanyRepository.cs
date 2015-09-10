@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
@@ -26,5 +27,10 @@ namespace TMD.Repository.Repositories
             get { return db.Company; }
         }
         #endregion
+
+        public IEnumerable<Company> GetCompanies()
+        {
+            return DbSet.Where(x => x.IsCompany);
+        }
     }
 }
