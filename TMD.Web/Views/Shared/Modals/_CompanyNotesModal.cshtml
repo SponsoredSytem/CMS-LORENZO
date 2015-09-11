@@ -1,0 +1,55 @@
+﻿@model TMD.Web.ViewModels.CompanyViewModel
+<div id="NotesModal" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Company Note</h4>
+            </div>
+            <div class="modal-body">
+                <div class="scroller" style="height:400px" data-always-visible="1" data-rail-visible1="1">
+                    <input type="hidden" id="NotesModalIndex" />
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Reminder Date</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryCnModal datepicker" id="cnReminderDate" />
+                        </div>
+                    </div>
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Action Date</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryCnModal datepicker" id="cnActionDate" />
+                        </div>
+                    </div>
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label">Type</label>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownList("CompanyNoteTypes", new SelectList(Model.CompanyNoteTypes, "Id", "Name"), "Select Type", new { @class = "form-control mandatoryCnIndividual", id = "cnType" })
+                        </div>
+                    </div>
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label">Description</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user-md"></i>
+                            <textarea rows="4" class="form-control mandatoryCnModal" id="cnDescription"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn default">Close</button>
+                <button type="button" id="CompanyNotesSave" class="btn green">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

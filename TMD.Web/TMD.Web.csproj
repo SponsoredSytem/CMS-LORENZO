@@ -1742,6 +1742,7 @@
     <Content Include="Scripts\App\toastr.js" />
     <Content Include="Scripts\App\toastr.min.js" />
     <Content Include="Scripts\App\ValidateFields.js" />
+    <Content Include="Scripts\CompanyPage.js" />
     <Content Include="Scripts\InventoryScripts.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.pulsate.min.js" />
@@ -1824,6 +1825,8 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
     <Content Include="Views\Event\Calendar.cshtml" />
+    <Content Include="Views\Shared\Modals\_CompanyContactModal.cshtml" />
+    <Content Include="Views\Shared\Modals\_CompanyNotesModal.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

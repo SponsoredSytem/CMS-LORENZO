@@ -14,5 +14,7 @@ namespace TMD.Models.ResponseModels
         public IEnumerable<CompanyStatus> CompanyStatuses { get; set; }
         public IEnumerable<Company> Companies { get; set; }
         public IEnumerable<Company> CompaniesAndIndividuals { get; set; }
+        public IEnumerable<Note> CompanyNotes { get; set; }
+        public IEnumerable<NotesCategory> NotesCategories { get; set; }
     }
 }

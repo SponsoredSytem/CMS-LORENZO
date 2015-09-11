@@ -16,8 +16,9 @@ namespace TMD.Implementation.Services
         private readonly ICompanyContactRepository companyContactRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly ICompanyStatusRepository companyStatusRepository;
+        private readonly INotesCategoryRepository notesCategoryRepository;
 
-        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository, IAspNetUserRepository aspNetUserRepository, ICompanyStatusRepository companyStatusRepository)
+        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository, IAspNetUserRepository aspNetUserRepository, ICompanyStatusRepository companyStatusRepository, INotesCategoryRepository notesCategoryRepository)
         {
             this.companyRepository = companyRepository;
             this.cityRepository = cityRepository;
@@ -25,6 +26,7 @@ namespace TMD.Implementation.Services
             this.companyContactRepository = companyContactRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             this.companyStatusRepository = companyStatusRepository;
+            this.notesCategoryRepository = notesCategoryRepository;
         }
 
         public Company GetCompany(long companyId)
@@ -35,30 +37,34 @@ namespace TMD.Implementation.Services
         public CompanyResponseModel GetCompanyResponse(long? companyId)
         {
             CompanyResponseModel responseModel=new CompanyResponseModel();
+
             //Load Company Data
             if (companyId != null)
             {
                 responseModel.Company = companyRepository.Find((long)companyId);
                 //Load Contacts
-                responseModel.CompanyContacts = companyContactRepository.GetCompanyContactsByCompanyId((long)companyId);
+                responseModel.CompanyContacts = companyContactRepository.GetCompanyContactsByCompanyId((long)companyId).ToList();
             }
                 
             //Load Cities
             responseModel.Cities = cityRepository.GetAll().ToList();
             //Load Sources
-            responseModel.Sources = sourceRepository.GetAll();
+            responseModel.Sources = sourceRepository.GetAll().ToList();
 
             //Load Employees
-            responseModel.Employees = aspNetUserRepository.GetAllUsersOfEmployeeRole();
+            responseModel.Employees = aspNetUserRepository.GetAllUsersOfEmployeeRole().ToList();
 
             //Load Company Statuses
-            responseModel.CompanyStatuses = companyStatusRepository.GetCompanyStatusesBySortOrder();
+            responseModel.CompanyStatuses = companyStatusRepository.GetCompanyStatusesBySortOrder().ToList();
 
             //Load Companies And Individuals
-            responseModel.CompaniesAndIndividuals = companyRepository.GetAll();
+            responseModel.CompaniesAndIndividuals = companyRepository.GetAll().ToList();
 
             //Load Companies
-            responseModel.Companies = companyRepository.GetCompanies();
+            responseModel.Companies = companyRepository.GetCompanies().ToList();
+
+            //Notes Categories
+            responseModel.NotesCategories = notesCategoryRepository.GetAll().ToList();
 
             return responseModel;
         }

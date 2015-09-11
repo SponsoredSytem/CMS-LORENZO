@@ -11,11 +11,10 @@ namespace TMD.Web.ModelMappers
             {
                 Id = source.Id,
                 NotesDate = source.NotesDate,
+                ReminderDate = source.ReminderDate,
                 NotesCategoryId = source.NotesCategoryId,
-                IsOpen = source.IsOpen,
+                CompanyId = source.CompanyId,
                 Description = source.Description,
-                Amount = source.Amount,
-
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -29,12 +28,12 @@ namespace TMD.Web.ModelMappers
             {
                 Id = source.Id,
                 NotesDate = source.NotesDate,
+                ReminderDate = source.ReminderDate,
                 NotesCategoryId = source.NotesCategoryId,
-                IsOpen = source.IsOpen,
+                NotesCategoryName = source.NotesCategory.Name,
+                CompanyId = source.CompanyId,
+                CompanyName = source.Company.CompanyName,
                 Description = source.Description,
-                Amount = source.Amount,
-                Category = source.NotesCategory.Name,
-
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,

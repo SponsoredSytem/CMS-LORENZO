@@ -41,21 +41,9 @@
                     </div>
                 </div>
                 <div class="form-group margin-top-20">
-                    @Html.Label("Amount", new { @class = "col-md-3 control-label" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.NoteModel.Amount, new { @class = "form-control input-circle", placeholder = "Expense Amount", @id = "Amount" })
-                    </div>
-                </div>
-                <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.NoteModel.Description, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
                         @Html.TextAreaFor(m => m.NoteModel.Description, new { @class = "form-control input-circle mandatory", placeholder = "Description" })
-                    </div>
-                </div>
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.NoteModel.IsOpen, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.CheckBoxFor(m => m.NoteModel.IsOpen, new { @class = "form-control input-circle mandatory", placeholder = "IsOpen" })
                     </div>
                 </div>
             </div>

@@ -44,5 +44,6 @@ namespace TMD.Models.DomainModels
         public virtual City City { get; set; }
         public virtual ICollection<Company> BelongingsOfTheCompany { get; set; }
         public virtual Company BelongingCompany { get; set; }
+        public virtual ICollection<Note> CompanyNotes { get; set; }
     }
 }

@@ -350,10 +350,10 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NotesDate" Type="datetime" Nullable="false" />
+          <Property Name="ReminderDate" Type="datetime" Nullable="false" />
           <Property Name="NotesCategoryId" Type="bigint" Nullable="false" />
+          <Property Name="CompanyId" Type="bigint" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="IsOpen" Type="bit" Nullable="false" />
-          <Property Name="Amount" Type="decimal" Precision="9" Scale="2" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -365,6 +365,7 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
@@ -953,6 +954,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Notes_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Notes">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Notes_NotesCategory">
           <End Role="NotesCategory" Type="Self.NotesCategory" Multiplicity="1" />
           <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
@@ -1324,6 +1337,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             <End Role="City" EntitySet="City" />
             <End Role="Municipal" EntitySet="Municipal" />
           </AssociationSet>
+          <AssociationSet Name="FK_Notes_Company" Association="Self.FK_Notes_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Notes" EntitySet="Notes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Notes_NotesCategory" Association="Self.FK_Notes_NotesCategory">
             <End Role="NotesCategory" EntitySet="NotesCategory" />
             <End Role="Notes" EntitySet="Notes" />
@@ -1633,6 +1650,10 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <AssociationSet Name="FK_Company_BelongingCompany" Association="TMD.Models.DomainModels.FK_Company_BelongingCompany">
             <End Role="Company" EntitySet="Companies" />
             <End Role="Company1" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notes_Company" Association="TMD.Models.DomainModels.FK_Notes_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Note" EntitySet="Notes" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -2360,13 +2381,14 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="NotesDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NotesCategoryId" Type="Int64" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsOpen" Type="Boolean" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="NotesCategory" Relationship="TMD.Models.DomainModels.FK_Notes_NotesCategory" FromRole="Note" ToRole="NotesCategory" />
+          <Property Name="ReminderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompanyId" Type="Int64" />
+          <NavigationProperty Name="Company" Relationship="TMD.Models.DomainModels.FK_Notes_Company" FromRole="Note" ToRole="Company" />
         </EntityType>
         <EntityType Name="NotesCategory">
           <Key>
@@ -2380,6 +2402,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Notes" Relationship="TMD.Models.DomainModels.FK_Notes_NotesCategory" FromRole="NotesCategory" ToRole="Note" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Notes_NotesCategory">
           <End Type="TMD.Models.DomainModels.NotesCategory" Role="NotesCategory" Multiplicity="1" />
@@ -2550,6 +2573,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <NavigationProperty Name="City" Relationship="TMD.Models.DomainModels.FK_Company_City" FromRole="Company" ToRole="City" />
           <NavigationProperty Name="BelongingsOfTheCompany" Relationship="TMD.Models.DomainModels.FK_Company_BelongingCompany" FromRole="Company" ToRole="Company1" />
           <NavigationProperty Name="BelongingCompany" Relationship="TMD.Models.DomainModels.FK_Company_BelongingCompany" FromRole="Company1" ToRole="Company" />
+          <NavigationProperty Name="CompanyNotes" Relationship="TMD.Models.DomainModels.FK_Notes_Company" FromRole="Company" ToRole="Note" />
         </EntityType>
         <EntityType Name="Municipal">
           <Key>
@@ -2895,6 +2919,18 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
             </Principal>
             <Dependent Role="Company1">
               <PropertyRef Name="BelongingCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notes_Company">
+          <End Type="TMD.Models.DomainModels.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3307,12 +3343,12 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="Notes">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Note">
               <MappingFragment StoreEntitySet="Notes">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ReminderDate" ColumnName="ReminderDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="NotesCategoryId" ColumnName="NotesCategoryId" />
                 <ScalarProperty Name="NotesDate" ColumnName="NotesDate" />
@@ -3323,6 +3359,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="NotesCategories">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.NotesCategory">
               <MappingFragment StoreEntitySet="NotesCategory">
+                <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
@@ -3688,6 +3725,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_Company" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_City" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Company_BelongingCompany" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Notes_Company" />
       </Diagram>
     </Diagrams>
   </Designer>

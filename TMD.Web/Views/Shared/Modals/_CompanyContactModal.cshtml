@@ -1,0 +1,77 @@
+﻿<div id="ContactModal" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Company Contact</h4>
+            </div>
+            <div class="modal-body">
+                <div class="scroller" style="height:400px" data-always-visible="1" data-rail-visible1="1">
+                    <input type="hidden" id="ContactModalIndex" />
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">First Name</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal" id="ccFirstName" />
+                        </div>
+                    </div>
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Last Name</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="form-control mandatoryModal" id="ccLastName" />
+                        </div>
+                    </div>
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label">Position</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-user-md"></i>
+                            <input type="text" class="form-control" id="ccPosition" />
+                        </div>
+                    </div>
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label">Cell#</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-phone-square"></i>
+                            <input type="text" class="form-control" id="ccCell" />
+                        </div>
+                    </div>
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label requiredLabel">Email</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-envelope"></i>
+                            <input type="text" class="form-control mandatoryModal" id="ccEmail" />
+                        </div>
+                    </div>
+                    <div class="row form-group margin-top-20">
+                        <div class="col-md-3">
+                            <label class="control-label">Contact Type</label>
+                        </div>
+                        <div class="col-md-6 input-icon ">
+                            <i class="fa fa-tag"></i>
+                            <select class="form-control" id="ccContactType">
+                                <option value="">Select Contact Type</option>
+                                <option value="1">Primary</option>
+                                <option value="0">Secondary</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn default">Close</button>
+                <button type="button" id="CompanyContactsSave" class="btn green">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
