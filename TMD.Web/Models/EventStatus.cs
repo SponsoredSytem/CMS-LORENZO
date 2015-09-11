@@ -4,6 +4,7 @@
     {
         public int StatusId { get; set; }
         public string StatusTitle { get; set; }
+        public string Color { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public System.DateTime RecLastUpdatedDate { get; set; }

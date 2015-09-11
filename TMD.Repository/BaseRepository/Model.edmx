@@ -260,6 +260,7 @@
           </Key>
           <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StatusTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
@@ -2847,6 +2848,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Events" Relationship="TMD.Models.DomainModels.FK_Events_EventStatus" FromRole="EventStatus" ToRole="Event" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Events_EventStatus">
           <End Type="TMD.Models.DomainModels.EventStatus" Role="EventStatus" Multiplicity="1" />
@@ -3566,6 +3568,7 @@ warning 6002: The table/view 'cmslorenzo.dbo.ProductsStock' does not have a prim
           <EntitySetMapping Name="EventStatus1">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.EventStatus">
               <MappingFragment StoreEntitySet="EventStatus">
+                <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />

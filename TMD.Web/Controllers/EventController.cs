@@ -69,14 +69,7 @@ namespace TMD.Web.Controllers
         }
         public ActionResult Create(int? id)
         {
-            var viewModel = new EventViewModel
-            {
-                //EventModel =
-                //{
-                //    EventDateString = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
-                //    ReminderDate = DateTime.Now
-                //}
-            };
+            var viewModel = new EventViewModel();
             viewModel.Companies = companyService.GetAllCompanies().ToList().Select(x => x.CreateFromServerToClient());
             viewModel.EventStatuses = eventStatusService.GetAllActiveEventStatuses().ToList().Select(x => x.CreateFromServerToClient());
 
@@ -107,6 +100,7 @@ namespace TMD.Web.Controllers
                 }
                 viewModel.EventModel.RecLastUpdatedBy = User.Identity.GetUserId();
                 viewModel.EventModel.RecLastUpdatedDate = DateTime.Now;
+                viewModel.EventModel.EventDuration = 15;
 
                 if (eventService.SaveEvent(viewModel.EventModel.CreateFromClientToServer()) > 0)
                 {
@@ -152,6 +146,7 @@ namespace TMD.Web.Controllers
                                 start = string.Format("{0:yyyy-MM-dd}", e.EventDate) + "T" + string.Format("{0:HH:mm:ss}", e.EventDate),
                                 end = string.Format("{0:yyyy-MM-dd}", e.EventDate.AddMinutes(e.EventLengthMinutes)) + "T" + string.Format("{0:HH:mm:ss}", e.EventDate.AddMinutes(e.EventLengthMinutes)),
                                 allDay = false,
+                                color = e.EventStatus.Color,
                                 companyid=e.CompanyId,
                                 statusId=e.EventStatusId,
                                 duration=e.EventLengthMinutes,
@@ -171,10 +166,12 @@ namespace TMD.Web.Controllers
             var eventList = from e in events
                             select new
                             {
+                                id = e.EventId,
                                 title = e.EventDescription,
                                 start = string.Format("{0:yyyy-MM-dd}", e.EventDate) + "T" + string.Format("{0:HH:mm:ss}", e.EventDate),
                                 end = string.Format("{0:yyyy-MM-dd}", e.EventDate.AddMinutes(e.EventLengthMinutes)) + "T" + string.Format("{0:HH:mm:ss}", e.EventDate.AddMinutes(e.EventLengthMinutes)),
                                 allDay = false,
+                                color = e.EventStatus.Color,
                                 companyid = e.CompanyId,
                                 statusId = e.EventStatusId,
                                 duration = e.EventLengthMinutes,
