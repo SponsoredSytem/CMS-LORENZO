@@ -26,9 +26,9 @@
             <div class="portlet-title">
 
                 <div class="tools">
-                    <button type="submit" class="btn btn-circle blue" onclick="return ValidationPageFields();">@btnText</button>
+                    <button type="submit" class="btn blue" onclick="return ValidationPageFields();">@btnText</button>
                     <a href="~/Company/Index">
-                        <button type="button" class="btn btn-circle default">Cancel</button>
+                        <button type="button" class="btn default">Cancel</button>
                     </a>
                 </div>
                 <div class="caption">
@@ -49,6 +49,7 @@
                     @Html.HiddenFor(m => m.Company.RecCreatedBy)
                     @Html.HiddenFor(m => m.Company.RecCreatedDate)
                     @Html.HiddenFor(m => m.Company.DeletedCompanyContacts, new { @id = "DeletedCompanyContacts" })
+                    @Html.HiddenFor(m => m.Company.DeletedCompanyNotes, new { @id = "DeletedCompanyNotes" })
 
                     @*<div class="row">
                             <div class="col-md-6">
@@ -85,7 +86,7 @@
                                 @Html.LabelFor(m => m.Company.CompanyName, new { @class = "control-label requiredLabel" })
                             </div>
                             <div class="col-md-3 input-icon">
-                                @Html.DropDownListFor(m => m.Company.BelongingCompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.Company.BelongingCompanyId), "Select your company", new { @class = "input-medium select2me mandatoryIndividual", id = "IndividualBelongsToCompany" })
+                                @Html.DropDownListFor(m => m.Company.BelongingCompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.Company.BelongingCompanyId), "Select your company", new { @class = "form-control select2me mandatoryIndividual", id = "IndividualBelongsToCompany" })
                             </div>
                         </div>
                         <div class="CompanyRelatedInformation" style="display: none">
@@ -148,14 +149,14 @@
                             @Html.Label("City", new { @class = "control-label requiredLabel" })
                         </div>
                         <div class="col-md-3 input-icon">
-                            @Html.DropDownListFor(m => m.Company.CityId, new SelectList(Model.Cities, "CityId", "CityName", Model.Company.CityId), "Select City", new { @class = "input-medium select2me mandatory", id = "CityId" })
+                            @Html.DropDownListFor(m => m.Company.CityId, new SelectList(Model.Cities, "CityId", "CityName", Model.Company.CityId), "Select City", new { @class = "form-control select2me mandatory", id = "CityId" })
                         </div>
 
                         <div class="col-md-2 textAlignRight">
                             @Html.LabelFor(m => m.Company.RefrenceCompanyId, new { @class = "control-label" })
                         </div>
                         <div class="col-md-3 input-icon">
-                            @Html.DropDownListFor(m => m.Company.RefrenceCompanyId, new SelectList(Model.CompaniesAndIndividuals, "CompanyId", "CompanyName", Model.Company.RefrenceCompanyId), "Select Refrence", new { @class = "input-medium select2me", id = "RefrenceCompanyId" })
+                            @Html.DropDownListFor(m => m.Company.RefrenceCompanyId, new SelectList(Model.CompaniesAndIndividuals, "CompanyId", "CompanyName", Model.Company.RefrenceCompanyId), "Select Refrence", new { @class = "form-control select2me", id = "RefrenceCompanyId" })
                         </div>
                     </div>
 
@@ -211,7 +212,7 @@
                                     @Html.LabelFor(m => m.Company.SourceId, new { @class = "control-label requiredLabel" })
                                 </div>
                                 <div class="col-md-3 input-icon select2DDLParent">
-                                    @Html.DropDownListFor(m => m.Company.SourceId, new SelectList(Model.Sources, "SourceId", "SourceName", Model.Company.SourceId), "Select Source", new { @class = "input-medium select2me mandatory", id = "SourceId" })
+                                    @Html.DropDownListFor(m => m.Company.SourceId, new SelectList(Model.Sources, "SourceId", "SourceName", Model.Company.SourceId), "Select Source", new { @class = "form-control select2me mandatory", id = "SourceId" })
                                 </div>
                             </div>
 
@@ -220,13 +221,13 @@
                                     @Html.Label("Account Holder", new { @class = "control-label" })
                                 </div>
                                 <div class="col-md-3 input-icon">
-                                    @Html.DropDownListFor(m => m.Company.AccountHolderId, new SelectList(Model.Employees, "Id", "Name", Model.Company.AccountHolderId), "Select Employee", new { @class = "input-medium select2me", id = "AccountHolderId" })
+                                    @Html.DropDownListFor(m => m.Company.AccountHolderId, new SelectList(Model.Employees, "Id", "Name", Model.Company.AccountHolderId), "Select Employee", new { @class = "form-control select2me", id = "AccountHolderId" })
                                 </div>
                                 <div class="col-md-2 textAlignRight">
                                     @Html.Label("Status", new { @class = "control-label" })
                                 </div>
                                 <div class="col-md-3 input-icon select2DDLParent">
-                                    @Html.DropDownListFor(m => m.Company.StatusId, new SelectList(Model.CompanyStatuses, "Id", "Title", Model.Company.StatusId), "Select Status", new { @class = "input-medium select2me", id = "StatusId" })
+                                    @Html.DropDownListFor(m => m.Company.StatusId, new SelectList(Model.CompanyStatuses, "Id", "Title", Model.Company.StatusId), "Select Status", new { @class = "form-control select2me", id = "StatusId" })
                                 </div>
                             </div>*@
 
@@ -237,12 +238,12 @@
                                     <ul class="nav nav-tabs">
                                         <li class="active">
                                             <a href="#tabContacts" data-toggle="tab">
-                                                Contacts
+                                                Contacts (@Model.CompanyContacts.Count)
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#tabNotes" data-toggle="tab">
-                                                Notes
+                                                Notes (@Model.CompanyNotes.Count)
                                             </a>
                                         </li>
                                         <li>
@@ -385,30 +386,32 @@
                                                                             <td style='display: none'></td>
                                                                             <td>
                                                                                 @Html.HiddenFor(m => m.CompanyNotes[i].NotesDate)
-                                                                                <span id="spanFirstName_@i">
-                                                                                    @Html.DisplayFor(m => m.CompanyNotes[i].NotesDate)
+                                                                                @Html.HiddenFor(m => m.CompanyNotes[i].NotesDateString)
+                                                                                <span id="spanActionDate_@i">
+                                                                                    @Html.DisplayFor(m => m.CompanyNotes[i].NotesDateString)
                                                                                 </span>
                                                                             </td>
                                                                             <td>
                                                                                 @Html.HiddenFor(m => m.CompanyNotes[i].ReminderDate)
-                                                                                <span id="spanLastName_@i">
-                                                                                    @Html.DisplayFor(m => m.CompanyNotes[i].ReminderDate)
+                                                                                @Html.HiddenFor(m => m.CompanyNotes[i].ReminderDateString)
+                                                                                <span id="spanReminderDate_@i">
+                                                                                    @Html.DisplayFor(m => m.CompanyNotes[i].ReminderDateString)
                                                                                 </span>
                                                                             </td>
                                                                             <td>
-                                                                                @Html.HiddenFor(m => m.CompanyNotes[i].NotesCategoryName)
-                                                                                <span id="spanPosition_@i">
+                                                                                @Html.HiddenFor(m => m.CompanyNotes[i].NotesCategoryId)
+                                                                                <span id="spanNoteTypeName_@i">
                                                                                     @Html.DisplayFor(m => m.CompanyNotes[i].NotesCategoryName)
                                                                                 </span>
                                                                             </td>
                                                                             <td>
                                                                                 @Html.HiddenFor(m => m.CompanyNotes[i].Description)
-                                                                                <span id="spanPhoneCell_@i">
+                                                                                <span id="spanNoteDescription_@i">
                                                                                     @Html.DisplayFor(m => m.CompanyNotes[i].Description)
                                                                                 </span>
                                                                             </td>
-                                                                            <td><a href="javascript:;" class="editContact">Edit</a></td>
-                                                                            <td><a href="javascript:;" class="deleteRow">X</a></td>
+                                                                            <td><a href="javascript:;" class="editNote">Edit</a></td>
+                                                                            <td><a href="javascript:;" class="deleteNote">X</a></td>
                                                                         </tr>
                                                                     }
                                                                 }

@@ -79,7 +79,7 @@ namespace TMD.Web.ModelMappers
                 RefrenceCompanyId = source.RefrenceCompanyId,
                 BelongingCompanyId = source.BelongingCompanyId,
 
-                CompanyEventsUrl = source.Events.Any() ? ConfigurationManager.AppSettings["HostURL"] + "/Event/Index/" + source.CompanyId : "",
+                CompanyEventsUrl = (source.IsCompany && source.Events.Any()) ? ConfigurationManager.AppSettings["HostURL"] + "/Event/Index/" + source.CompanyId : "",
             };
         }
     }

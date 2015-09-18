@@ -12,7 +12,11 @@
     <header>
         <h3 class="page-title">
             @ViewBag.Title @Html.Raw(ViewBag.Company)
+            <span class="input-icon">
+                <a href="~/Event/Calendar"><i class="fa fa-calendar" title="Change to calendar view"></i></a>
+            </span>
         </h3>
+        
     </header>
     <label id="pulsate-crazy-target" style="padding:5px;font-weight: bold;font-size: 15px;width: 100%">
         Today's Remaining Events:
@@ -56,7 +60,7 @@
                                         
                                         <td class="col-md-2">
                                             <div class="input-icon">
-                                                @Html.DropDownList("Company", new SelectList(Model.Companies, "CompanyId", "CompanyName"), "Select Company", new { @class = "input-medium", id = "CompanyId" })
+                                                @Html.DropDownList("Company", new SelectList(Model.Companies, "CompanyId", "CompanyName"), "Select Company", new { @class = "form-control", id = "CompanyId" })
                                             </div>
                                         </td>*@
                                         <td class="col-md-3"></td>
@@ -223,6 +227,7 @@
             }
 
             function errorFunc(e, status) {
+                debugger
                 toastr.error(e.responseJSON.ErrorMessage);
             }
 

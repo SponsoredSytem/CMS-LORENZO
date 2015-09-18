@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
+using TMD.Models.PostModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.Models.Common;
@@ -64,8 +65,25 @@ namespace TMD.Web.Controllers
                     companyViewModel.Company.RecLastUpdatedBy = User.Identity.GetUserId();
                     companyViewModel.Company.RecLastUpdatedDate = DateTime.Now;
                 }
-                var companyContacts = companyViewModel.CompanyContacts.Select(x => x.CreateFromClientToServer(companyViewModel.Company));
-                companyService.SaveCompany(companyViewModel.Company.CreateFromClientToServer(),companyViewModel.Company.DeletedCompanyContacts, companyContacts);
+
+                CompanyPostModal companyPostModal = new CompanyPostModal();
+                
+                companyPostModal.Company = companyViewModel.Company.CreateFromClientToServer();
+                
+                if (companyViewModel.Company.IsCompany)
+                {
+                    companyPostModal.CompanyContacts =
+                    companyViewModel.CompanyContacts.Select(
+                        x => x.CreateFromClientToServer(companyViewModel.Company));
+
+                    companyPostModal.ContactsToBeDeleted = companyViewModel.Company.DeletedCompanyContacts;
+                    if (companyViewModel.CompanyNotes != null)
+                        companyPostModal.CompanyNotes = companyViewModel.CompanyNotes.Select(x => x.CreateFromClientToServer(companyViewModel.Company));
+                    
+                    companyPostModal.NotesToBeDeleted = companyViewModel.Company.DeletedCompanyNotes;
+                }
+
+                companyService.SaveCompany(companyPostModal);
 
                 return RedirectToAction("Index");
             }

@@ -22,9 +22,9 @@
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
+                <button type="submit" class="btn blue" onclick="return(ValidateFields(event));">Save</button>
                 <a href="~/Event/Index">
-                    <button type="button" class="btn btn-circle default">Cancel</button>
+                    <button type="button" class="btn default">Cancel</button>
                 </a>
             </div>
             <div class="caption">
@@ -51,7 +51,7 @@
                         @Html.LabelFor(m => m.EventModel.CompanyId, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3">
-                        @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "input-medium select2me mandatory", id = "CompanyId" })
+                        @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "form-control select2me mandatory", id = "CompanyId" })
                     </div>
                     
                 </div>
@@ -70,7 +70,7 @@
                         @Html.LabelFor(m => m.EventModel.StatusId, new { @class = "control-label requiredLabel" })
                     </div>
                     <div class="col-md-3">
-                        @Html.DropDownListFor(m => m.EventModel.StatusId, new SelectList(Model.EventStatuses, "StatusId", "StatusTitle", Model.EventModel.StatusId), "Select Status", new { @class = "input-medium select2me mandatory", id = "StatusId" })
+                        @Html.DropDownListFor(m => m.EventModel.StatusId, new SelectList(Model.EventStatuses, "StatusId", "StatusTitle", Model.EventModel.StatusId), "Select Status", new { @class = "form-control select2me mandatory", id = "StatusId" })
                     </div>
                 </div>
 

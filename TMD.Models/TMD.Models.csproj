@@ -159,6 +159,7 @@
     <Compile Include="ModelMapers\ReportsMappers\PurchaseReportMapper.cs" />
     <Compile Include="ModelMapers\ReportsMappers\ExpenseReportMapper.cs" />
     <Compile Include="ModelMapers\ReportsMappers\SalesReportMapper.cs" />
+    <Compile Include="PostModels\CompanyPostModal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsModels\ExpenseReport.cs" />
     <Compile Include="ReportsModels\StockReport.cs" />

@@ -13,6 +13,8 @@ $('#CompanyContactsSave').on("click", function () {
     //var index = $("#CompanyContactsTableBody").children("tr").length;
     var index = $("#ContactModalIndex").val();
 
+    var contactType = Type == 1 ? "Primary" : Type == "" ? "" : "Secondary";
+
     if (index == "") {
         //add new row
 
@@ -25,7 +27,7 @@ $('#CompanyContactsSave').on("click", function () {
             "<input name='CompanyContacts[" + index + "].CompanyContactId' id='CompanyContacts_" + index + "__CompanyContactId' type='hidden' />" +
             "<input name='CompanyContacts[" + index + "].CompanyId' id='CompanyContacts_" + index + "__CompanyId' type='hidden' />" +
             "</td>";
-        var contactType = Type == 1 ? "Primary" : Type == "" ? "" : "Secondary";
+        
         //CompanyContacts
         var html = ' <tr data-id=' + index + '>' +
             indexCell +
@@ -69,7 +71,7 @@ $('#CompanyContactsSave').on("click", function () {
     }
 
     $("#ContactModal").modal('toggle');
-    $('#ContactModal input').val('');
+    $('#ContactModalForm').trigger("reset");
     ////remove validation
     //$("form").removeData("validator").removeData("unobtrusiveValidation");
 
@@ -164,8 +166,8 @@ $('#CompanyNotesSave').on("click", function () {
             '<input id="CompanyNotes_' + index + '__Description" name="CompanyNotes[' + index + '].Description" type="hidden" value="' + noteDescription + '"><span id="spanNoteDescription_' + index + '">' + noteDescription + '</span>' +
             '</td>' +
             
-            '<td><a href="javascript:;" class="editContact">Edit</a></td>' +
-            '<td><a href="javascript:;" class="deleteRow" title="Delete">X</a></td>' +
+            '<td><a href="javascript:;" class="editNote">Edit</a></td>' +
+            '<td><a href="javascript:;" class="deleteNote" title="Delete">X</a></td>' +
             '</tr>';
         $('#CompanyNotesTableBody').append(html);
     } else {
@@ -182,12 +184,47 @@ $('#CompanyNotesSave').on("click", function () {
     }
 
     $("#NotesModal").modal('toggle');
-    $('#NotesModal input').val('');
+    $('#NotesModalForm').trigger("reset");
+    
     ////remove validation
     //$("form").removeData("validator").removeData("unobtrusiveValidation");
 
     ////Parse the form again to apply new validations
     //$.validator.unobtrusive.parse("form");
+});
+
+//Load popup for notes table row's data
+$('.editNote').live('click', function () {
+    //get the id from tr that is selected for the item popup
+    var index = $(event.target).closest('tr').data('id');
+    //save index in model
+    $("#NotesModalIndex").val(index);
+    //get item's values
+
+    $("#cnReminderDate").val($("#CompanyNotes_" + index + "__NotesDateString").val());
+    $("#cnActionDate").val($("#CompanyNotes_" + index + "__ReminderDateString").val());
+    $("#cnType").val($("#CompanyNotes_" + index + "__NotesCategoryId").val());
+    $("#cnDescription").val($("#CompanyNotes_" + index + "__Description").val());
+    $("#NotesModal").modal('toggle');
+});
+
+//delete company note table row
+$('.deleteNote').live("click", function () {
+    var count = $("#CompanyNotesTableBody").children("tr").length;
+    if (count > 0) {
+        var note = $("#DeletedCompanyNotes").val();
+        var noteToBeDeleted = $(this).parent().parent().children("input").first().attr("value");
+        if (noteToBeDeleted != undefined) {
+            if (note == "") {
+                note = noteToBeDeleted;
+            } else {
+                note = note + "," + noteToBeDeleted;
+            }
+
+            $("#DeletedCompanyNotes").val(note);
+        }
+        $(this).parent().parent().remove();
+    }
 });
 
 

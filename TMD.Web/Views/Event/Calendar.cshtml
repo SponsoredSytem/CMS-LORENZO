@@ -14,16 +14,20 @@
 <script src="~/Content/fullcalendar/moment.min.js"></script>
 <link href="~/Content/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
 <script src="~/Content/fullcalendar/fullcalendar.min.js"></script>
+<header>
+    <h3 class="page-title">
+        @ViewBag.Title @Html.Raw(ViewBag.Company)
+        <span class="input-icon">
+            <a href="~/Event/Index"><i class="fa fa-list-ul" title="Change to list view"></i></a>
+        </span>
+    </h3>
 
+</header>
 <div class="row formMinHeight500">
     <div class="col-md-12">
         <!-- BEGIN PORTLET-->
         <div class="portlet box blue-madison calendar">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-calendar"></i>Calendar
-                </div>
-            </div>
+            <div class="portlet-title"></div>
             <div class="portlet-body light-grey">
                 <div id="calendar">
                 </div>
@@ -40,26 +44,26 @@
                 <h4 class="modal-title">Add New Event</h4>
             </div>
             <div class="modal-body">
-                <div class="scroller" style="height:400px" data-always-visible="1" data-rail-visible1="1">
+                <div class="scroller" style="height:435px" data-always-visible="1" data-rail-visible1="1">
                     <input type="hidden" id="eventID" />
                     <input type="hidden" id="recCreatedBy" />
                     <input type="hidden" id="recCreatedDate" />
-                    
+
                     <div class="row form-group margin-top-20">
                         <div class="col-md-3">
                             <label class="control-label requiredLabel">Company</label>
                         </div>
                         <div class="col-md-6">
-                            @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "input-medium select2me mandatoryModal", id = "CompanyId" })
+                            @Html.DropDownListFor(m => m.EventModel.CompanyId, new SelectList(Model.Companies, "CompanyId", "CompanyName", Model.EventModel.CompanyId), "Select Company", new { @class = "form-control select2me mandatoryModal", id = "CompanyId" })
                         </div>
                     </div>
-                    
+
                     <div class="row form-group margin-top-20">
                         <div class="col-md-3">
                             <label class="control-label requiredLabel">Event Type</label>
                         </div>
                         <div class="col-md-6">
-                            @Html.DropDownListFor(m => m.EventModel.StatusId, new SelectList(Model.EventStatuses, "StatusId", "StatusTitle", Model.EventModel.StatusId), "Select Status", new { @class = "input-medium select2me mandatoryModal", id = "StatusId" })
+                            @Html.DropDownListFor(m => m.EventModel.StatusId, new SelectList(Model.EventStatuses, "StatusId", "StatusTitle", Model.EventModel.StatusId), "Select Status", new { @class = "form-control select2me mandatoryModal", id = "StatusId" })
                         </div>
                     </div>
 
@@ -72,17 +76,17 @@
                             <input type="text" class="form-control mandatoryModal" id="eventTitle" />
                         </div>
                     </div>
-                    
+
                     <div class="row form-group margin-top-20">
                         <div class="col-md-3">
                             <label class="control-label requiredLabel">Event Date</label>
                         </div>
                         <div class="col-md-6 input-icon ">
                             <i class="fa fa-user"></i>
-                            <input type="text" class="form-control mandatoryModal datepicker" id="eventDate"/>
+                            <input type="text" class="form-control mandatoryModal datepicker" id="eventDate" />
                         </div>
                     </div>
-                    
+
                     <div class="row form-group margin-top-20">
                         <div class="col-md-3">
                             <label class="control-label requiredLabel">Event Time</label>
@@ -92,7 +96,7 @@
                             <input type="text" class="form-control mandatoryModal" id="eventTime" />
                         </div>
                     </div>
-                    
+
                     <div class="row form-group margin-top-20">
                         <div class="col-md-3">
                             <label class="control-label requiredLabel">Event Duration</label>
@@ -102,7 +106,7 @@
                             <input type="text" class="form-control mandatoryModal" id="eventDuration" placeholder="Duration in minutes" />
                         </div>
                     </div>
-                    
+
                     <div class="row form-group margin-top-20">
                         <div class="col-md-3">
                             <label class="control-label requiredLabel">Reminder Date</label>
@@ -130,12 +134,12 @@
                 <button type="button" id="btnPopupCancel" data-dismiss="modal" class="btn">Cancel</button>
                 <button type="button" id="btnPopupSave" data-dismiss="modal" class="btn btn-primary">Save event</button>
             </div>
-            
+
             <div id="dtBox"></div>
         </div>
     </div>
 </div>
-        <script type="text/javascript">
+<script type="text/javascript">
             $(document).ready(function () {
 
                 var sourceFullView = { url: '/Event/GetCalendarEvents/' };
@@ -248,7 +252,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: "/Home/UpdateEvent",
+                    url: "/Event/UpdateEvent",
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(dataRow)
@@ -261,7 +265,7 @@
 
             $('#btnPopupDelete').click(function () {
                 $("#popupEventForm").modal('toggle');
-                
+
                 $.ajax({
                     type: 'POST',
                     url: "/Event/DeleteEvent",
@@ -313,4 +317,4 @@
                     }
                 });
             });
-        </script>
+</script>

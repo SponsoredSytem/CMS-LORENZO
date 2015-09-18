@@ -4,6 +4,7 @@ using System.Linq;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
+using TMD.Models.PostModels;
 using TMD.Models.ResponseModels;
 
 namespace TMD.Implementation.Services
@@ -17,8 +18,9 @@ namespace TMD.Implementation.Services
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly ICompanyStatusRepository companyStatusRepository;
         private readonly INotesCategoryRepository notesCategoryRepository;
+        private readonly INoteRepository noteRepository;
 
-        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository, IAspNetUserRepository aspNetUserRepository, ICompanyStatusRepository companyStatusRepository, INotesCategoryRepository notesCategoryRepository)
+        public CompanyService(ICompanyRepository companyRepository,ICityRepository cityRepository,ISourceRepository sourceRepository,ICompanyContactRepository companyContactRepository, IAspNetUserRepository aspNetUserRepository, ICompanyStatusRepository companyStatusRepository, INotesCategoryRepository notesCategoryRepository, INoteRepository noteRepository)
         {
             this.companyRepository = companyRepository;
             this.cityRepository = cityRepository;
@@ -27,6 +29,7 @@ namespace TMD.Implementation.Services
             this.aspNetUserRepository = aspNetUserRepository;
             this.companyStatusRepository = companyStatusRepository;
             this.notesCategoryRepository = notesCategoryRepository;
+            this.noteRepository = noteRepository;
         }
 
         public Company GetCompany(long companyId)
@@ -44,6 +47,8 @@ namespace TMD.Implementation.Services
                 responseModel.Company = companyRepository.Find((long)companyId);
                 //Load Contacts
                 responseModel.CompanyContacts = companyContactRepository.GetCompanyContactsByCompanyId((long)companyId).ToList();
+                //Notes
+                responseModel.CompanyNotes = noteRepository.GetNotesByCompanyId((long)companyId).ToList();
             }
                 
             //Load Cities
@@ -74,38 +79,81 @@ namespace TMD.Implementation.Services
             return companyRepository.GetAll();
         }
 
-        public long SaveCompany(Company company,string contactsToBeDeleted, IEnumerable<CompanyContact> companyContacts = null)
+        public IEnumerable<Company> GetOnlyCompanies()
         {
-            if(company.CompanyId>0)
-                companyRepository.Update(company);
+            return companyRepository.GetCompanies();
+        }
+
+        public long SaveCompany(CompanyPostModal companyPostModal)
+        {
+            if (companyPostModal.Company.CompanyId > 0)
+                companyRepository.Update(companyPostModal.Company);
             else
-                companyRepository.Add(company);
+                companyRepository.Add(companyPostModal.Company);
 
             companyRepository.SaveChanges();
+
+            if (companyPostModal.Company.IsCompany)
+            {
+                UpdateCompanyContacts(companyPostModal);
+                UpdateCompanyNotes(companyPostModal);
+            }
+            
+            return companyPostModal.Company.CompanyId;
+        }
+
+        private void UpdateCompanyContacts(CompanyPostModal companyPostModal)
+        {
             var isAnyChangeInContacts = false;
 
             //update contacs
-            if (companyContacts != null)
+            if (companyPostModal.CompanyContacts != null)
             {
-                foreach (var companyContact in companyContacts)
+                foreach (var companyContact in companyPostModal.CompanyContacts)
                 {
-                    companyContact.CompanyId = company.CompanyId;
+                    companyContact.CompanyId = companyPostModal.Company.CompanyId;
                     companyContactRepository.Update(companyContact);
                     isAnyChangeInContacts = true;
                 }
             }
 
             //delete contacts
-            if (!string.IsNullOrEmpty(contactsToBeDeleted))
+            if (!string.IsNullOrEmpty(companyPostModal.ContactsToBeDeleted))
             {
-                var stringListOfIds = contactsToBeDeleted.Split(',');
+                var stringListOfIds = companyPostModal.ContactsToBeDeleted.Split(',');
                 var longListOfIds = stringListOfIds.Select(Int64.Parse).ToList();
                 companyContactRepository.DeleteAllContactsById(longListOfIds);
                 isAnyChangeInContacts = true;
             }
             if (isAnyChangeInContacts)
                 companyContactRepository.SaveChanges();
-            return company.CompanyId;
+        }
+
+        private void UpdateCompanyNotes(CompanyPostModal companyPostModal)
+        {
+            var isAnyChangeInNotes = false;
+
+            //update Notes
+            if (companyPostModal.CompanyNotes != null)
+            {
+                foreach (var companyNote in companyPostModal.CompanyNotes)
+                {
+                    companyNote.CompanyId = companyPostModal.Company.CompanyId;
+                    noteRepository.Update(companyNote);
+                    isAnyChangeInNotes = true;
+                }
+            }
+
+            //delete Notes
+            if (!string.IsNullOrEmpty(companyPostModal.NotesToBeDeleted))
+            {
+                var stringListOfIds = companyPostModal.NotesToBeDeleted.Split(',');
+                var longListOfIds = stringListOfIds.Select(Int64.Parse).ToList();
+                noteRepository.DeleteAllNotesById(longListOfIds);
+                isAnyChangeInNotes = true;
+            }
+            if (isAnyChangeInNotes)
+                noteRepository.SaveChanges();
         }
     }
 }

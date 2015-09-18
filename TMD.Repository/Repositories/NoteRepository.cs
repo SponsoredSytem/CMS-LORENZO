@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
@@ -24,6 +26,16 @@ namespace TMD.Repository.Repositories
         {
             get { return db.Notes; }
         }
-        #endregion        
+        #endregion
+
+        public void DeleteAllNotesById(List<long> contactIds)
+        {
+            DbSet.Where(x => contactIds.Contains(x.Id)).ToList().ForEach(y => DbSet.Remove(y));
+        }
+
+        public IEnumerable<Note> GetNotesByCompanyId(long companyId)
+        {
+            return DbSet.Where(x => x.CompanyId == companyId);
+        }
     }
 }
