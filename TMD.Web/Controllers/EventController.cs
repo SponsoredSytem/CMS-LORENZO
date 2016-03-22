@@ -134,7 +134,7 @@ namespace TMD.Web.Controllers
             }
             return Json(new { response = actionMessage, status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
-
+        //Day/Week View
         public JsonResult GetCalendarEvents(DateTime start, DateTime end)
         {
             var events = eventService.GetAllEvents(null).ToList();
@@ -160,6 +160,7 @@ namespace TMD.Web.Controllers
             var rows = eventList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);
         }
+        //Month View
         public JsonResult GetCalendarSummary(DateTime start, DateTime end)
         {
             var events = eventService.GetAllEvents(null).ToList();
